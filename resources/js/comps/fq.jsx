@@ -8,14 +8,14 @@ export const Fq = () => {
   };
 
   const faqs = [
-    { question: "What is included in the Starter plan?", answer: "The Starter plan includes access to all basic features, 5GB of storage, and email support." },
-    { question: "Do you offer a free trial?", answer: "Yes, we offer a 14-day free trial for all our plans. No credit card is required to start." },
-    { question: "Can I switch plans later?", answer: "Absolutely! You can upgrade or downgrade your plan at any time from your account settings." },
-    { question: "What payment methods do you accept?", answer: "We accept all major credit cards (Visa, MasterCard, American Express) and PayPal." },
-    { question: "How secure is my data?", answer: "We use industry-standard encryption and security protocols to ensure your data is safe and protected." },
-    { question: "How does the 2% donation work?", answer: "We pledge to donate 2% of our annual revenue to environmental causes and non-profit organizations." },
-    { question: "Can I integrate this platform with other tools?", answer: "Yes, we offer seamless integration with popular tools like Slack, Trello, and Google Workspace." },
-    { question: "What makes your platform different?", answer: "Our platform is built with a focus on user experience, speed, and reliability." }
+    { question: "What is postpartum douala?", answer: "A postpartum doula provides non-medical support for new parents, offering guidance on newborn care, breastfeeding, and emotional support, along with light household help." },
+    { question: "What Sleep Training Services Do You Offer?", answer: "We offer personalized pediatric sleep training consultations to help families establish healthy sleep routines and improve their child’s sleep habits with gentle, effective methods." },
+    { question: "How do i know if i need postpartum douala?", answer: "If you're feeling overwhelmed, need help adjusting to life with a new baby, or want extra support with feeding and baby care, postpartum doula services can offer guidance and reassurance." },
+    { question: "Do you offer breastfeeding support?", answer: "Yes, we offer breastfeeding guidance, including help with latch, milk supply, and overall feeding techniques" },
+    { question: "What sleep training methods do you use?", answer: "We use gentle, evidence-based methods that focus on building positive sleep habits, creating a peaceful sleep environment, and minimizing stress for both parents and babies." },
+    { question: "How long does sleep training take to work?", answer: "Results typically appear within a few days to a couple of weeks, depending on your child's needs and consistency with the plan" },
+    { question: "Do you provide overnight doula support?", answer: "Yes, we offer overnight support to help with feedings and soothing, allowing you to rest and recharge." },
+    { question: "How do I start sleep training?", answer: "Schedule a consultation, and we'll create a personalized sleep plan for your child and provide ongoing support to guide you through the process" }
   ];
 
   return (
