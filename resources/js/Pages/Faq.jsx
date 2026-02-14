@@ -1,16 +1,18 @@
 import { Contact } from "@/comps/Contact";
 import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
+import { Seo } from "@/comps/SEO";
 import { Fq } from "@/comps/fq";
 
 export default function FAQ(){
 return (
 <div className="w-full overflow-y-hidden">
+    <Seo title="FAQ" description="A postpartum doula provides compassionate, non-medical support to families during the early weeks after birth. This includes guidance on newborn care, breastfeeding support, emotional reassurance, and light household assistance to help parents recover, adjust, and feel confident in their new roles." url="/faq"/>
 <Header/>
 <section className="relative w-full py-4 h-[500px] flex items-center justify-center">
               
               <img
-                  src="https://nestednurturers.com/wp-content/uploads/2024/10/newborn-baby-boy-sucking-milk-from-mothers-breast-portrait-of-mom-and-breastfeeding-baby-e1634613320759.jpg"
+                  src="images\services\newborn-baby-boy-sucking-milk-from-mothers-breast-portrait-of-mom-and-breastfeeding-baby-e1634613320759.jpg"
                   alt="Birth and Postpartum Support"
                   className="absolute inset-0 w-full h-full object-cover rounded-2xl"
               />
@@ -27,7 +29,7 @@ return (
                   Take A look at what people ask us
                   </p>
                   <a
-                      href="#consultation"
+                      href="/contact"
                       className="inline-block bg-pr_btn mb-2 hover:bg-pr_btn text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition"
                   >
                      

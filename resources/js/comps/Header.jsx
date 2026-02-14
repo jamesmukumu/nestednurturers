@@ -33,10 +33,19 @@ export function Header() {
 
           {/* Social Icons */}
           <div className="flex items-center space-x-5 text-white">
-            <i className="fa-brands fa-facebook text-xl  cursor-pointer transition"></i>
+           <a href="https://www.facebook.com/nestednurturerz?mibextid=ZbWKwL" target="_blank">
+           <i className="fa-brands fa-facebook text-xl  cursor-pointer transition"></i>
+           </a>
+            <a href="https://www.instagram.com/nestednurturers?igsh=emdsM3RhMnZ1endk" target="_blank">
             <i className="fa-brands fa-instagram text-xl cursor-pointer transition"></i>
-            <i className="fa-brands fa-twitter text-xl cursor-pointer transition"></i>
-            <i className="fa-brands fa-linkedin text-xl cursor-pointer transition"></i>
+            </a>
+          <a href="https://www.tiktok.com/@nestednurturersdoulas?_r=1&_t=ZT-91baqNofnZ1" target="_blank">
+          <i className="fa-brands fa-tiktok text-xl cursor-pointer transition"></i>
+          </a>
+           <a href="">
+           <i className="fa-brands fa-yelp text-xl cursor-pointer transition"></i>
+           </a>
+            
           </div>
         </div>
       </div>
@@ -47,15 +56,16 @@ export function Header() {
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
         <a
-        href="/"
-           className={`transition-all duration-300 ease-in-out h-20`}
-        >
-          <img
-            src="images/logo.webp"
-            alt="Logo"
-            className="h-full w-auto object-contain"
-          />
-        </a>
+  href="/"
+  className="transition-all duration-300 ease-in-out h-[90px]"
+>
+  <img
+    src="images/updates-logo.jpeg"
+    alt="Logo"
+    className="h-full w-auto object-contain"
+  />
+</a>
+
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex items-center gap-12 text-base font-medium">
@@ -92,7 +102,7 @@ export function Header() {
           <ul className="py-2 text-sm">
             <li>
               <a
-                href="/hotels/luxury"
+                href="/services"
                 className="block px-4 py-2 hover:bg-gray-100 transition"
               >
                 Birth Support
@@ -100,7 +110,7 @@ export function Header() {
             </li>
             <li>
               <a
-                href="/hotels/budget"
+                href="/services"
                 className="block px-4 py-2 hover:bg-gray-100 transition"
               >
                 Postpartum Support
@@ -108,10 +118,18 @@ export function Header() {
             </li>
             <li>
               <a
-                href="/hotels/resorts"
+                href="/services"
                 className="block px-4 py-2 hover:bg-gray-100 transition"
               >
                 Sibling Support
+              </a>
+            </li>
+            <li>
+              <a
+                href="/services"
+                className="block px-4 py-2 hover:bg-gray-100 transition"
+              >
+                Night Doula Care
               </a>
             </li>
           </ul>

@@ -14,10 +14,10 @@ export  function Footer() {
       <div className="container px-6 py-12 mx-auto">
         <div className=" md:-mx-3 md:items-center md:justify-between">
           <h1 className="text-xl font-semibold tracking-tight text-white md:mx-3 xl:text-2xl">
-          Vision Statement
+          Serving Bay area
           </h1>
           <p className="p-2 text-m font-semibold tracking-tight text-white md:mx-3 xl:text-xl">
-          We believe in building healthy communities through equitable doula care that improves outcomes for families and empowers those who support them.
+          We provide expert birth doula and pregnancy support services. Carrot and Medi-Cal approved. All of our doulas are fully trained and certified.
           </p>
 
     
@@ -115,10 +115,18 @@ export  function Footer() {
           <div>
             <h1 className="text-xl font-semibold text-white">Connect with us</h1>
             <div className="flex items-center space-x-5 text-white">
+            <a href="https://www.facebook.com/nestednurturerz?mibextid=ZbWKwL">
             <i className="fa-brands fa-facebook text-xl hover:text-pr transition"></i>
-            <i className="fa-brands fa-instagram text-xl hover:text-pr transition"></i>
-            <i className="fa-brands fa-twitter text-xl hover:text-pr transition"></i>
-            <i className="fa-brands fa-linkedin text-xl hover:text-pr transition"></i>
+            </a>
+           <a href="https://www.instagram.com/nestednurturers?igsh=emdsM3RhMnZ1endk">
+           <i className="fa-brands fa-instagram text-xl hover:text-pr transition"></i>
+           </a>
+           <a href="https://www.tiktok.com/@nestednurturersdoulas?_r=1&_t=ZT-91baqNofnZ1">
+           <i className="fa-brands fa-tiktok text-xl hover:text-pr transition"></i>
+           </a>
+           <a href="/">
+           <i className="fa-brands fa-yelp text-xl hover:text-pr transition"></i>
+           </a>
           </div>
             <div className="flex flex-col items-start mt-5 space-y-2">
               <a
@@ -138,10 +146,10 @@ export  function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between sm:flex-row">
-          <a href="/">
+          <a href="/" className="mt-2">
             <img
-              className="w-auto h-7"
-              src="images/logo.webp"
+              className="w-auto h-14"
+              src="images/bottom-logo.jpeg"
               alt="logo"
             />
           </a>

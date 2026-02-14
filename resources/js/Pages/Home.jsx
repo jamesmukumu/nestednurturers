@@ -1,6 +1,9 @@
 import { Header } from "../comps/Header";
 import { Footer } from "../comps/Foot";
 import {Contact} from '../comps/Contact'
+import Pricing from "./Pricing";
+import { PriceTemp } from "@/comps/PricingComp";
+import { Seo } from "@/comps/SEO";
 export default function Home() {
     const HeroSection = () => {
         return (
@@ -20,7 +23,7 @@ export default function Home() {
                             At Nested Nurturers, we believe that every family deserves compassionate, personalized support as they navigate the beautiful yet challenging journey of early parenthood. Our team of certified postpartum doulas and sleep consultants is dedicated to empowering parents with the tools, guidance, and encouragement they need to create peaceful, nurturing environments for their growing families.
                         </p>{" "}
                         <a
-                            href="#consult"
+                            href="/contact"
                             type="button"
                             className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
                         >
@@ -32,7 +35,7 @@ export default function Home() {
                     <div className="mt-8 md:mt-0 md:w-1/2 flex justify-center">
                         {" "}
                         <img
-                            src="https://www.doulasbythebay.com/wp-content/uploads/2022/06/mom-and-baby-transparent-smaller-white-outline.png"
+                            src="images\services\mom-and-baby-transparent-smaller-white-outline.png"
                             alt="Parent holding baby"
                             className="w-full max-w-md"
                         />{" "}
@@ -52,7 +55,7 @@ export default function Home() {
                 <div className="mt-8 md:mt-0 md:w-1/2 h-full flex justify-center">
                        
                        <img
-                           src="https://nestednurturers.com/wp-content/uploads/2024/10/smiling-mother-clapping-and-looking-at-happy-toddler-sitting-on-couch-in-living-room-1024x683.jpg"
+                           src="images\services\smiling-mother-clapping-and-looking-at-happy-toddler-sitting-on-couch-in-living-room-1024x683.jpg"
                            alt="Parent holding baby"
                            className="w-full max-w-md"
                        />
@@ -70,7 +73,7 @@ export default function Home() {
                             Nested Nurturers is your trusted partner for postpartum care and sleep training services, offering compassionate support to help families bond, rest, and grow together. Let us ease the transition into parenthood with personalized guidance and gentle care.
                         </p>
                         <a
-                            href="#consult"
+                            href="/contact"
                             type="button"
                             className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
                         >
@@ -85,9 +88,115 @@ export default function Home() {
         );
     };
 
-
+let TodaysDate = new Date()
     return (
         <div className="overflow-y-hidden">
+          <Seo title="Doula  Support Services" description="Nested Nurturers offers compassionate, personalized doula support in the Bay Area, California. We provide prenatal, birth, and postpartum care to help families feel confident, supported, and empowered throughout their parenthood journey" url="/" schema={{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "",
+      "url": "",
+      "name": "Nested Nurturers | Doulas Services SF Bay",
+      "isPartOf": {
+        "@id": "https://www.pjsafaris.site/#website"
+      },
+      "about": {
+        "@id": "https://www.pjsafaris.site/#organization"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://www.pjsafaris.site/#primaryimage"
+      },
+      "image": {
+        "@id": "https://www.pjsafaris.site/#primaryimage"
+      },
+      "thumbnailUrl": "https://www.pjsafaris.site/logo.png",
+      "datePublished": TodaysDate,
+      "dateModified": TodaysDate,
+      "description": "Premium Holiday Deals to Top-Rated Destinations in Kenya & Beyond. Discounted Beach & Safari Packages. Vacation to Exotic places like Dubai. Book Now!",
+      "breadcrumb": {
+        "@id": "https://www.pjsafaris.site/#breadcrumb"
+      },
+      "inLanguage": "en-US",
+      "potentialAction": [
+        {
+          "@type": "ReadAction",
+          "target": [
+            "https://www.pjsafaris.site/"
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "ImageObject",
+      "inLanguage": "en-US",
+      "@id": "https://www.pjsafaris.site/#primaryimage",
+      "url": "https://www.pjsafaris.site/logo.png",
+      "contentUrl": "https://www.pjsafaris.site/logo.png",
+      "width": 1200,
+      "height": 799
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.pjsafaris.site/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item":"https://www.pjsafaris.site"
+          
+        }
+       
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.pjsafaris.site/#website",
+      "url": "https://www.pjsafaris.site/",
+      "name": "PJ Safaris",
+      "description": "PJ Safaris| Top Holidays Deals | Kenya &amp; International Destinations",
+      "publisher": {
+        "@id": "https://www.pjsafaris.site/#organization"
+      },
+      "potentialAction": [
+        {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.pjsafaris.site/?s={search_term_string}"
+          },
+          "query-input": {
+            "@type": "PropertyValueSpecification",
+            "valueRequired": true,
+            "valueName": "search_term_string"
+          }
+        }
+      ],
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.pjsafaris.site/#organization",
+      "name": "PJ Safaris",
+      "url": "https://www.pjsafaris.site/",
+      "logo": {
+        "@type": "ImageObject",
+        "inLanguage": "en-US",
+        "@id": "https://www.pjsafaris.site/#/schema/logo/image/",
+        "url": "https://www.pjsafaris.site/logo.png",
+        "contentUrl": "https://www.pjsafaris.site/logo.png",
+        "width": 240,
+        "height": 80,
+        "caption": "PJ Safaris"
+      },
+      "image": {
+        "@id": "https://www.pjsafaris.site/logo.png"
+      }
+    }
+  ]
+} }/>
             <Header />
             <section>
             <HeroSection/>
@@ -167,6 +276,9 @@ export default function Home() {
         </section>
 <section>
 <ChooseSection/>
+</section>
+<section>
+  <PriceTemp/>
 </section>
 <section>
 <Contact/>

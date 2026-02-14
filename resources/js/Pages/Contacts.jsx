@@ -1,15 +1,18 @@
 import { Contact } from "@/comps/Contact";
 import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
+import { Seo } from "@/comps/SEO";
 
 export default function Contacts(){
 return (
 <div>
+<Seo title="Contact Us" description="Contact Nested Nurturers for compassionate prenatal, birth, and postpartum doula support in the Bay Area, California. Reach us at +1 (925) 316-8311 or info@nestednurturers.com
+ to schedule a consultation and receive personalized care for your growing family." url="/contact"/>
 <Header/>
 <section className="relative w-full py-4 h-[500px] flex items-center justify-center">
               
               <img
-                  src="https://nestednurturers.com/wp-content/uploads/2024/10/newborn-baby-boy-sucking-milk-from-mothers-breast-portrait-of-mom-and-breastfeeding-baby-e1634613320759.jpg"
+                  src="images\services\newborn-baby-boy-sucking-milk-from-mothers-breast-portrait-of-mom-and-breastfeeding-baby-e1634613320759.jpg"
                   alt="Birth and Postpartum Support"
                   className="absolute inset-0 w-full h-full object-cover rounded-2xl"
               />
@@ -25,13 +28,7 @@ return (
                      
                   Compassionate Support Tailored For Your Family
                   </p>
-                  <a
-                      href="#consultation"
-                      className="inline-block bg-pr_btn mb-2 hover:bg-pr_btn text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition"
-                  >
-                     
-                      BOOK YOUR CONSULTATION
-                  </a>
+              
               </div>
           </section>
           <section>

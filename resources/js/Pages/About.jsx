@@ -1,10 +1,12 @@
 import { Contact } from "@/comps/Contact";
 import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
+import { Seo } from "@/comps/SEO";
 
 export default function About(){
 return (
 <div>
+    <Seo description="About Us Home About Us Welcome to Nested Nurturers At Nested Nurturers, we believe that every family deserves compassionate, personalized support as they navigate the beautiful yet challenging journey of early parenthood. Our team of certified postpartum doulas and sleep consultants is dedicated to empowering parents with the tools, guidance, and encouragement they need to" title="About Us" url="/about"/>
 <Header/>
 <section className="bg-white py-12">
                 {" "}
@@ -20,7 +22,7 @@ return (
                             At Nested Nurturers, we believe that every family deserves compassionate, personalized support as they navigate the beautiful yet challenging journey of early parenthood. Our team of certified postpartum doulas and sleep consultants is dedicated to empowering parents with the tools, guidance, and encouragement they need to create peaceful, nurturing environments for their growing families.
                         </p>{" "}
                         <a
-                            href="#consult"
+                            href="/consult"
                             type="button"
                             className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
                         >
@@ -40,7 +42,7 @@ return (
 <div className="mt-8 md:mt-0 md:w-1/2 flex justify-center">
   <div className="w-full max-w-md aspect-[4/5] rounded-full overflow-hidden shadow-lg">
     <img
-      src="https://nestednurturers.com/wp-content/uploads/2024/10/mom-and-baby-boy.jpg"
+      src="images\services\mom-and-baby-boy.jpg"
       alt="Group photo"
       className="w-full h-full object-cover"
     />
@@ -58,7 +60,7 @@ return (
                 <div className="mt-8 md:mt-0 md:w-1/2 flex justify-center">
   <div className="w-full max-w-md aspect-[4/5] rounded-full overflow-hidden shadow-lg">
     <img
-      src="https://nestednurturers.com/wp-content/uploads/2024/10/mother-playing-with-baby-helping-her-crawl-on-bed-indoor-e1634117890229-1024x682.jpg"
+      src="images\services\mother-playing-with-baby-helping-her-crawl-on-bed-indoor-e1634117890229-1024x682.jpg"
       alt="Group photo"
       className="w-full h-full object-cover"
     />
@@ -77,7 +79,7 @@ return (
                             Nested Nurturers is your trusted partner for postpartum care and sleep training services, offering compassionate support to help families bond, rest, and grow together. Let us ease the transition into parenthood with personalized guidance and gentle care."
                         </p>
                         <a
-                            href="#consult"
+                            href="/consult"
                             type="button"
                             className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
                         >

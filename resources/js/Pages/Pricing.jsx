@@ -1,6 +1,7 @@
 import { Contact } from "@/comps/Contact";
 import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
+import { Seo } from "@/comps/SEO";
 
 export default function Pricing(){
 
@@ -11,7 +12,7 @@ export default function Pricing(){
               {/* Intro Section */}
               <div className="text-center mb-12">
                 <h1 className="text-3xl font-semibold text-gray-800 capitalize dark:text-white">
-                  Our Pricing Plan
+                  Our Pricing Plans
                 </h1>
       
                 <div className="mt-2 flex justify-center items-center space-x-2">
@@ -100,11 +101,12 @@ export default function Pricing(){
 
 return (
 <div>
+<Seo title="Our Pricing" url="/" description="At Nested Nurturers, we believe every family’s postpartum journey is unique. That’s why our doula care plans are thoughtfully designed to provide flexible, compassionate support tailored to your family’s rhythm, recovery, and rest needs."/>
 <Header/>
 <section className="relative w-full py-4 h-[500px] flex items-center justify-center">
               
               <img
-                  src="https://nestednurturers.com/wp-content/uploads/2025/09/mom-holds-happy-baby-while-drinking-coffee.jpg"
+                  src="images\services\mom-holds-happy-baby-while-drinking-coffee.jpg"
                   alt="Birth and Postpartum Support"
                   className="absolute inset-0 w-full h-full object-cover rounded-2xl"
               />
@@ -121,7 +123,7 @@ return (
                   Compassionate Support Tailored For Your Family
                   </p>
                   <a
-                      href="#consultation"
+                      href="/contact"
                       className="inline-block bg-pr_btn mb-2 hover:bg-pr_btn text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition"
                   >
                      
