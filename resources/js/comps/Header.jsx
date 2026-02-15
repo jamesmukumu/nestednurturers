@@ -178,7 +178,7 @@ export function Header() {
       </button>
     </div>
   
-
+   //
     <a href="/">
       <img className="w-auto h-7" src="images/updates-logo.jpeg" alt="Logo"/>
     </a>
