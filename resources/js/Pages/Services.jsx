@@ -49,7 +49,7 @@ export default function Services() {
         },
         {
             image: "images/services/birthdoula_2-e1615916817362.webp",
-            title: "newborn care specialist",
+            title: "Newborn Care Specialist",
             description: `Our newborn care specialist services provide expert guidance and hands-on support during your baby’s earliest weeks. We assist with feeding routines, sleep shaping, soothing techniques, and healthy developmental practices. Whether you're navigating life with your first baby or adjusting to a growing family, our trained specialists offer personalized care to help you feel confident, supported, and well-rested during the newborn stage.`,
         },
         {
