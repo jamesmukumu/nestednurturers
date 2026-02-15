@@ -148,7 +148,9 @@ export const SinglePriceTemp = () => {
             {/* Second Essential Plan */}
             <div className="w-full   dark:bg-gray-800 flex flex-col">
               <div className="p-6 flex flex-col h-full">
-               <button onClick={visitContact} className="w-full px-4 py-2 mt-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:pr_btn focus:ring-opacity-80">
+               <button onClick={()=>{
+                window.open("/pricing")
+               }} className="w-full px-4 py-2 mt-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:pr_btn focus:ring-opacity-80">
                   View More Packages
                 </button>
               </div>
