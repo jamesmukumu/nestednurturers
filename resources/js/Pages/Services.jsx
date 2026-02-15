@@ -18,12 +18,7 @@ export default function Services() {
             description:
                 "Welcoming a new baby can be a big transition for older siblings. Our sibling doula support helps children feel included and cared for during this exciting time. We provide gentle guidance, fun engagement, and reassurance, allowing parents to focus on labor, recovery, and bonding with the new baby while knowing their other children are supported with love and care.",
         },
-        {
-            image: "images/services/young-single-mother-teaching-her-little-son-toddler-baby-infant-how-to-walk-crawling-on-the-table-e1634275998120.jpg",
-            title: "Night Doula Care",
-            description:
-                "Our night doula services are designed to give parents the gift of rest. We care for your baby overnight, tending to feeding, soothing, and diaper changes, so you can wake up feeling refreshed. Whether you're recovering postpartum, balancing work, or simply needing more sleep, our overnight care ensures both you and your baby get the restorative rest you need.",
-        },
+      
         {
             image: "images/services/birth-labor-doula-support-services.jpg",
             title: "Sleep Training Consultation & Support",
