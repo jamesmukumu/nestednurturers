@@ -36,7 +36,7 @@ export function Header() {
            <a href="https://www.facebook.com/nestednurturerz?mibextid=ZbWKwL" target="_blank">
            <i className="fa-brands fa-facebook text-xl  cursor-pointer transition"></i>
            </a>
-            <a href="https://www.instagram.com/nestednurturers?igsh=emdsM3RhMnZ1endk" target="_blank">
+            <a href="https://www.instagram.com/nestednurturersdoulas?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr" target="_blank">
             <i className="fa-brands fa-instagram text-xl cursor-pointer transition"></i>
             </a>
           <a href="https://www.tiktok.com/@nestednurturersdoulas?_r=1&_t=ZT-91baqNofnZ1" target="_blank">
@@ -178,7 +178,7 @@ export function Header() {
       </button>
     </div>
   
-   //
+   
     <a href="/">
       <img className="w-auto h-7" src="images/updates-logo.jpeg" alt="Logo"/>
     </a>

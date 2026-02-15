@@ -17,7 +17,7 @@ export  function Footer() {
           Serving Bay area
           </h1>
           <p className="p-2 text-m font-semibold tracking-tight text-white md:mx-3 xl:text-xl">
-          We provide expert birth doula and pregnancy support services. Carrot and Medi-Cal approved. All of our doulas are fully trained and certified.
+          We provide expert birth doula and pregnancy support services, approved by Carrot and Medi-Cal. All of our doulas are fully trained, certified, and carefully vetted to ensure the highest quality of care.
           </p>
 
     
@@ -118,7 +118,7 @@ export  function Footer() {
             <a href="https://www.facebook.com/nestednurturerz?mibextid=ZbWKwL">
             <i className="fa-brands fa-facebook text-xl hover:text-pr transition"></i>
             </a>
-           <a href="https://www.instagram.com/nestednurturers?igsh=emdsM3RhMnZ1endk">
+           <a href="https://www.instagram.com/nestednurturersdoulas?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr">
            <i className="fa-brands fa-instagram text-xl hover:text-pr transition"></i>
            </a>
            <a href="https://www.tiktok.com/@nestednurturersdoulas?_r=1&_t=ZT-91baqNofnZ1">

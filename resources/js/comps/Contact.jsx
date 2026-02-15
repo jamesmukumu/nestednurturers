@@ -79,7 +79,7 @@ async function Submission(payload) {
     return (
       <div className="bg-white rounded-2xl shadow-lg p-6 h-full max-w-md mx-auto">
         <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
-          Schedule Consultation
+          Schedule Free Consultation
         </h1>
       
 
