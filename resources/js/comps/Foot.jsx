@@ -14,7 +14,7 @@ export  function Footer() {
       <div className="container px-6 py-12 mx-auto">
         <div className=" md:-mx-3 md:items-center md:justify-between">
           <h1 className="text-xl font-semibold tracking-tight text-white md:mx-3 xl:text-2xl">
-          Serving Bay Area And Beyong
+          Serving Bay Area And Beyond
           </h1>
           <p className="p-2 text-m font-semibold tracking-tight text-white md:mx-3 xl:text-xl">
           We are trusted and approved by Carrot and Medi-Cal. 
@@ -29,13 +29,19 @@ export  function Footer() {
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {/* Destinations */}
           <div>
-            <h1 className="font-semibold text-xl text-white">Useful Links</h1>
+            <h1 className="font-semibold text-xl text-white">Quick Links</h1>
             <div className="flex flex-col items-start mt-5 space-y-2">
               <a
                 href="/"
                 className="transition-colors duration-300 text-white hover:underline"
               >
                 Home
+              </a>
+              <a
+                href="/about"
+                className="transition-colors duration-300 text-white hover:underline"
+              >
+                About
               </a>
               <a
                 href="/services"
@@ -47,41 +53,45 @@ export  function Footer() {
                 href="/pricing"
                 className="transition-colors duration-300 text-white hover:underline"
               >
-             Pricing
+             Price
               </a>
          
-           
+              <a
+                href="/contact"
+                className="transition-colors duration-300 text-white hover:underline"
+              >
+                Contact
+              </a>
           
+              <a
+                href="/contact"
+                className="transition-colors duration-300 text-white hover:underline"
+              >
+                Career (Are you a doula? Contact us to serve our community)
+              </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <p className="font-semibold text-xl text-white">Quick Links</p>
+            <p className="font-semibold text-xl text-white">Benefits</p>
             <div className="flex flex-col items-start mt-5 space-y-2">
               <a
                 target="_blank"
-                href="/about"
+                href="/services"
                 className="transition-colors text-white duration-300 hover:underline"
               >
-               About Us
+             Carrot Fertility
               </a>
               <a
                 target="_blank"
                 href="/services"
                 className="transition-colors text-white duration-300 hover:underline"
               >
-              Services
+              Medi-cal
               </a>
        
-              <a
-                target="_blank"
-                href="/contact"
-                className="transition-colors text-white duration-300 hover:underline"
-              >
-                Contact Us
-              </a>
-          
+         
           
        
             </div>
@@ -89,24 +99,18 @@ export  function Footer() {
 
           {/* About */}
           <div>
-            <h1 className="text-xl font-semibold text-white">Resources</h1>
+            <h1 className="text-xl font-semibold text-white">Location</h1>
             <div className="flex flex-col items-start mt-5 space-y-2">
               <a
                 target="_blank"
                 href="/"
                 className="transition-colors text-white duration-300 hover:underline"
               >
-                Privacy Policy
+              Bay Area&Beyond
               </a>
       
          
-              <a
-                target="_blank"
-                href="/faq"
-                className="transition-colors text-white duration-300 hover:underline"
-              >
-                FAQ
-              </a>
+          
 
             </div>
           </div>

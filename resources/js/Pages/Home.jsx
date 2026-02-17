@@ -9,7 +9,7 @@ export default function Home() {
     const HeroSection = () => {
         return (
             <section className="bg-white py-12">
-                {" "}
+                
                 <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
                     <div className="md:w-1/2 md:pr-12">
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 leading-snug">
@@ -31,18 +31,18 @@ export default function Home() {
                             type="button"
                             className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
                         >
-                            Book Your Free Consult
+                            Book Your Free Consultation
                         </a>
                     </div>
                     <div className="mt-8 md:mt-0 md:w-1/2 flex justify-center">
-                        {" "}
+                     
                         <img
                             src="images\services\mom-and-baby-transparent-smaller-white-outline.png"
                             alt="Parent holding baby"
                             className="w-full max-w-md"
-                        />{" "}
-                    </div>{" "}
-                </div>{" "}
+                        />
+                    </div>
+                </div>
             </section>
         );
     };
@@ -50,7 +50,7 @@ export default function Home() {
     const ChooseSection = () => {
         return (
             <section className="bg-white py-12">
-                {" "}
+              
                 <div className="container mx-auto px-6 flex  flex-col  md:flex-row items-center">
                     <div className="mt-8 md:mt-0 md:w-1/2 h-full flex justify-center">
                         <img
