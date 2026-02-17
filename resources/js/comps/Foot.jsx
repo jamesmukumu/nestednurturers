@@ -14,10 +14,10 @@ export  function Footer() {
       <div className="container px-6 py-12 mx-auto">
         <div className=" md:-mx-3 md:items-center md:justify-between">
           <h1 className="text-xl font-semibold tracking-tight text-white md:mx-3 xl:text-2xl">
-          Serving Bay area
+          Serving Bay Area And Beyong
           </h1>
           <p className="p-2 text-m font-semibold tracking-tight text-white md:mx-3 xl:text-xl">
-          We provide expert birth doula and pregnancy support services, approved by Carrot and Medi-Cal. All of our doulas are fully trained, certified, and carefully vetted to ensure the highest quality of care.
+          We are trusted and approved by Carrot and Medi-Cal. 
           </p>
 
     

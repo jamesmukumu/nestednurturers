@@ -180,7 +180,7 @@ export function Header() {
   
    
     <a href="/">
-      <img className="w-auto h-7" src="images/updates-logo.jpeg" alt="Logo"/>
+      <img className="w-auto h-13" src="images/updates-logo.jpeg" alt="Logo"/>
     </a>
   
     <div class="flex flex-col justify-between flex-1 mt-6">

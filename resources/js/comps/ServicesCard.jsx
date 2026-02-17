@@ -11,7 +11,7 @@ export function ServiceCard() {
         {
             image: "images/services/mom-holds-happy-baby-while-drinking-coffee.jpg",
             title: "Postpartum Doula Services",
-            description: `We offer day and night doula care, with all our doulas fully trained, certified, vetted, and specialized in newborn care. Our holistic support includes infant soothing, breastfeeding guidance, and light household tasks such as meal preparation—helping nurture your physical and emotional well-being while easing your transition into parenthood.`,
+            description: `We offer holistic day doula, overnight doula and newborn care specialist services personalized care to support your physical and emotional well-being during the postpartum period. We assist with newborn care, infant soothing, feeding support, and light household help, ensuring you feel confident, rested, and supported as you transition into parenthood.`,
         },
 
         {
@@ -52,12 +52,12 @@ export function ServiceCard() {
                             <h3 className="text-2xl font-light text-gray-900 mb-4 tracking-wide">
                                 {service.title}
                             </h3>
-                            <p className="text-gray-600 text-lg leading-relaxed flex-grow">
+                            <p className="text-gray-600 text-lg leading-relaxed flex-grow p-2">
                                 {service.description}
                             </p>
                             <a
                                 href="/contact"
-                                className="mt-3 inline-flex items-center justify-center px-6 py-3 bg-pr_btn text-white font-semibold rounded shadow hover:shadow-lg transition-transform hover:-translate-y-1"
+                                className="mt-3 mb-3 inline-flex items-center justify-center px-6 py-3 bg-pr_btn text-white font-semibold rounded shadow hover:shadow-lg transition-transform hover:-translate-y-1"
                             >
                                 Book Now
                             </a>

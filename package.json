@@ -24,10 +24,12 @@
     },
     "dependencies": {
         "@material-tailwind/react": "^2.1.10",
+        "date-fns": "^4.1.0",
         "formik": "^2.4.9",
         "primeflex": "^4.0.0",
         "primeicons": "^7.0.0",
         "primereact": "^10.9.7",
+        "react-datepicker": "^9.1.0",
         "tailwindcss-animate": "^1.0.7",
         "yup": "^1.7.1"
     }
