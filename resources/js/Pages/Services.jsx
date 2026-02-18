@@ -48,12 +48,12 @@ export default function Services() {
         },
     
         {
-            image: "images/services/Sign-Language.jpeg",
+            image: "images/services/Sign.jpg",
             title: "Baby Sign Language",
             description: `Our baby sign language classes help infants and toddlers communicate their needs before they can speak. Through simple, developmentally appropriate signs, we guide parents in teaching their babies how to express hunger, emotions, and everyday needs. This early communication approach can reduce frustration, strengthen bonding, and support language development in a fun and engaging way for the whole family.`,
         },
         {
-            image: "images/services/Potty-Training.jpeg",
+            image: "images/services/Potty.jpg",
             title: "Potty Training",
             description: `Our potty training support provides parents with practical, step-by-step guidance to help toddlers transition confidently out of diapers. We offer personalized strategies based on your child’s readiness, temperament, and developmental stage. From creating consistent routines to managing setbacks, we support you with positive reinforcement techniques that make the potty training process smoother and less stressful for the whole family.`,
         },
