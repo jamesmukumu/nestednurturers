@@ -14,7 +14,8 @@ $validatedRequest = $request->validate([
 "email"=>"required",
 "day"=>"required",
 "phone"=>"required",
-"name"=>"required"
+"name"=>"required",
+"timezone"=>"required"
 ]);
 try{
     $enquiry = new EnquiryMail($validatedRequest);

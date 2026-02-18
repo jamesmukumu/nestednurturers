@@ -85,7 +85,7 @@
                     
                       <tr>
                         <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Date Of Consultation</td>
-                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['day'] }} (Los Angeles Time)</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['day'] }} ({{ $clients['timezone'] }})</td>
                       </tr>
                     
                     

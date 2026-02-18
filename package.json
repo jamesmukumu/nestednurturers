@@ -25,6 +25,7 @@
     "dependencies": {
         "@material-tailwind/react": "^2.1.10",
         "date-fns": "^4.1.0",
+        "date-fns-tz": "^3.2.0",
         "formik": "^2.4.9",
         "primeflex": "^4.0.0",
         "primeicons": "^7.0.0",
