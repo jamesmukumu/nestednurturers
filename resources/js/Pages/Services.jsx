@@ -28,7 +28,7 @@ export default function Services() {
         },
       
         {
-            image: "images/services/Sleep-Training.jpeg",
+            image: "images/services/Sleeper.jpg",
             title: "Sleep Training Consultation & Support",
             description:
                 "We understand how challenging sleep can be for both parents and babies. Our sleep training consultation services offer customized solutions to address your child’s sleep needs. From gentle sleep methods to establishing healthy sleep habits, we work with you to create a plan that fits your family’s goals and lifestyle, ensuring peaceful nights and well-rested days.",
