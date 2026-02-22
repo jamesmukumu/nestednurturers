@@ -54,7 +54,7 @@ export function Contact() {
     try {
       setSaving(true);
       let response = await axios.post(
-        `https://nestednurturers-master-ky6jzp.laravel.cloud/api/submit/enquiry`,
+        `http://localhost:8000/api/submit/enquiry`,
         payload
       );
 

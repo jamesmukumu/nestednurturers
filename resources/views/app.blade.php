@@ -25,4 +25,5 @@
     <body class="font-sans antialiased ">
         @inertia
     </body>
+    <script src="https://elfsightcdn.com/platform.js" async></script>
 </html>

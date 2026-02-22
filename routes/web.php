@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
+Route::get("/sitemap",[SitemapController::class,'SiteMapGenerator']);
 Route::get('/', function () {
 return Inertia::render('Home');
 });

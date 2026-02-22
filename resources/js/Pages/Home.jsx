@@ -5,6 +5,7 @@ import Pricing from "./Pricing";
 import { PriceTemp, SinglePriceTemp } from "@/comps/PricingComp";
 import { Seo } from "@/comps/SEO";
 import { ServiceCard } from "@/comps/ServicesCard";
+import { Reviews } from "../comps/Reviews";
 export default function Home() {
     const HeroSection = () => {
         return (
@@ -103,63 +104,63 @@ export default function Home() {
                             url: "",
                             name: "Nested Nurturers | Doulas Services SF Bay",
                             isPartOf: {
-                                "@id": "https://www.pjsafaris.site/#website",
+                                "@id": "https://nestednurturers.com/#website",
                             },
                             about: {
-                                "@id": "https://www.pjsafaris.site/#organization",
+                                "@id": "https://nestednurturers.com/#organization",
                             },
                             primaryImageOfPage: {
-                                "@id": "https://www.pjsafaris.site/#primaryimage",
+                                "@id": "https://nestednurturers.com/#primaryimage",
                             },
                             image: {
-                                "@id": "https://www.pjsafaris.site/#primaryimage",
+                                "@id": "https://nestednurturers.com/#primaryimage",
                             },
-                            thumbnailUrl: "https://www.pjsafaris.site/logo.png",
+                            thumbnailUrl: "https://nestednurturers.com/images/logo.webp",
                             datePublished: TodaysDate,
                             dateModified: TodaysDate,
                             description:
-                                "Premium Holiday Deals to Top-Rated Destinations in Kenya & Beyond. Discounted Beach & Safari Packages. Vacation to Exotic places like Dubai. Book Now!",
+                                "Nested Nurturers offers compassionate, personalized doula support in the Bay Area, California. We provide prenatal, birth, and postpartum care to help families feel confident, supported, and empowered throughout their parenthood journey",
                             breadcrumb: {
-                                "@id": "https://www.pjsafaris.site/#breadcrumb",
+                                "@id": "https://nestednurturers.com/#breadcrumb",
                             },
                             inLanguage: "en-US",
                             potentialAction: [
                                 {
                                     "@type": "ReadAction",
-                                    target: ["https://www.pjsafaris.site/"],
+                                    target: ["https://nestednurturers.com/"],
                                 },
                             ],
                         },
                         {
                             "@type": "ImageObject",
                             inLanguage: "en-US",
-                            "@id": "https://www.pjsafaris.site/#primaryimage",
-                            url: "https://www.pjsafaris.site/logo.png",
-                            contentUrl: "https://www.pjsafaris.site/logo.png",
+                            "@id": "https://nestednurturers.com/#primaryimage",
+                            url: "https://nestednurturers.com/images/logo.webp",
+                            contentUrl: "https://nestednurturers.com/images/logo.webp",
                             width: 1200,
                             height: 799,
                         },
                         {
                             "@type": "BreadcrumbList",
-                            "@id": "https://www.pjsafaris.site/#breadcrumb",
+                            "@id": "https://nestednurturers.com/#breadcrumb",
                             itemListElement: [
                                 {
                                     "@type": "ListItem",
                                     position: 1,
                                     name: "Home",
-                                    item: "https://www.pjsafaris.site",
+                                    item: "https://nestednurturers.com",
                                 },
                             ],
                         },
                         {
                             "@type": "WebSite",
-                            "@id": "https://www.pjsafaris.site/#website",
-                            url: "https://www.pjsafaris.site/",
-                            name: "PJ Safaris",
+                            "@id": "https://nestednurturers.com/#website",
+                            url: "https://nestednurturers.com/",
+                            name: "Nested Nurturers",
                             description:
-                                "PJ Safaris| Top Holidays Deals | Kenya &amp; International Destinations",
+                                "Nested Nurturers|Nested Nurturers offers compassionate, personalized doula support in the Bay Area, California. We provide prenatal, birth, and postpartum care to help families feel confident, supported, and empowered throughout their parenthood journey",
                             publisher: {
-                                "@id": "https://www.pjsafaris.site/#organization",
+                                "@id": "https://nestednurturers.com/#organization",
                             },
                             potentialAction: [
                                 {
@@ -167,7 +168,7 @@ export default function Home() {
                                     target: {
                                         "@type": "EntryPoint",
                                         urlTemplate:
-                                            "https://www.pjsafaris.site/?s={search_term_string}",
+                                            "https://nestednurturers.com/?s={search_term_string}",
                                     },
                                     "query-input": {
                                         "@type": "PropertyValueSpecification",
@@ -180,26 +181,27 @@ export default function Home() {
                         },
                         {
                             "@type": "Organization",
-                            "@id": "https://www.pjsafaris.site/#organization",
-                            name: "PJ Safaris",
-                            url: "https://www.pjsafaris.site/",
+                            "@id": "https://nestednurturers.com/#organization",
+                            name: "Nested Nurturers",
+                            url: "https://nestednurturers.com/",
                             logo: {
                                 "@type": "ImageObject",
                                 inLanguage: "en-US",
-                                "@id": "https://www.pjsafaris.site/#/schema/logo/image/",
-                                url: "https://www.pjsafaris.site/logo.png",
+                                "@id": "https://nestednurturers.com/#/schema/logo/image/",
+                                url: "https://nestednurturers.com/images/logo.webp",
                                 contentUrl:
-                                    "https://www.pjsafaris.site/logo.png",
+                                    "https://nestednurturers.com/images/logo.webp",
                                 width: 240,
                                 height: 80,
-                                caption: "PJ Safaris",
+                                caption: "Nested Nurturers",
                             },
                             image: {
-                                "@id": "https://www.pjsafaris.site/logo.png",
+                                "@id": "https://nestednurturers.com/images/logo.webp",
                             },
                         },
                     ],
-                }}
+                }
+            }
             />
             <Header />
             <section>
@@ -244,6 +246,9 @@ export default function Home() {
             </section>
             <section>
                 <Contact />
+            </section>
+            <section>
+                <Reviews/>
             </section>
             <Footer />
         </div>

@@ -4,7 +4,7 @@ import { Header } from "@/comps/Header";
 import { Seo } from "@/comps/SEO";
 
 export default function Pricing(){
-
+var TodaysDate = new Date()
     const PriceTemp = () => {
         return (
           <div className="bg-white dark:bg-gray-900">
@@ -28,8 +28,7 @@ export default function Pricing(){
              
               </div>
       
-              {/* Pricing Cards */}
-             {/* Pricing Cards */}
+            
 <div className="mt-8 w-full flex flex-col md:flex-row gap-6">
   {/* Essential Plan */}
   <div className="w-full rounded-2xl shadow-lg bg-white dark:bg-gray-800">
@@ -51,7 +50,7 @@ export default function Pricing(){
 
   </div>
 
-  {/* Second Essential Plan */}
+
   <div className="w-full rounded-2xl shadow-lg bg-white dark:bg-gray-800">
     <div className="p-6">
       <h1 className="text-xl font-medium text-gray-700 capitalize lg:text-2xl dark:text-white">
@@ -72,7 +71,7 @@ export default function Pricing(){
    
   </div>
 
-  {/* Premium Plan */}
+
   <div className="w-full rounded-2xl shadow-lg bg-white dark:bg-gray-800">
     <div className="p-6">
       <h1 className="text-xl font-medium text-gray-700 capitalize lg:text-2xl dark:text-white">
@@ -101,7 +100,125 @@ export default function Pricing(){
 
 return (
 <div>
-<Seo title="Our Pricing" url="/" description="At Nested Nurturers, we believe every family’s postpartum journey is unique. That’s why our doula care plans are thoughtfully designed to provide flexible, compassionate support tailored to your family’s rhythm, recovery, and rest needs."/>
+<Seo 
+title="Our Pricing" 
+url="/" 
+description="At Nested Nurturers, we believe every family’s postpartum journey is unique. That’s why our doula care plans are thoughtfully designed to provide flexible, compassionate support tailored to your family’s rhythm, recovery, and rest needs."
+schema={{
+  "@context": "https://schema.org",
+  "@graph": [
+      {
+          "@type": "WebPage",
+          "@id": "",
+          url: "",
+          name: "Nested Nurturers | Doulas Services SF Bay",
+          isPartOf: {
+              "@id": "https://nestednurturers.com/#website",
+          },
+          about: {
+              "@id": "https://nestednurturers.com/#organization",
+          },
+          primaryImageOfPage: {
+              "@id": "https://nestednurturers.com/#primaryimage",
+          },
+          image: {
+              "@id": "https://nestednurturers.com/#primaryimage",
+          },
+          thumbnailUrl: "https://nestednurturers.com/images/logo.webp",
+          datePublished: TodaysDate,
+          dateModified: TodaysDate,
+          description:
+              "Nested Nurturers offers compassionate, personalized doula support in the Bay Area, California. We provide prenatal, birth, and postpartum care to help families feel confident, supported, and empowered throughout their parenthood journey",
+          breadcrumb: {
+              "@id": "https://nestednurturers.com/#breadcrumb",
+          },
+          inLanguage: "en-US",
+          potentialAction: [
+              {
+                  "@type": "ReadAction",
+                  target: ["https://nestednurturers.com/"],
+              },
+          ],
+      },
+      {
+          "@type": "ImageObject",
+          inLanguage: "en-US",
+          "@id": "https://nestednurturers.com/#primaryimage",
+          url: "https://nestednurturers.com/images/logo.webp",
+          contentUrl: "https://nestednurturers.com/images/logo.webp",
+          width: 1200,
+          height: 799,
+      },
+      {
+          "@type": "BreadcrumbList",
+          "@id": "https://nestednurturers.com/#breadcrumb",
+          itemListElement: [
+              {
+                  "@type": "ListItem",
+                  position: 1,
+                  name: "Pricing",
+                  item: "https://nestednurturers.com/pricing",
+              },
+              {
+                  "@type": "ListItem",
+                  position: 2,
+                  name: "Home",
+                  item: "https://nestednurturers.com",
+              },
+
+          ],
+      },
+      {
+          "@type": "WebSite",
+          "@id": "https://nestednurturers.com/#website",
+          url: "https://nestednurturers.com/",
+          name: "Nested Nurturers",
+          description:
+              "Nested Nurturers|Nested Nurturers offers compassionate, personalized doula support in the Bay Area, California. We provide prenatal, birth, and postpartum care to help families feel confident, supported, and empowered throughout their parenthood journey",
+          publisher: {
+              "@id": "https://nestednurturers.com/#organization",
+          },
+          potentialAction: [
+              {
+                  "@type": "SearchAction",
+                  target: {
+                      "@type": "EntryPoint",
+                      urlTemplate:
+                          "https://nestednurturers.com/?s={search_term_string}",
+                  },
+                  "query-input": {
+                      "@type": "PropertyValueSpecification",
+                      valueRequired: true,
+                      valueName: "search_term_string",
+                  },
+              },
+          ],
+          inLanguage: "en-US",
+      },
+      {
+          "@type": "Organization",
+          "@id": "https://nestednurturers.com/#organization",
+          name: "Nested Nurturers",
+          url: "https://nestednurturers.com/",
+          logo: {
+              "@type": "ImageObject",
+              inLanguage: "en-US",
+              "@id": "https://nestednurturers.com/#/schema/logo/image/",
+              url: "https://nestednurturers.com/images/logo.webp",
+              contentUrl:
+                  "https://nestednurturers.com/images/logo.webp",
+              width: 240,
+              height: 80,
+              caption: "Nested Nurturers",
+          },
+          image: {
+              "@id": "https://nestednurturers.com/images/logo.webp",
+          },
+      },
+  ],
+}
+}
+/>
 <Header/>
 <section className="relative w-full py-4 h-[500px] flex items-center justify-center">
               
