@@ -3,10 +3,10 @@ import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
 import { Seo } from "@/comps/SEO";
 import { useState } from "react";
-export default function Services() {
+export default function Services({uscities}) {
     var TodaysDate = new Date()
     const [services, setServices] = useState([
-       
+
         {
             image: "images/services/mom-holds-happy-baby-while-drinking-coffee.jpg",
             title: "Postpartum Doula Services",
@@ -27,7 +27,7 @@ export default function Services() {
             description:
                 "Welcoming a new baby can be a big transition for older siblings. Our sibling doula support helps children feel included and cared for during this exciting time. We provide gentle guidance, fun engagement, and reassurance, allowing parents to focus on labor, recovery, and bonding with the new baby while knowing their other children are supported with love and care.",
         },
-      
+
         {
             image: "images/services/Sleeper.jpg",
             title: "Sleep Training Consultation & Support",
@@ -41,13 +41,13 @@ export default function Services() {
             description:
                 "Every child is unique, and some little ones need extra care when it comes to sleep. Our special needs sleep consultations are tailored to children with developmental or medical considerations. We provide compassionate, adaptive strategies to support your child`s individual needs, helping the whole family get better rest",
         },
-       
+
         {
             image: "images/services/discussing-their-hopes-dreams-group-pregnant-women-sitting-down-together-share-their-feelings_590464-13892.jpg",
             title: "Childbirth Education",
             description: `Our childbirth education classes are designed to prepare you for a confident and informed birth experience. We provide evidence-based guidance on the stages of labor, pain management techniques, breathing exercises, partner support, and postpartum preparation. Whether you're planning a hospital, birth center, or home birth, our classes equip you with the knowledge and tools needed to approach labor and delivery with clarity and confidence.`,
         },
-    
+
         {
             image: "images/services/Sign.jpg",
             title: "Baby Sign Language",
@@ -126,7 +126,7 @@ export default function Services() {
                                     name: "Home",
                                     item: "https://nestednurturers.com",
                                 },
-                
+
                             ],
                         },
                         {
@@ -261,7 +261,7 @@ export default function Services() {
                 </div>
             </section>
             <section>
-                <Contact />
+                <Contact  cities={uscities ?? []}/>
             </section>
             <Footer />
         </div>

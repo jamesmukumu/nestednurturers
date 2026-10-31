@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && vite build --ssr",
         "dev": "vite"
     },
     "devDependencies": {
@@ -23,6 +23,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@inertiajs/vite": "^3.7.1",
         "@material-tailwind/react": "^2.1.10",
         "date-fns": "^4.1.0",
         "date-fns-tz": "^3.2.0",

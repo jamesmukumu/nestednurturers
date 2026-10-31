@@ -38,9 +38,7 @@ export function ServiceCard() {
                     >
                         <a
                             href="/contact"
-                            className="flex flex-col items-center text-center h-full 
-        rounded-2xl overflow-hidden shadow-md 
-        hover:shadow-xl transition-all duration-300"
+                            className="flex h-full w-full flex-col items-center overflow-hidden rounded-lg text-center shadow-sm transition-all duration-300 hover:shadow-md"
                         >
                             <div className="relative overflow-hidden mb-4 h-64 w-full">
                                 <img
@@ -49,15 +47,15 @@ export function ServiceCard() {
                                     className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                                 />
                             </div>
-                            <h3 className="text-2xl font-light text-gray-900 mb-4 tracking-wide">
+                            <h3 className="mb-4 px-6 text-2xl font-light tracking-wide text-gray-900">
                                 {service.title}
                             </h3>
-                            <p className="text-gray-600 text-lg leading-relaxed flex-grow p-2">
+                            <p className="flex-grow px-6 pb-5 text-lg leading-relaxed text-gray-600">
                                 {service.description}
                             </p>
                             <a
                                 href="/contact"
-                                className="mt-3 mb-3 inline-flex items-center justify-center px-6 py-3 bg-pr_btn text-white font-semibold rounded shadow hover:shadow-lg transition-transform hover:-translate-y-1"
+                                className="mb-6 mt-3 inline-flex items-center justify-center rounded bg-pr_btn px-6 py-3 font-semibold text-white shadow transition-transform hover:-translate-y-1 hover:shadow-lg"
                             >
                                 Book Now
                             </a>

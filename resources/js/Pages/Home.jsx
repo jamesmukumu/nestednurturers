@@ -6,11 +6,12 @@ import { PriceTemp, SinglePriceTemp } from "@/comps/PricingComp";
 import { Seo } from "@/comps/SEO";
 import { ServiceCard } from "@/comps/ServicesCard";
 import { Reviews } from "../comps/Reviews";
-export default function Home() {
+export default function Home({uscities}) {
+
     const HeroSection = () => {
         return (
             <section className="bg-white py-12">
-                
+
                 <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
                     <div className="md:w-1/2 md:pr-12">
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 leading-snug">
@@ -29,6 +30,7 @@ export default function Home() {
                         </p>
                         <a
                             href="/contact"
+                            aria-label="contact-page"
                             type="button"
                             className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
                         >
@@ -36,7 +38,7 @@ export default function Home() {
                         </a>
                     </div>
                     <div className="mt-8 md:mt-0 md:w-1/2 flex justify-center">
-                     
+
                         <img
                             src="images\services\mom-and-baby-transparent-smaller-white-outline.png"
                             alt="Parent holding baby"
@@ -51,7 +53,7 @@ export default function Home() {
     const ChooseSection = () => {
         return (
             <section className="bg-white py-12">
-              
+
                 <div className="container mx-auto px-6 flex  flex-col  md:flex-row items-center">
                     <div className="mt-8 md:mt-0 md:w-1/2 h-full flex justify-center">
                         <img
@@ -78,6 +80,7 @@ export default function Home() {
                         <a
                             href="/contact"
                             type="button"
+                            aria-label="contact us"
                             className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
                         >
                             Learn More
@@ -93,7 +96,7 @@ export default function Home() {
         <div className="overflow-y-hidden">
             <Seo
                 title="Doula  Support Services"
-                description="Nested Nurturers offers compassionate, personalized doula support in the Bay Area, California. We provide prenatal, birth, and postpartum care to help families feel confident, supported, and empowered throughout their parenthood journey"
+                description="Nested Nurturers provides compassionate doula support in the Bay Area, California, offering prenatal, birth, and postpartum care to support and empower growing families."
                 url="/"
                 schema={{
                     "@context": "https://schema.org",
@@ -211,9 +214,9 @@ export default function Home() {
             <section className="py-24 bg-[#f0f1f3] ">
                 <div className="max-w-6xl mx-auto px-6">
                     <div className="text-center mb-20">
-                        <h2 className="font-serif text-5xl font-light text-gray-900 mb-4 tracking-wide">
+                        <h1 className="font-serif text-5xl font-light text-gray-900 mb-4 tracking-wide">
                             Our Services
-                        </h2>
+                        </h1>
                         <p className="pt-5 leading-relaxed text-lg text-gray-700">
                             At Nested Nurturers, we are dedicated to providing
                             families with the essential support they need to
@@ -245,7 +248,7 @@ export default function Home() {
               <SinglePriceTemp/>
             </section>
             <section>
-                <Contact />
+                <Contact cities={uscities} />
             </section>
             <section>
                 <Reviews/>
