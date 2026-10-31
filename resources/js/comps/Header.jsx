@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { usePage } from "@inertiajs/react";
 
 import { Sidebar } from 'primereact/sidebar';
-        
+
 export function Header() {
+  const { url } = usePage();
+  const currentPath = url.split("?")[0];
   const [showSideMenu, setShowSideMenu] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const isActive = (path) => currentPath === path;
+  const linkClass = (path) =>
+    `transition ${isActive(path) ? "text-pr" : "text-black hover:text-pr"}`;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,29 +40,30 @@ export function Header() {
 
           {/* Social Icons */}
           <div className="flex items-center space-x-5 text-white">
-           <a href="https://www.facebook.com/nestednurturerz?mibextid=ZbWKwL" target="_blank">
+           <a aria-label="Facebook link"  href="https://www.facebook.com/nestednurturerz?mibextid=ZbWKwL" target="_blank">
            <i className="fa-brands fa-facebook text-xl  cursor-pointer transition"></i>
            </a>
-            <a href="https://www.instagram.com/nestednurturersdoulas?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr" target="_blank">
+            <a aria-label="Instagram link"  href="https://www.instagram.com/nestednurturersdoulas?igsh=NTc4MTIwNjQ2YQ%3D%3D&utm_source=qr" target="_blank">
             <i className="fa-brands fa-instagram text-xl cursor-pointer transition"></i>
             </a>
-          <a href="https://www.tiktok.com/@nestednurturersdoulas?_r=1&_t=ZT-91baqNofnZ1" target="_blank">
+          <a aria-label="Tiktok link"  href="https://www.tiktok.com/@nestednurturersdoulas?_r=1&_t=ZT-91baqNofnZ1" target="_blank">
           <i className="fa-brands fa-tiktok text-xl cursor-pointer transition"></i>
           </a>
-           <a href="">
+           <a aria-label="yelp-account" href="https://www.yelp.com/biz/nested-nurturers-martinez">
            <i className="fa-brands fa-yelp text-xl cursor-pointer transition"></i>
            </a>
-            
+
           </div>
         </div>
       </div>
 
 
 
-      {/* Main Navbar */}
+
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
+
         <a
+        aria-label="logo"
   href="/"
   className="transition-all duration-300 ease-in-out h-[90px]"
 >
@@ -67,14 +75,14 @@ export function Header() {
 </a>
 
 
-        {/* Desktop Menu */}
+
         <nav className="hidden lg:flex items-center gap-12 text-base font-medium">
-          <a href="/" className="text-black hover:text-pr transition">
+          <a href="/" aria-label="home-page" className={linkClass("/")}>
             Home
           </a>
-        
-         
-       
+
+
+
           <div
   className="relative"
   onMouseEnter={() => setOpenDropdown("hotels")}
@@ -85,7 +93,8 @@ export function Header() {
     {/* Trigger */}
     <a
       href="/services"
-      className="flex items-center gap-2 text-black hover:text-pr transition"
+      aria-label="services-page"
+      className={`flex items-center gap-2 ${linkClass("/services")}`}
     >
       Services
       <i
@@ -102,6 +111,7 @@ export function Header() {
           <ul className="py-2 text-sm">
             <li>
               <a
+              aria-label="services-page"
                 href="/services"
                 className="block px-4 py-2 hover:bg-gray-100 transition"
               >
@@ -111,6 +121,7 @@ export function Header() {
             <li>
               <a
                 href="/services"
+                aria-label="services-page"
                 className="block px-4 py-2 hover:bg-gray-100 transition"
               >
                 Postpartum Support
@@ -119,6 +130,7 @@ export function Header() {
             <li>
               <a
                 href="/services"
+                aria-label="services-page"
                 className="block px-4 py-2 hover:bg-gray-100 transition"
               >
                 Sibling Support
@@ -127,6 +139,7 @@ export function Header() {
             <li>
               <a
                 href="/services"
+                aria-label="services-page"
                 className="block px-4 py-2 hover:bg-gray-100 transition"
               >
                 Night Doula Care
@@ -139,28 +152,31 @@ export function Header() {
   </div>
 </div>
 
-       
 
-     
-          <a href="/about" className="text-black hover:text-pr transition">
+
+
+          <a href="/about" aria-label="about-page" className={linkClass("/about")}>
             About
           </a>
-          <a href="/pricing" className="text-black hover:text-pr transition">
+          <a href="/pricing" aria-label="pricing-page" className={linkClass("/pricing")}>
             Pricing
           </a>
-          <a href="faq" className="text-black hover:text-pr transition">
+          <a href="/faq" aria-label="faq-page" className={linkClass("/faq")}>
           FAQ
           </a>
-        
+
           <a
+          aria-label="contact-page"
             href="/contact"
-            className="px-6 py-2 rounded bg-pr_btn hover:bg-pr_btn transition text-sm font-semibold text-white"
+            className={`px-6 py-2 rounded transition text-sm font-semibold text-white ${
+              isActive("/contact") ? "bg-pr" : "bg-pr_btn hover:bg-pr_btn"
+            }`}
           >
             Contact Us
           </a>
         </nav>
 
-    
+
         <button
           onClick={() => setShowSideMenu(true)}
           className="lg:hidden text-black text-3xl"
@@ -168,60 +184,60 @@ export function Header() {
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
         </button>
 
-        
+
 
       </div>
       <Sidebar visible={showSideMenu} onHide={()=>setShowSideMenu(false)}>
 <div class=" justify-end mb-4">
       <button name="side-bar" className="text-gray-500 hover:text-red-600 text-xl">
-      
+
       </button>
     </div>
-  
-   
-    <a href="/">
+
+
+    <a aria-label="logo" href="/">
       <img className="w-auto h-13" src="images/updates-logo.jpeg" alt="Logo"/>
     </a>
-  
+
     <div class="flex flex-col justify-between flex-1 mt-6">
       <nav class="-mx-3 space-y-6">
         <div class="space-y-3">
           <label class="px-3 text-xs text-gray-500 uppercase"></label>
-  
-          <a  class=" px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg" href="/">
+
+          <a aria-label="Home page"  class={`px-3 py-2 rounded-lg ${isActive("/") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
             </svg>
             <span  class="ml-2 text-sm">Home</span>
           </a>
 
-          <a  class=" px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg" href="/services">
+          <a aria-label="See what services we do offer"   class={`px-3 py-2 rounded-lg ${isActive("/services") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/services">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
             </svg>
             <span class="ml-2 text-sm">Services</span>
           </a>
-          <a  class=" px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg" href="/about">
+          <a aria-label="Who are nested nurturers check more about us"   class={`px-3 py-2 rounded-lg ${isActive("/about") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/about">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
             </svg>
             <span class="ml-2 text-sm">About</span>
           </a>
-          <a  class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg" href="/faq">
+          <a aria-label="Check our frequently asked question"  class={`px-3 py-2 rounded-lg ${isActive("/faq") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/faq">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
             </svg>
             <span class="ml-2 text-sm">FAQ</span>
           </a>
 
-          <a class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg" target="_blank" href="/pricing">
+          <a aria-label="Check our affordable pricing"  class={`px-3 py-2 rounded-lg ${isActive("/pricing") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} target="_blank" href="/pricing">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
             </svg>
             <span class="ml-2 text-sm">Pricing</span>
           </a>
-     
-          <a class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg" target="_blank" href="/contact">
+
+          <a aria-label="Contact Us to get a free consultation" class={`px-3 py-2 rounded-lg ${isActive("/contact") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} target="_blank" href="/contact">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
             </svg>

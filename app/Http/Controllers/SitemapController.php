@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\consultations;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
@@ -11,7 +14,7 @@ class SitemapController extends Controller{
 
 public function SiteMapGenerator(Request $request){
 $now = Carbon::now();
-$baseUrl = "http://localhost:8000";
+$baseUrl = "https://nestednurturers.com";
 $sitemap = Sitemap::create();
 
 $pages = [
@@ -33,4 +36,7 @@ return "SiteMap Added";
 }
 
 
+
 }
+
+

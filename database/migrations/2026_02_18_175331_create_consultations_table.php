@@ -19,8 +19,16 @@ return new class extends Migration
             $table->string("phonenumber")->nullable(false);
             $table->string("consultationDate")->nullable(false);
             $table->string("timezone")->nullable(true);
-            $table->string("consultationID")->nullable(false);
-        
+            $table->string("consultationID")->nullable(false)->unique(true)->index();
+            $table->string('location')->nullable(false);
+            $table->dateTime('expected_due_time')->nullable(false);
+            $table->dateTime('preferred_douala_services_start')->nullable(false);
+            $table->tinyText('services_seeked')->nullable(true);
+            $table->string('duration_of_support')->nullable(false);
+            $table->string('no_nights_per_week')->nullable(false);
+            $table->string('howHeard')->nullable(true);
+            $table->boolean('is_acknowledged')->nullable(false)->default(true);
+
         });
     }
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
@@ -34,7 +34,7 @@
         <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#8aa7c7;">
           <tr>
             <td style="padding:25px 10px 40px 10px; text-align:center;">
-              <img src="https://nestednurturers-master-ky6jzp.laravel.cloud/images/updates-logo.jpeg" 
+              <img src="https://nestednurturers-master-ky6jzp.laravel.cloud/images/updates-logo.jpeg"
                    alt="Nested Nurtures" style="height:60px;width:150px;display:block;margin:0 auto;">
             </td>
           </tr>
@@ -57,42 +57,76 @@
 
                   <!-- Enquiry Details Section -->
                     <table width="100%" cellpadding="0" cellspacing="0" style="font-family: Arial, sans-serif; border-collapse: collapse; margin-top: 20px;">
-                    
+
                       <!-- Section Title -->
                       <tr>
                         <td colspan="2" style="background-color: #ff76dc; color: white; font-weight: bold; padding: 12px; font-size: 16px; border: 1px solid #E5D2B8;">
                           Enquiry Summary
                         </td>
                       </tr>
-                    
+
                       <!-- Name Row -->
                       <tr>
                         <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Name</td>
                         <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['name'] }}</td>
                       </tr>
-                    
+
                       <!-- Email Row -->
                       <tr>
                         <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Email</td>
                         <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['email'] }}</td>
                       </tr>
-                    
+
                       <!-- Phone Row -->
                       <tr>
                         <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Phone</td>
-                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['phone'] }}</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['phonenumber'] }}</td>
                       </tr>
-                    
-                      <tr>
-                        <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Date Of Consultation</td>
-                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['day'] }} ({{ $clients['timezone'] }})</td>
+                        {{-- location --}}
+                        <tr>
+                        <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Location</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['location'] }}</td>
                       </tr>
-                    
-                    
-                   
-                    
+
+                      {{-- expected_due_time --}}
+                         <tr>
+                        <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Expected Due Date</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['expected_due_time'] }}</td>
+                      </tr>
+
+                      {{-- preferred_douala_services_start --}}
+                          <tr>
+                        <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Preferred Doula Service Date</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['preferred_doula_services_start'] }}</td>
+                      </tr>
+{{-- Duration Of Support --}}
+    <tr>
+                        <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Duration of Support</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['duration_of_support'] }}</td>
+                      </tr>
+                       {{-- No of Nights Week --}}
+                          <tr>
+                        <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">No. Nights Per Week</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['no_nights_per_week'] }}</td>
+                      </tr>
+                      {{-- services_seeked --}}
+                           @if (!empty($clients['services_seeked']))
+                             <tr>
+                        <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Services Seeked</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['services_seeked'] }}</td>
+                      </tr>
+                       @endif
+            {{-- how heard --}}
+                  @if (!empty($clients['howHeard']))
+                        <tr>
+                        <td style="width: 30%; padding: 10px; border: 1px solid #E5D2B8; font-weight: bold; color: #4A2E19;">Mode of Knowing</td>
+                        <td style="width: 70%; padding: 10px; border: 1px solid #E5D2B8;">{{ $clients['howHeard'] }}</td>
+                      </tr>
+                  @endif
+
+
                     </table>
-                  
+
                   <p>
                     We look forward to supporting you.
                     </p>
@@ -105,8 +139,8 @@
                   </p>
                 </div>
 
-                  
-               
+
+
               </div>
             </td>
           </tr>

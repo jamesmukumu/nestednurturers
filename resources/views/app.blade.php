@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Nested Nurturers provides compassionate prenatal, birth, and postpartum doula support in the Bay Area, California, helping families feel supported, confident, and cared for through pregnancy and early parenthood.">
+        <meta name="robots" content="index, follow">
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
@@ -19,7 +21,7 @@
         <!-- Scripts -->
         @routes
         @viteReactRefresh
-        @vite(['resources/js/app.jsx', "resources/js/Pages/{$page['component']}.jsx"])
+        @vite('resources/js/app.jsx')
         @inertiaHead
     </head>
     <body class="font-sans antialiased ">

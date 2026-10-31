@@ -1,0 +1,27 @@
+# Nestednurturers
+
+> A site offering services for families or caregivers, with information on services, pricing, support, and company details.
+
+## Main
+
+- [NestedNurturers](https://nestednurturers.com/): Homepage overview of NestedNurturers and offerings
+
+## Services
+
+- [NestedNurturers](https://nestednurturers.com/services): Details of services offered by NestedNurturers
+
+## Pricing
+
+- [NestedNurturers](https://nestednurturers.com/pricing): Pricing information for NestedNurturers services
+
+## Help and support
+
+- [NestedNurturers](https://nestednurturers.com/faq): Frequently asked questions and help resources
+
+## Company
+
+- [NestedNurturers](https://nestednurturers.com/about): Company background and about info for NestedNurturers
+
+## Optional
+
+- [NestedNurturers](https://nestednurturers.com/contact): Contact form and ways to reach NestedNurturers
