@@ -89,7 +89,7 @@ export function CityAutocompleteField({
     errors,
     touched,
     placeholder = "Search or enter your city",
-    citiesOptions
+    citiesOptions = usCityOptions,
 }) {
     const [suggestions, setSuggestions] = useState(citiesOptions.slice(0, 20));
 

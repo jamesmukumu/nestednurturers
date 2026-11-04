@@ -27,6 +27,17 @@ Laravel has the most extensive and thorough [documentation](https://laravel.com/
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
+## Running with Docker and Inertia SSR
+
+The Compose stack runs Laravel with PHP-FPM, serves it through Nginx, builds and runs the Inertia React SSR bundle in a Node service, and starts PostgreSQL.
+
+1. Copy `.env.example` to `.env` and set a unique `APP_KEY` and database password. Generate an application key with `php artisan key:generate` if PHP and Composer are installed locally.
+2. Start the stack with `docker compose up --build -d`.
+3. Run database migrations with `docker compose exec app php artisan migrate --force`.
+4. Open [http://localhost:8080](http://localhost:8080), or use the port set by `APP_PORT`.
+
+The app container enables Inertia SSR and points it at the internal SSR service. The SSR bundle is built as part of the Docker image; rebuild after changing frontend code. PostgreSQL data and Laravel storage are kept in named volumes.
+
 ## Laravel Sponsors
 
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
