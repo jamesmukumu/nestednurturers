@@ -1,0 +1,77 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:-client}
+      DB_USERNAME: ${DB_USERNAME:-nestednurturers}
+      DB_PASSWORD: ${DB_PASSWORD:-nestednurturers}
+      INERTIA_SSR_ENABLED: "true"
+      INERTIA_SSR_URL: http://ssr:13714
+    volumes:
+      - app_storage:/var/www/html/storage
+    depends_on:
+      db:
+        condition: service_healthy
+      ssr:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: web
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    volumes:
+      - app_storage:/var/www/html/storage:ro
+    depends_on:
+      - app
+
+  ssr:
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: ssr
+    restart: unless-stopped
+    expose:
+      - "13714"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:13714/health').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-client}
+      POSTGRES_USER: ${DB_USERNAME:-nestednurturers}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-nestednurturers}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  app_storage:
+  postgres_data:
