@@ -8,19 +8,7 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM composer:2 AS dependencies
-
-WORKDIR /var/www/html
-
-COPY composer.json composer.lock ./
-RUN composer install \
-    --no-dev \
-    --no-interaction \
-    --no-scripts \
-    --prefer-dist \
-    --optimize-autoloader
-
-FROM php:8.3-fpm-bookworm AS app
+FROM php:8.4-fpm-bookworm AS php-base
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -41,6 +29,22 @@ RUN apt-get update \
         pdo_pgsql \
         zip \
     && rm -rf /var/lib/apt/lists/*
+
+FROM php-base AS dependencies
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+COPY composer.json composer.lock ./
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --no-scripts \
+    --prefer-dist \
+    --optimize-autoloader
+
+FROM php-base AS app
 
 WORKDIR /var/www/html
 

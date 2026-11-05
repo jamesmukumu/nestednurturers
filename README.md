@@ -38,6 +38,10 @@ The Compose stack runs Laravel with PHP-FPM, serves it through Nginx, builds and
 
 The app container enables Inertia SSR and points it at the internal SSR service. The SSR bundle is built as part of the Docker image; rebuild after changing frontend code. PostgreSQL data and Laravel storage are kept in named volumes.
 
+## Local frontend development
+
+When running Laravel locally with `php artisan serve`, also run `npm run dev` so Vite can serve frontend assets. If you are not running the Vite dev server, run `npm run build` first to create the Vite manifest. The build command generates both the client assets and the configured Inertia SSR bundle.
+
 ## Laravel Sponsors
 
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
