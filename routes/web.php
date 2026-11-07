@@ -26,4 +26,24 @@ Route::get('/about', function () {
     return Inertia::render('About');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('dashboard');
+
+    Route::get('/dashboard/editor', function () {
+        return Inertia::render('Admin/Editor');
+    })->name('dashboard.editor');
+
+    Route::get('/dashboard/settings', function () {
+        return Inertia::render('Admin/Settings');
+    })->name('dashboard.settings');
+
+    Route::get('/dashboard/{path?}', function () {
+        return Inertia::render('Admin/NotFound')
+            ->toResponse(request())
+            ->setStatusCode(404);
+    })->where('path', '.*')->name('dashboard.not-found');
+});
+
 require __DIR__ . '/auth.php';

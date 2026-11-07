@@ -5,6 +5,8 @@ import createServer from "@inertiajs/react/server";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { renderToString } from "react-dom/server";
 import { PrimeReactProvider } from "primereact/api";
+import { Provider } from "react-redux";
+import { store } from "./store";
  
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -20,9 +22,11 @@ createServer((page) =>
             ),
         setup({ App, props }) {
             return (
-                <PrimeReactProvider>
-                    <App {...props} />
-                </PrimeReactProvider>
+                <Provider store={store}>
+                    <PrimeReactProvider>
+                        <App {...props} />
+                    </PrimeReactProvider>
+                </Provider>
             );
         },
     }),
