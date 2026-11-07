@@ -11,6 +11,8 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import {PrimeReactProvider} from "primereact/api"
+import { Provider } from 'react-redux';
+import { store } from './store';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
@@ -24,9 +26,11 @@ createInertiaApp({
         const root = createRoot(el);
 
         root.render(
-       <PrimeReactProvider>
-         <App {...props} />
-       </PrimeReactProvider>
+       <Provider store={store}>
+         <PrimeReactProvider>
+           <App {...props} />
+         </PrimeReactProvider>
+       </Provider>
         
         );
     },
