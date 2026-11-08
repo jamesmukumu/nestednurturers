@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,14 +27,16 @@ Route::get('/about', function () {
     return Inertia::render('About');
 });
 
-Route::middleware('auth')->group(function () {
+Route::redirect('/dashboard/editor', '/blogs');
+
+Route::middleware('auth:admin')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
 
-    Route::get('/dashboard/editor', function () {
-        return Inertia::render('Admin/Editor');
-    })->name('dashboard.editor');
+    Route::resource('blogs', BlogController::class);
+    Route::get('/blog-categories', [BlogCategoryController::class, 'index'])->name('blog-categories.index');
+    Route::post('/blog-categories', [BlogCategoryController::class, 'store'])->name('blog-categories.store');
 
     Route::get('/dashboard/settings', function () {
         return Inertia::render('Admin/Settings');
@@ -45,5 +48,6 @@ Route::middleware('auth')->group(function () {
             ->setStatusCode(404);
     })->where('path', '.*')->name('dashboard.not-found');
 });
+
 
 require __DIR__ . '/auth.php';

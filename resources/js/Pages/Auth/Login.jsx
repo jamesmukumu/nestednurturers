@@ -1,100 +1,81 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { Button } from 'primereact/button';
+import { Checkbox } from 'primereact/checkbox';
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
+import GuestLayout from '../../Layouts/GuestLayout';
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
         remember: false,
     });
 
-    const submit = (e) => {
-        e.preventDefault();
-
+    const submit = (event) => {
+        event.preventDefault();
         post(route('login'), {
             onFinish: () => reset('password'),
         });
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout
+            title="Welcome back"
+            subtitle="Log in to continue to your workspace."
+            footer={<>Don’t have an account? <Link href={route('register')}>Register</Link></>}
+        >
             <Head title="Log in" />
-
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4 block">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) =>
-                                setData('remember', e.target.checked)
-                            }
+            <div className="auth-card-content">
+                {status && <p className="auth-form__status" role="status">{status}</p>}
+                <form className="auth-form" onSubmit={submit} noValidate>
+                    <div className="auth-form__field">
+                        <label htmlFor="login-email">Email</label>
+                        <InputText
+                            id="login-email"
+                            type="email"
+                            value={data.email}
+                            autoComplete="email"
+                            autoFocus
+                            invalid={Boolean(errors.email)}
+                            aria-invalid={Boolean(errors.email)}
+                            aria-describedby={errors.email ? 'login-email-error' : undefined}
+                            onChange={(event) => setData('email', event.target.value)}
                         />
-                        <span className="ms-2 text-sm text-gray-600">
-                            Remember me
-                        </span>
-                    </label>
-                </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
-            </form>
+                        {errors.email && <small className="p-error" id="login-email-error">{errors.email}</small>}
+                    </div>
+                    <div className="auth-form__field">
+                        <label htmlFor="login-password">Password</label>
+                        <Password
+                            inputId="login-password"
+                            value={data.password}
+                            autoComplete="current-password"
+                            toggleMask
+                            feedback={false}
+                            invalid={Boolean(errors.password)}
+                            aria-invalid={Boolean(errors.password)}
+                            aria-describedby={errors.password ? 'login-password-error' : undefined}
+                            onChange={(event) => setData('password', event.target.value)}
+                        />
+                        {errors.password && <small className="p-error" id="login-password-error">{errors.password}</small>}
+                    </div>
+                    <div className="auth-form__remember">
+                        <Checkbox
+                            inputId="login-remember"
+                            checked={data.remember}
+                            onChange={(event) => setData('remember', event.checked)}
+                        />
+                        <label htmlFor="login-remember">Remember me</label>
+                    </div>
+                    <Button
+                        className="auth-form__submit"
+                        type="submit"
+                        label="Log in"
+                        loading={processing}
+                        disabled={processing}
+                    />
+                </form>
+            </div>
         </GuestLayout>
     );
 }

@@ -450,15 +450,7 @@
     min-width: 0;
 }
 
-.admin-editor__preview {
-    display: block;
-    width: 100%;
-    min-height: 16rem;
-    border: 0;
-    background: var(--surface-card);
-}
-
-.admin-editor__loading {
+.rich-text-editor__loading {
     display: flex;
     min-height: 18rem;
     align-items: center;
@@ -466,18 +458,18 @@
     color: var(--text-color-secondary);
 }
 
-.admin-editor .jodit-container {
+.rich-text-editor .jodit-container {
     max-width: 100%;
     overflow: hidden;
     border-color: var(--surface-border);
     border-radius: var(--border-radius);
 }
 
-.admin-editor .jodit-toolbar__box {
+.rich-text-editor .jodit-toolbar__box {
     max-width: 100%;
 }
 
-.admin-editor .jodit-workplace {
+.rich-text-editor .jodit-workplace {
     min-width: 0;
 }
 

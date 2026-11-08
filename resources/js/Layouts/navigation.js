@@ -13,15 +13,9 @@ export const navigation = [
         heading: 'Content',
         items: [
             {
-                label: 'Editor',
+                label: 'Blogs',
+                href: '/blogs',
                 icon: 'pi pi-file-edit',
-                children: [
-                    {
-                        label: 'Rich text editor',
-                        href: '/dashboard/editor',
-                        icon: 'pi pi-pencil',
-                    },
-                ],
             },
         ],
     },
