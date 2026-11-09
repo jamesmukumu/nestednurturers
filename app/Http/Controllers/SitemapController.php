@@ -23,7 +23,8 @@ $pages = [
 "/about"=>0.9,
 "/contact"=>0.8,
 "/faq"=>0.7,
-"/pricing"=>0.7
+"/pricing"=>0.7,
+"/blogs"=>0.8
 ];
 
 foreach($pages as $page=>$p){
@@ -38,5 +39,3 @@ return "SiteMap Added";
 
 
 }
-
-

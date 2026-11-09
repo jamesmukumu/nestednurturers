@@ -6,6 +6,7 @@ import { PriceTemp, SinglePriceTemp } from "@/comps/PricingComp";
 import { Seo } from "@/comps/SEO";
 import { ServiceCard } from "@/comps/ServicesCard";
 import { Reviews } from "../comps/Reviews";
+import Button from "@/Components/Button";
 export default function Home({uscities}) {
 
     const HeroSection = () => {
@@ -28,14 +29,13 @@ export default function Home({uscities}) {
                             encouragement they need to create peaceful,
                             nurturing environments for their growing families.
                         </p>
-                        <a
+                        <Button
                             href="/contact"
                             aria-label="contact-page"
-                            type="button"
-                            className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
+                            className="mt-6"
                         >
                             Book Your Free Consultation
-                        </a>
+                        </Button>
                     </div>
                     <div className="mt-8 md:mt-0 md:w-1/2 flex justify-center">
 
@@ -77,14 +77,13 @@ export default function Home({uscities}) {
                             transition into parenthood with personalized
                             guidance and gentle care.
                         </p>
-                        <a
+                        <Button
                             href="/contact"
-                            type="button"
                             aria-label="contact us"
-                            className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
+                            className="mt-6"
                         >
                             Learn More
-                        </a>
+                        </Button>
                     </div>
                 </div>
             </section>
@@ -232,13 +231,12 @@ export default function Home({uscities}) {
                   <ServiceCard/>
                 </div>
                 <div className="w-full flex justify-center">
-                    <a
+                    <Button
                         href="/services"
-                        type="button"
-                        className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
+                        className="mt-6"
                     >
                         View More Services
-                    </a>
+                    </Button>
                 </div>
             </section>
             <section>

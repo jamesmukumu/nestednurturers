@@ -46,23 +46,23 @@ test('blogs list, create, show, and edit pages use existing categories', functio
     ]);
 
     $this->actingAs($admin, 'admin')
-        ->get('/blogs')
+        ->get('/dashboard/blogs')
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page->component('Admin/Blogs/Index'));
 
-    $this->get('/blogs/create')
+    $this->get('/dashboard/blogs/create')
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('Admin/Blogs/Create')
             ->where('categories.0.id', $category->id));
 
-    $this->get("/blogs/{$blog->id}")
+    $this->get("/dashboard/blogs/{$blog->id}")
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('Admin/Blogs/Show')
             ->where('blog.id', $blog->id));
 
-    $this->get("/blogs/{$blog->id}/edit")
+    $this->get("/dashboard/blogs/{$blog->id}/edit")
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('Admin/Blogs/Edit')
@@ -75,11 +75,11 @@ test('an admin can create, update, and delete an owned blog', function () {
     $category = BlogCategory::factory()->create(['admins_id' => $admin->id]);
 
     $this->actingAs($admin, 'admin')
-        ->post('/blogs', [
+        ->post('/dashboard/blogs', [
             ...blogPayload($category),
             'image' => UploadedFile::fake()->image('cover.jpg'),
         ])
-        ->assertRedirect('/blogs');
+        ->assertRedirect('/dashboard/blogs');
 
     $blog = Blog::firstOrFail();
     expect($blog->admins_id)->toBe($admin->id)
@@ -90,15 +90,15 @@ test('an admin can create, update, and delete an owned blog', function () {
     Storage::disk('public')->assertExists($blog->image_path);
 
     $newCategory = BlogCategory::factory()->create(['admins_id' => $admin->id]);
-    $this->put("/blogs/{$blog->id}", [
+    $this->put("/dashboard/blogs/{$blog->id}", [
         ...blogPayload($newCategory, 'An updated blog title'),
-    ])->assertRedirect('/blogs');
+    ])->assertRedirect('/dashboard/blogs');
 
     expect($blog->fresh()->title)->toBe('An updated blog title')
         ->and($blog->fresh()->blog_categories_id)->toBe($newCategory->id);
 
     $imagePath = $blog->fresh()->image_path;
-    $this->delete("/blogs/{$blog->id}")->assertRedirect('/blogs');
+    $this->delete("/dashboard/blogs/{$blog->id}")->assertRedirect('/dashboard/blogs');
     expect(Blog::count())->toBe(0);
     Storage::disk('public')->assertMissing($imagePath);
 });
@@ -109,18 +109,18 @@ test('blog validation rejects categories belonging to another admin', function (
     $category = BlogCategory::factory()->create(['admins_id' => $otherAdmin->id]);
 
     $this->actingAs($admin, 'admin')
-        ->from('/blogs/create')
-        ->post('/blogs', [
+        ->from('/dashboard/blogs/create')
+        ->post('/dashboard/blogs', [
             ...blogPayload($category),
             'image' => UploadedFile::fake()->image('cover.png'),
         ])
-        ->assertRedirect('/blogs/create')
+        ->assertRedirect('/dashboard/blogs/create')
         ->assertSessionHasErrors('blog_categories_id');
 
     expect(Blog::count())->toBe(0);
 });
 
 test('blog management routes require admin authentication', function () {
-    $this->get('/blogs')->assertRedirect('/login');
+    $this->get('/dashboard/blogs')->assertRedirect('/login');
     $this->get('/blog-categories')->assertRedirect('/login');
 });

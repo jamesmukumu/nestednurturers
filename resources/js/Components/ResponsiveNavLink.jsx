@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import Button from '@/Components/Button';
 
 export default function ResponsiveNavLink({
     active = false,
@@ -6,13 +7,27 @@ export default function ResponsiveNavLink({
     children,
     ...props
 }) {
+    if (props.as === 'button') {
+        return (
+            <Button
+                {...props}
+                variant="ghost"
+                size="sm"
+                fullWidth
+                className={`justify-start ${className}`}
+            >
+                {children}
+            </Button>
+        );
+    }
+
     return (
         <Link
             {...props}
             className={`flex w-full items-start border-l-4 py-2 pe-4 ps-3 ${
                 active
-                    ? 'border-indigo-400 bg-indigo-50 text-indigo-700 focus:border-indigo-700 focus:bg-indigo-100 focus:text-indigo-800'
-                    : 'border-transparent text-gray-600 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-800 focus:border-gray-300 focus:bg-gray-50 focus:text-gray-800'
+                    ? 'border-[var(--app-primary)] bg-[var(--surface-hover)] text-[var(--app-text)] focus:border-[var(--app-primary-hover)]'
+                    : 'border-transparent text-[var(--app-text-secondary)] hover:border-[var(--app-border)] hover:bg-[var(--surface-hover)] hover:text-[var(--app-text)] focus:border-[var(--app-border)] focus:bg-[var(--surface-hover)] focus:text-[var(--app-text)]'
             } text-base font-medium transition duration-150 ease-in-out focus:outline-none ${className}`}
         >
             {children}

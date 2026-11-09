@@ -6,6 +6,26 @@
         <meta name="description" content="Nested Nurturers provides compassionate prenatal, birth, and postpartum doula support in the Bay Area, California, helping families feel supported, confident, and cared for through pregnancy and early parenthood.">
         <meta name="robots" content="index, follow">
 
+        <script>
+            (() => {
+                let mode = 'system';
+                try {
+                    const savedMode = localStorage.getItem('app-theme');
+                    if (['light', 'dark', 'system'].includes(savedMode)) mode = savedMode;
+                } catch (error) {
+                    console.error('Unable to read the theme preference from local storage.', error);
+                }
+
+                const dark = mode === 'dark'
+                    || (mode === 'system'
+                        && typeof window.matchMedia === 'function'
+                        && window.matchMedia('(prefers-color-scheme: dark)').matches);
+                document.documentElement.classList.toggle('dark', dark);
+                document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+                document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+            })();
+        </script>
+
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
         <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />

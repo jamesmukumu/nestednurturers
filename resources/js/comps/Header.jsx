@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePage } from "@inertiajs/react";
 
 import { Sidebar } from 'primereact/sidebar';
+import Button from '@/Components/Button';
 
 export function Header() {
   const { url } = usePage();
@@ -9,6 +10,8 @@ export function Header() {
   const [showSideMenu, setShowSideMenu] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const headerRef = useRef(null);
 
   const isActive = (path) => currentPath === path;
   const linkClass = (path) =>
@@ -22,8 +25,22 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const resizeObserver = new ResizeObserver(() => {
+      setHeaderHeight(header.offsetHeight);
+    });
+    resizeObserver.observe(header);
+    setHeaderHeight(header.offsetHeight);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
   return (
-    <header className="w-full sticky top-0 left-0 z-50 bg-white shadow-md">
+    <>
+    <header ref={headerRef} className="fixed top-0 left-0 z-50 w-full bg-white shadow-md">
       {/* Top Bar */}
       <div className="bg-pr text-white py-2 border-b border-pr">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
@@ -76,7 +93,7 @@ export function Header() {
 
 
 
-        <nav className="hidden lg:flex items-center gap-12 text-base font-medium">
+        <nav className="hidden lg:flex items-center gap-8 text-base font-medium">
           <a href="/" aria-label="home-page" className={linkClass("/")}>
             Home
           </a>
@@ -164,37 +181,31 @@ export function Header() {
           <a href="/faq" aria-label="faq-page" className={linkClass("/faq")}>
           FAQ
           </a>
-
-          <a
-          aria-label="contact-page"
-            href="/contact"
-            className={`px-6 py-2 rounded transition text-sm font-semibold text-white ${
-              isActive("/contact") ? "bg-pr" : "bg-pr_btn hover:bg-pr_btn"
-            }`}
-          >
-            Contact Us
+          <a href="/blogs" aria-label="blogs-page" className={linkClass("/blogs")}>
+            Blog
           </a>
+
+          <Button href="/contact">
+            Contact Us
+          </Button>
         </nav>
 
 
-        <button
+        <Button
+          variant="ghost"
+          size="sm"
+          iconOnly
+          aria-label="Open navigation menu"
           onClick={() => setShowSideMenu(true)}
-          className="lg:hidden text-black text-3xl"
+          className="lg:hidden text-black"
         >
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-        </button>
+        </Button>
 
 
 
       </div>
       <Sidebar visible={showSideMenu} onHide={()=>setShowSideMenu(false)}>
-<div class=" justify-end mb-4">
-      <button name="side-bar" className="text-gray-500 hover:text-red-600 text-xl">
-
-      </button>
-    </div>
-
-
     <a aria-label="logo" href="/">
       <img className="w-auto h-13" src="images/updates-logo.jpeg" alt="Logo"/>
     </a>
@@ -229,6 +240,10 @@ export function Header() {
             </svg>
             <span class="ml-2 text-sm">FAQ</span>
           </a>
+          <a aria-label="Read our latest articles" class={`px-3 py-2 rounded-lg ${isActive("/blogs") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/blogs">
+            <i class="pi pi-book w-5" aria-hidden="true"></i>
+            <span class="ml-2 text-sm">Blog</span>
+          </a>
 
           <a aria-label="Check our affordable pricing"  class={`px-3 py-2 rounded-lg ${isActive("/pricing") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} target="_blank" href="/pricing">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -253,5 +268,7 @@ export function Header() {
 </Sidebar>
 
     </header>
+    <div aria-hidden="true" style={{ height: headerHeight }} />
+    </>
   );
 }

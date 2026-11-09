@@ -2,6 +2,7 @@ import { Contact } from "@/comps/Contact";
 import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
 import { Seo } from "@/comps/SEO";
+import Button from "@/Components/Button";
 
 export default function Pricing({ uscities }) {
     var TodaysDate = new Date();
@@ -43,13 +44,13 @@ export default function Pricing({ uscities }) {
                                     </span>
                                 </h2>
 
-                                <button
+                                <Button
                                     type="button"
-                                    role="button"
-                                    className="w-full px-4 py-2 mt-8 tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                                    fullWidth
+                                    className="mt-8"
                                 >
                                     Contact Us
-                                </button>
+                                </Button>
                             </div>
                         </div>
 
@@ -67,9 +68,9 @@ export default function Pricing({ uscities }) {
                                         /3Nights a week
                                     </span>
                                 </h2>
-                                <button className="w-full px-4 py-2 mt-6 tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:pr_btn focus:ring-opacity-80">
+                                <Button type="button" fullWidth className="mt-6">
                                     Contact Us
-                                </button>
+                                </Button>
                             </div>
                         </div>
 
@@ -89,9 +90,9 @@ export default function Pricing({ uscities }) {
                                     </span>
                                 </h2>
 
-                                <button className="w-full px-4 py-2 mt-6 tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:pr_btn focus:ring-opacity-80">
+                                <Button type="button" fullWidth className="mt-6">
                                     Contact Us
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -237,12 +238,12 @@ export default function Pricing({ uscities }) {
                     <p className="text-lg md:text-2xl text-white mb-8 leading-relaxed">
                         Compassionate Support Tailored For Your Family
                     </p>
-                    <a
+                    <Button
                         href="/contact"
-                        className="inline-block bg-pr_btn mb-2 hover:bg-pr_btn text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition"
+                        className="mb-2"
                     >
                         BOOK YOUR CONSULTATION
-                    </a>
+                    </Button>
                 </div>
             </section>
 

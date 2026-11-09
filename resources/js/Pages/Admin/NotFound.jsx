@@ -1,6 +1,6 @@
-import { Head, Link } from '@inertiajs/react';
-import { Button } from 'primereact/button';
+import { Head } from '@inertiajs/react';
 import { Card } from 'primereact/card';
+import Button from '@/Components/Button';
 import AdminLayout from '../../Layouts/AdminLayout';
 
 function NotFound() {
@@ -13,9 +13,9 @@ function NotFound() {
                     <p>This dashboard page does not exist.</p>
                 </header>
                 <Card className="admin-page__card">
-                    <Link href="/dashboard">
-                        <Button label="Back to dashboard" icon="pi pi-arrow-left" />
-                    </Link>
+                    <Button href="/dashboard" variant="secondary" leftIcon={<i className="pi pi-arrow-left" aria-hidden="true" />}>
+                        Back to dashboard
+                    </Button>
                 </Card>
             </section>
         </>

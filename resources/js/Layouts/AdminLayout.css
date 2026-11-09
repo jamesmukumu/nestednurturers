@@ -142,13 +142,13 @@
     font-weight: 600;
 }
 
-.admin-shell__nav-link:focus-visible,
-.admin-shell__brand:focus-visible,
-.admin-shell__topbar .p-button:focus-visible {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
+.admin-shell__nav-link.app-button.is-active:hover:not(:disabled):not([aria-disabled="true"]) {
+    color: var(--primary-color);
+    background: var(--primary-50, var(--surface-hover));
 }
 
+.admin-shell__nav-link:focus-visible,
+.admin-shell__brand:focus-visible,
 .admin-shell__nav-icon {
     display: inline-flex;
     flex: 0 0 1.5rem;
@@ -225,13 +225,13 @@
     background: var(--primary-50, var(--surface-hover));
 }
 
-.admin-shell__user-menu-button.p-button {
+.admin-shell__user-menu-button.app-button {
     flex: 0 0 2.5rem;
     width: 2.75rem;
     height: 2.75rem;
 }
 
-.admin-shell__mobile-sidebar-header .p-button {
+.admin-shell__mobile-sidebar-header .app-button {
     min-width: 2.75rem;
     min-height: 2.75rem;
 }
@@ -291,8 +291,17 @@
     flex: 0 0 auto;
 }
 
-.admin-shell__icon-button.p-button,
-.admin-shell__avatar-button.p-button {
+.admin-shell__theme-toggle {
+    flex-wrap: nowrap;
+}
+
+.admin-shell__mobile-theme-toggle {
+    justify-content: center;
+    margin: 0.75rem 0;
+}
+
+.admin-shell__icon-button.app-button,
+.admin-shell__avatar-button.app-button {
     position: relative;
     flex: 0 0 2.75rem;
     width: 2.75rem;
@@ -300,12 +309,12 @@
     color: var(--text-color-secondary);
 }
 
-.admin-shell__avatar-button.p-button {
+.admin-shell__avatar-button.app-button {
     width: auto;
     padding: 0.25rem;
 }
 
-.admin-shell__notification-badge.p-badge {
+.admin-shell__notification-badge {
     position: absolute;
     top: 0.125rem;
     right: 0.125rem;
@@ -495,6 +504,10 @@
 
     .admin-shell__search-trigger {
         display: inline-flex !important;
+    }
+
+    .admin-shell__theme-toggle {
+        display: none;
     }
 }
 

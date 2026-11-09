@@ -50,6 +50,13 @@ export function Footer() {
                                 Services
                             </a>
                             <a
+                                href="/blogs"
+                                aria-label="blogs-page"
+                                class="transition-colors duration-300 text-white hover:underline"
+                            >
+                                Blog
+                            </a>
+                            <a
                                 href="/pricing"
                                 aria-label="pricing-link"
                                 class="transition-colors duration-300 text-white hover:underline"

@@ -3,6 +3,7 @@ import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
 import { Seo } from "@/comps/SEO";
 import { useState } from "react";
+import Button from "@/Components/Button";
 export default function Services({uscities}) {
     var TodaysDate = new Date()
     const [services, setServices] = useState([
@@ -198,12 +199,12 @@ export default function Services({uscities}) {
                         families with the essential support they need to
                         flourish during the early stages of parenthood.
                     </p>
-                    <a
+                    <Button
                         href="/contact"
-                        className="inline-block bg-pr_btn mb-2 hover:bg-pr_btn text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition"
+                        className="mb-2"
                     >
                         BOOK YOUR CONSULTATION
-                    </a>
+                    </Button>
                 </div>
             </section>
 
@@ -248,12 +249,12 @@ export default function Services({uscities}) {
                                     <p className="text-gray-600 text-lg leading-relaxed flex-grow">
                                         {service.description}
                                     </p>
-                                    <a
+                                    <Button
                                         href="/contact"
-                                        className="mt-3 inline-flex items-center justify-center px-6 py-3 bg-pr_btn text-white font-semibold rounded shadow hover:shadow-lg transition-transform hover:-translate-y-1"
+                                        className="mt-3"
                                     >
                                         Book Now
-                                    </a>
+                                    </Button>
                                 </a>
                             </div>
                         ))}

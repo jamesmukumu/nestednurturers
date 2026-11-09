@@ -14,7 +14,7 @@ export const navigation = [
         items: [
             {
                 label: 'Blogs',
-                href: '/blogs',
+                href: '/dashboard/blogs',
                 icon: 'pi pi-file-edit',
             },
         ],

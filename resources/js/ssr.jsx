@@ -7,8 +7,12 @@ import { renderToString } from "react-dom/server";
 import { PrimeReactProvider } from "primereact/api";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import ThemeManager from "./Components/ThemeManager";
+import lightThemeUrl from "primereact/resources/themes/lara-light-indigo/theme.css?url";
+import darkThemeUrl from "primereact/resources/themes/lara-dark-indigo/theme.css?url";
  
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+const themeUrls = { light: lightThemeUrl, dark: darkThemeUrl };
 
 createServer((page) =>
     createInertiaApp({
@@ -24,6 +28,7 @@ createServer((page) =>
             return (
                 <Provider store={store}>
                     <PrimeReactProvider>
+                        <ThemeManager themeUrls={themeUrls} />
                         <App {...props} />
                     </PrimeReactProvider>
                 </Provider>

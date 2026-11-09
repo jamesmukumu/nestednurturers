@@ -84,7 +84,7 @@
         flex-direction: column;
     }
 
-    .blogs-list__header > .p-button {
+    .blogs-list__header > .app-button {
         width: 100%;
     }
 }

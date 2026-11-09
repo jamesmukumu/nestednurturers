@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Head, Link, router, useForm } from '@inertiajs/react';
-import { Button } from 'primereact/button';
+import { Head, router, useForm } from '@inertiajs/react';
 import { Card } from 'primereact/card';
 import { Checkbox } from 'primereact/checkbox';
 import { Dropdown } from 'primereact/dropdown';
@@ -9,6 +8,7 @@ import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import BlogCategoryDialog from './BlogCategoryDialog';
 import RichTextEditor from '../RichTextEditor';
+import Button from '@/Components/Button';
 import AdminLayout from '../../Layouts/AdminLayout';
 import './BlogForm.css';
 
@@ -118,7 +118,7 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
             || (!isEdit && !data.image)
         ) return;
 
-        const url = isEdit ? `/blogs/${blog.id}` : '/blogs';
+        const url = isEdit ? `/dashboard/blogs/${blog.id}` : '/dashboard/blogs';
         setSaving(true);
         router.post(url, {
             ...data,
@@ -164,17 +164,18 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                         <p>{isEdit ? 'Update your blog details and cover image.' : 'Add details and prepare your article for publishing.'}</p>
                     </div>
                     <div className="blog-form-page__actions">
-                        <Link href="/blogs" className="p-button p-component p-button-secondary p-button-outlined">
-                            <span className="p-button-label">Cancel</span>
-                        </Link>
+                        <Button href="/dashboard/blogs" variant="secondary">
+                            Cancel
+                        </Button>
                         <Button
                             type="submit"
                             form="blog-form"
-                            label={isEdit ? 'Save changes' : 'Create Article'}
-                            icon="pi pi-check"
                             loading={saving}
-                            disabled={saving}
-                        />
+                            loadingLabel={isEdit ? 'Saving changes…' : 'Creating article…'}
+                            leftIcon={<i className="pi pi-check" aria-hidden="true" />}
+                        >
+                            {isEdit ? 'Save changes' : 'Create Article'}
+                        </Button>
                     </div>
                 </header>
                 <Card className="admin-page__card blog-form__card">
@@ -255,11 +256,11 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                                     />
                                     <Button
                                         type="button"
-                                        label="Create Category"
-                                        icon="pi pi-plus"
-                                        outlined
+                                        leftIcon={<i className="pi pi-plus" aria-hidden="true" />}
                                         onClick={() => setCategoryDialogVisible(true)}
-                                    />
+                                    >
+                                        Create Category
+                                    </Button>
                                 </div>
                                 {errors.blog_categories_id && (
                                     <small className="p-error" id="blog-category-error">{errors.blog_categories_id}</small>
@@ -279,7 +280,10 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                                     customUpload
                                     auto={false}
                                     chooseLabel={data.image ? 'Replace image' : 'Choose image'}
-                                    chooseOptions={{ icon: 'pi pi-upload', className: 'p-button-outlined' }}
+                                    chooseOptions={{
+                                        icon: 'pi pi-upload',
+                                        className: 'app-button app-button--secondary app-button--md',
+                                    }}
                                     onSelect={onImageSelected}
                                     onValidationFail={() => setError('image', 'Choose a JPG, PNG, or WEBP image up to 2MB.')}
                                     pt={{
@@ -300,15 +304,15 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                                         {data.image && (
                                             <Button
                                                 type="button"
-                                                label={isEdit ? 'Use current image' : 'Remove image'}
-                                                icon="pi pi-times"
-                                                text
-                                                severity="secondary"
+                                                variant="ghost"
+                                                leftIcon={<i className="pi pi-times" aria-hidden="true" />}
                                                 onClick={() => {
                                                     setData('image', null);
                                                     clearErrors('image');
                                                 }}
-                                            />
+                                            >
+                                                {isEdit ? 'Use current image' : 'Remove image'}
+                                            </Button>
                                         )}
                                     </div>
                                 )}
