@@ -85,7 +85,7 @@ export function Header() {
   className="transition-all duration-300 ease-in-out h-[90px]"
 >
   <img
-    src="images/updates-logo.jpeg"
+    src="/images/updates-logo.jpeg"
     alt="Logo"
     className="h-full w-auto object-contain"
   />
@@ -207,7 +207,7 @@ export function Header() {
       </div>
       <Sidebar visible={showSideMenu} onHide={()=>setShowSideMenu(false)}>
     <a aria-label="logo" href="/">
-      <img className="w-auto h-13" src="images/updates-logo.jpeg" alt="Logo"/>
+      <img className="w-auto h-13" src="/images/updates-logo.jpeg" alt="Logo"/>
     </a>
 
     <div class="flex flex-col justify-between flex-1 mt-6">
