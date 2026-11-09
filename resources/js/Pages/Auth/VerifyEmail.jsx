@@ -1,5 +1,6 @@
-import { Head, Link, useForm } from '@inertiajs/react';
-import { Button } from 'primereact/button';
+import { Head, useForm } from '@inertiajs/react';
+import AuthSubmitButton from '@/Components/AuthSubmitButton';
+import Button from '@/Components/Button';
 import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function VerifyEmail({ status }) {
@@ -15,9 +16,9 @@ export default function VerifyEmail({ status }) {
             title="Verify your email"
             subtitle="Check your inbox for the verification link. If you did not receive it, request another below."
             footer={
-                <Link href={route('logout')} method="post" as="button" className="auth-page__logout">
+                <Button href={route('logout')} method="post" as="button" variant="ghost" size="sm" className="auth-page__logout">
                     Log out
-                </Link>
+                </Button>
             }
         >
             <Head title="Email Verification" />
@@ -27,12 +28,10 @@ export default function VerifyEmail({ status }) {
                 </p>
             )}
             <form className="auth-form" onSubmit={submit}>
-                <Button
-                    className="auth-form__submit"
-                    type="submit"
+                <AuthSubmitButton
+                    processing={processing}
                     label="Resend Verification Email"
-                    loading={processing}
-                    disabled={processing}
+                    processingLabel="Sending…"
                 />
             </form>
         </GuestLayout>

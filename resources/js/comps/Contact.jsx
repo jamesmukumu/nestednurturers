@@ -9,6 +9,7 @@ import { useState, useRef } from "react";
 import { Toast } from "primereact/toast";
 import { Calendar } from "primereact/calendar";
 import { CityAutocompleteField } from "./CityAutocompleteField";
+import Button from "@/Components/Button";
 
 export function Contact({ cities }) {
     const [saving, setSaving] = useState(false);
@@ -623,17 +624,14 @@ export function Contact({ cities }) {
                                 />
                             </div>
 
-                            <button
+                            <Button
                                 type="submit"
-                                disabled={saving}
-                                className={`px-6 py-2 mt-2 rounded text-sm font-semibold text-white transition ${
-                                    saving
-                                        ? "bg-pr_btn opacity-50 blur-[1px] cursor-not-allowed"
-                                        : "bg-pr_btn hover:bg-pr_btn/90"
-                                }`}
+                                loading={saving}
+                                loadingLabel="Processing consultation..."
+                                className="mt-2"
                             >
-                                {saving ? "Processing..." : "Consult"}
-                            </button>
+                                Consult
+                            </Button>
                         </Form>
                     )}
                 </Formik>

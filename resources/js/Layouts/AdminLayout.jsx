@@ -3,11 +3,12 @@ import { Link, router, usePage } from '@inertiajs/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'primereact/avatar';
 import { BreadCrumb } from 'primereact/breadcrumb';
-import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { Menu } from 'primereact/menu';
 import { Sidebar } from 'primereact/sidebar';
 import { Tooltip } from 'primereact/tooltip';
+import Button from '@/Components/Button';
+import ThemeToggle from '@/Components/ThemeToggle';
 import { setMobileSidebarOpen, toggleSidebarCollapsed } from '../store/uiSlice';
 import { navigation } from './navigation';
 import { useMediaQuery } from '../hooks/useMediaQuery';
@@ -25,13 +26,36 @@ function getInitials(name = '') {
 function getCurrentPage(url) {
     const path = url.split('?')[0];
 
-    if (path === '/blogs') return 'Blogs';
-    if (path === '/blogs/create') return 'Create Article';
-    if (/^\/blogs\/[^/]+\/edit$/.test(path)) return 'Edit Article';
-    if (/^\/blogs\/[^/]+$/.test(path)) return 'Blog';
+    if (path === '/dashboard/blogs') return 'Blogs';
+    if (path === '/dashboard/blogs/create') return 'Create Article';
+    if (/^\/dashboard\/blogs\/[^/]+\/edit$/.test(path)) return 'Edit Article';
+    if (/^\/dashboard\/blogs\/[^/]+$/.test(path)) return 'Blog';
     if (path === '/dashboard/settings') return 'Settings';
     if (path === '/dashboard') return 'Dashboard';
     return 'Not found';
+}
+
+function menuActionTemplate(item, options) {
+    return (
+        <Button
+            href={item.url}
+            type="button"
+            variant="ghost"
+            size="sm"
+            fullWidth
+            leftIcon={item.icon ? <i className={item.icon} aria-hidden="true" /> : undefined}
+            className="p-menuitem-link admin-shell__menu-action"
+            aria-label={item.label}
+            tabIndex={options.tabIndex}
+            onMouseMove={options.onMouseMove}
+            onClick={(event) => {
+                event.stopPropagation();
+                options.onClick(event);
+            }}
+        >
+            {item.label}
+        </Button>
+    );
 }
 
 function SidebarNavigation({ collapsed, url, onNavigate }) {
@@ -65,7 +89,8 @@ function SidebarNavigation({ collapsed, url, onNavigate }) {
                                 <div className="admin-shell__nav-group" key={item.label}>
                                     <Button
                                         type="button"
-                                        text
+                                        variant="ghost"
+                                        size="sm"
                                         className={`admin-shell__nav-link${active ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
                                         aria-label={collapsed ? item.label : undefined}
                                         aria-expanded={expanded}
@@ -88,9 +113,11 @@ function SidebarNavigation({ collapsed, url, onNavigate }) {
                                                 const childActive = path === child.href;
 
                                                 return (
-                                                    <Link
+                                                    <Button
                                                         key={child.href}
                                                         href={child.href}
+                                                        variant="ghost"
+                                                        size="sm"
                                                         className={`admin-shell__nav-link admin-shell__subnav-link${childActive ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
                                                         aria-label={collapsed ? child.label : undefined}
                                                         aria-current={childActive ? 'page' : undefined}
@@ -100,7 +127,7 @@ function SidebarNavigation({ collapsed, url, onNavigate }) {
                                                     >
                                                         <i className={`admin-shell__nav-icon ${child.icon}`} aria-hidden="true" />
                                                         {!collapsed && <span className="admin-shell__nav-label">{child.label}</span>}
-                                                    </Link>
+                                                    </Button>
                                                 );
                                             })}
                                         </div>
@@ -112,9 +139,11 @@ function SidebarNavigation({ collapsed, url, onNavigate }) {
                         const itemActive = path === item.href || path.startsWith(`${item.href}/`);
 
                         return (
-                            <Link
+                            <Button
                                 key={item.href}
                                 href={item.href}
+                                variant="ghost"
+                                size="sm"
                                 className={`admin-shell__nav-link${itemActive ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
                                 aria-label={collapsed ? item.label : undefined}
                                 aria-current={itemActive ? 'page' : undefined}
@@ -124,7 +153,7 @@ function SidebarNavigation({ collapsed, url, onNavigate }) {
                             >
                                 <i className={`admin-shell__nav-icon ${item.icon}`} aria-hidden="true" />
                                 {!collapsed && <span className="admin-shell__nav-label">{item.label}</span>}
-                            </Link>
+                            </Button>
                         );
                     })}
                 </section>
@@ -164,13 +193,15 @@ function SidebarContents({ collapsed, onNavigate, user, menuRef, url }) {
                 )}
                 <Button
                     type="button"
-                    text
-                    rounded
-                    icon="pi pi-ellipsis-v"
+                    variant="ghost"
+                    size="sm"
+                    iconOnly
                     className="admin-shell__user-menu-button"
                     aria-label="Open account settings and logout menu"
                     onClick={(event) => menuRef.current?.toggle(event)}
-                />
+                >
+                    <i className="pi pi-ellipsis-v" aria-hidden="true" />
+                </Button>
             </div>
         </div>
     );
@@ -196,12 +227,14 @@ export default function AdminLayout({ children }) {
                 label: 'Settings',
                 icon: 'pi pi-cog',
                 url: '/dashboard/settings',
+                template: menuActionTemplate,
             },
             { separator: true },
             {
                 label: 'Log out',
                 icon: 'pi pi-sign-out',
                 command: () => router.post('/logout'),
+                template: menuActionTemplate,
             },
         ],
         [],
@@ -264,13 +297,16 @@ export default function AdminLayout({ children }) {
                         <strong>Nested Nurturers</strong>
                         <Button
                             type="button"
-                            text
-                            rounded
-                            icon="pi pi-times"
+                            variant="ghost"
+                            size="sm"
+                            iconOnly
                             aria-label="Close navigation menu"
                             onClick={() => dispatch(setMobileSidebarOpen(false))}
-                        />
+                        >
+                            <i className="pi pi-times" aria-hidden="true" />
+                        </Button>
                     </div>
+                    <ThemeToggle className="admin-shell__mobile-theme-toggle" />
                     <SidebarNavigation
                         collapsed={false}
                         url={url}
@@ -284,13 +320,15 @@ export default function AdminLayout({ children }) {
                         </div>
                         <Button
                             type="button"
-                            text
-                            rounded
-                            icon="pi pi-ellipsis-v"
+                            variant="ghost"
+                            size="sm"
+                            iconOnly
                             className="admin-shell__user-menu-button"
                             aria-label="Open account settings and logout menu"
                             onClick={(event) => menuRef.current?.toggle(event)}
-                        />
+                        >
+                            <i className="pi pi-ellipsis-v" aria-hidden="true" />
+                        </Button>
                     </div>
                 </div>
             </Sidebar>
@@ -300,14 +338,16 @@ export default function AdminLayout({ children }) {
                     <div className="admin-shell__topbar-start">
                         <Button
                             type="button"
-                            text
-                            rounded
-                            icon="pi pi-bars"
+                            variant="ghost"
+                            size="sm"
+                            iconOnly
                             className="admin-shell__icon-button"
                             aria-label={isDesktop ? 'Toggle sidebar' : 'Open navigation menu'}
                             aria-expanded={!isDesktop ? mobileSidebarOpen : undefined}
                             onClick={handleMenuToggle}
-                        />
+                        >
+                            <i className="pi pi-bars" aria-hidden="true" />
+                        </Button>
                         <BreadCrumb
                             aria-label="Breadcrumb"
                             className="admin-shell__breadcrumb"
@@ -317,6 +357,7 @@ export default function AdminLayout({ children }) {
                     </div>
 
                     <div className="admin-shell__topbar-actions">
+                        <ThemeToggle className="admin-shell__theme-toggle" />
                         <label className="admin-shell__search">
                             <i className="pi pi-search" aria-hidden="true" />
                             <InputText placeholder="Search" aria-label="Search dashboard" />
@@ -324,26 +365,29 @@ export default function AdminLayout({ children }) {
                         </label>
                         <Button
                             type="button"
-                            text
-                            rounded
-                            icon="pi pi-search"
+                            variant="ghost"
+                            size="sm"
+                            iconOnly
                             className="admin-shell__icon-button admin-shell__search-trigger"
                             aria-label="Search dashboard"
-                        />
+                        >
+                            <i className="pi pi-search" aria-hidden="true" />
+                        </Button>
                         <Button
                             type="button"
-                            text
-                            rounded
-                            icon="pi pi-bell"
+                            variant="ghost"
+                            size="sm"
+                            iconOnly
                             className="admin-shell__icon-button"
                             aria-label="Notifications, 3 unread"
-                            badge="3"
-                            badgeClassName="admin-shell__notification-badge"
-                        />
+                        >
+                            <i className="pi pi-bell" aria-hidden="true" />
+                            <span className="admin-shell__notification-badge" aria-hidden="true">3</span>
+                        </Button>
                         <Button
                             type="button"
-                            text
-                            rounded
+                            variant="ghost"
+                            size="sm"
                             className="admin-shell__avatar-button"
                             aria-label="Open account settings and logout menu"
                             aria-haspopup="true"
@@ -352,7 +396,7 @@ export default function AdminLayout({ children }) {
                             <Avatar label={getInitials(user?.name)} shape="circle" className="admin-shell__avatar" />
                         </Button>
                     </div>
-                    <Menu model={menuItems} popup ref={menuRef} />
+                    <Menu model={menuItems} popup ref={menuRef} className="admin-shell__account-menu" />
                 </header>
 
                 <main className="admin-shell__content-scroll" role="main">

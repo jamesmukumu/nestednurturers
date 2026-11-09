@@ -1,6 +1,7 @@
 import { Contact } from "@/comps/Contact";
 import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
+import Button from "@/Components/Button";
 import { Seo } from "@/comps/SEO";
 import { Fq } from "@/comps/fq";
 
@@ -149,13 +150,10 @@ schema={{
                      
                   Take A look at what people ask us
                   </p>
-                  <a
-                      href="/contact"
-                      className="inline-block bg-pr_btn mb-2 hover:bg-pr_btn text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition"
-                  >
+                  <Button href="/contact" className="mb-2">
                      
                       BOOK YOUR CONSULTATION
-                  </a>
+                  </Button>
               </div>
           </section>
 <section>

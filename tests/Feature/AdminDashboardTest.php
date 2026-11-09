@@ -11,7 +11,7 @@ test('public homepage remains available', function () {
 
 test('dashboard routes require authentication', function () {
     $this->get('/dashboard')->assertRedirect(route('login'));
-    $this->get('/dashboard/editor')->assertRedirect('/blogs');
+    $this->get('/dashboard/editor')->assertRedirect('/dashboard/blogs');
     $this->get('/dashboard/settings')->assertRedirect(route('login'));
 });
 
@@ -22,7 +22,7 @@ test('authenticated users can open dashboard pages', function () {
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page->component('Admin/Dashboard'));
 
-    $this->get('/dashboard/editor')->assertRedirect('/blogs');
+    $this->get('/dashboard/editor')->assertRedirect('/dashboard/blogs');
 
     $this->get('/dashboard/settings')
         ->assertOk()

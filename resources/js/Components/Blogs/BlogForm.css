@@ -109,7 +109,7 @@
         flex: 1;
     }
 
-    .blog-form__category-row > .p-button {
+    .blog-form__category-row > .app-button {
         width: 100%;
     }
 }

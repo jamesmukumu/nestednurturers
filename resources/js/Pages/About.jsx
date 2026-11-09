@@ -2,6 +2,7 @@ import { Contact } from "@/comps/Contact";
 import { Footer } from "@/comps/Foot";
 import { Header } from "@/comps/Header";
 import { Seo } from "@/comps/SEO";
+import Button from "@/Components/Button";
 
 export default function About({uscities}){
     let TodaysDate = new Date()
@@ -140,13 +141,12 @@ schema={{
 
                             At Nested Nurturers, we believe that every family deserves compassionate, personalized support as they navigate the beautiful yet challenging journey of early parenthood. Our team of certified postpartum doulas and sleep consultants is dedicated to empowering parents with the tools, guidance, and encouragement they need to create peaceful, nurturing environments for their growing families.
                         </p>
-                        <a
+                        <Button
                             href="/contact"
-                            type="button"
-                            className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
+                            className="mt-6"
                         >
                         Contact Us
-                        </a>
+                        </Button>
                     </div>
 
                     {/* <div className="mt-8 md:mt-0 md:w-1/2 flex justify-center">
@@ -197,13 +197,12 @@ schema={{
 
                             Nested Nurturers is your trusted partner for postpartum care and sleep training services, offering compassionate support to help families bond, rest, and grow together. Let us ease the transition into parenthood with personalized guidance and gentle care."
                         </p>
-                        <a
+                        <Button
                             href="/contact"
-                            type="button"
-                            className="inline-block mt-6 px-6 py-3 bg-pr_btn hover:bg-pr_btn text-white font-semibold rounded-lg shadow  transition"
+                            className="mt-6"
                         >
                         Contact Us
-                        </a>
+                        </Button>
                     </div>
 
                     {/* <div className="mt-8 md:mt-0 md:w-1/2 flex justify-center">

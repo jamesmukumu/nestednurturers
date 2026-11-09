@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Button } from 'primereact/button';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
+import Button from '@/Components/Button';
 
 export default function BlogCategoryDialog({ visible, onHide, onCreated, toast }) {
     const [data, setData] = useState({ title: '', description: '' });
@@ -61,8 +61,12 @@ export default function BlogCategoryDialog({ visible, onHide, onCreated, toast }
             className="blog-category-dialog"
             footer={(
                 <div className="blog-category-dialog__footer">
-                    <Button type="button" label="Cancel" severity="secondary" outlined onClick={close} disabled={saving} />
-                    <Button type="submit" form="blog-category-form" label="Save category" loading={saving} disabled={saving} />
+                    <Button type="button" variant="secondary" onClick={close} disabled={saving}>
+                        Cancel
+                    </Button>
+                    <Button type="submit" form="blog-category-form" loading={saving} loadingLabel="Saving category…">
+                        Save category
+                    </Button>
                 </div>
             )}
         >

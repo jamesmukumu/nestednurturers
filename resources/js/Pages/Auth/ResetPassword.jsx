@@ -1,7 +1,7 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
+import AuthPasswordInput from '@/Components/AuthPasswordInput';
+import AuthSubmitButton from '@/Components/AuthSubmitButton';
 import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function ResetPassword({ token, email }) {
@@ -45,12 +45,11 @@ export default function ResetPassword({ token, email }) {
                 </div>
                 <div className="auth-form__field">
                     <label htmlFor="reset-password">New password</label>
-                    <Password
+                    <AuthPasswordInput
                         inputId="reset-password"
                         value={data.password}
                         autoComplete="new-password"
                         autoFocus
-                        toggleMask
                         feedback={false}
                         invalid={Boolean(errors.password)}
                         aria-invalid={Boolean(errors.password)}
@@ -61,11 +60,10 @@ export default function ResetPassword({ token, email }) {
                 </div>
                 <div className="auth-form__field">
                     <label htmlFor="reset-password-confirmation">Confirm password</label>
-                    <Password
+                    <AuthPasswordInput
                         inputId="reset-password-confirmation"
                         value={data.password_confirmation}
                         autoComplete="new-password"
-                        toggleMask
                         feedback={false}
                         invalid={Boolean(errors.password_confirmation)}
                         aria-invalid={Boolean(errors.password_confirmation)}
@@ -78,12 +76,10 @@ export default function ResetPassword({ token, email }) {
                         </small>
                     )}
                 </div>
-                <Button
-                    className="auth-form__submit"
-                    type="submit"
+                <AuthSubmitButton
+                    processing={processing}
                     label="Reset Password"
-                    loading={processing}
-                    disabled={processing}
+                    processingLabel="Resetting password…"
                 />
             </form>
         </GuestLayout>

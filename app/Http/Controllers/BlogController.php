@@ -53,7 +53,7 @@ class BlogController extends Controller
 
         $admin->blogs()->create($validated);
 
-        return to_route('blogs.index')->with('success', 'Blog created successfully.');
+        return to_route('admin.blogs.index')->with('success', 'Blog created successfully.');
     }
 
     public function show(Request $request, string $blog): Response
@@ -99,7 +99,7 @@ class BlogController extends Controller
             Storage::disk('public')->delete($previousImagePath);
         }
 
-        return to_route('blogs.index')->with('success', 'Blog updated successfully.');
+        return to_route('admin.blogs.index')->with('success', 'Blog updated successfully.');
     }
 
     public function destroy(Request $request, string $blog): RedirectResponse
@@ -110,7 +110,7 @@ class BlogController extends Controller
         }
         $record->delete();
 
-        return to_route('blogs.index')->with('success', 'Blog deleted successfully.');
+        return to_route('admin.blogs.index')->with('success', 'Blog deleted successfully.');
     }
 
     private function admin(Request $request): Admin

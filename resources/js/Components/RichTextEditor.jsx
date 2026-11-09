@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
 import 'jodit/es2021/jodit.min.css';
 
 export default function RichTextEditor({
@@ -12,12 +13,14 @@ export default function RichTextEditor({
 }) {
     const [Editor, setEditor] = useState(null);
     const [loadError, setLoadError] = useState(false);
+    const isDark = useSelector((state) => state.theme.resolved === 'dark');
     const config = useMemo(
         () => ({
             height,
             minHeight: 240,
             width: '100%',
             readonly: readOnly,
+            theme: isDark ? 'dark' : 'default',
             placeholder,
             toolbarAdaptive: true,
             toolbarSticky: false,
@@ -43,7 +46,7 @@ export default function RichTextEditor({
             buttonsSM: ['bold', 'italic', '|', 'ul', 'ol', '|', 'link', 'undo', 'redo'],
             buttonsXS: ['bold', 'italic', '|', 'ul', 'ol', '|', 'undo', 'redo'],
         }),
-        [height, placeholder, readOnly],
+        [height, isDark, placeholder, readOnly],
     );
 
     useEffect(() => {

@@ -4,6 +4,8 @@ import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
+import Button from '@/Components/Button';
+import ThemeToggle from '@/Components/ThemeToggle';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -12,14 +14,14 @@ export default function AuthenticatedLayout({ header, children }) {
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="border-b border-gray-100 bg-white">
+        <div className="authenticated-shell min-h-screen bg-[var(--app-page)] text-[var(--app-text)]">
+            <nav className="border-b border-[var(--app-border)] bg-[var(--app-surface)]">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <ApplicationLogo className="block h-9 w-auto fill-current text-[var(--app-text)]" />
                                 </Link>
                             </div>
 
@@ -34,13 +36,15 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
+                            <ThemeToggle className="authenticated-shell__theme-toggle" />
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
-                                            <button
+                                            <Button
                                                 type="button"
-                                                className="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                                                variant="ghost"
+                                                size="sm"
                                             >
                                                 {user.name}
 
@@ -56,7 +60,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                                         clipRule="evenodd"
                                                     />
                                                 </svg>
-                                            </button>
+                                            </Button>
                                         </span>
                                     </Dropdown.Trigger>
 
@@ -79,13 +83,17 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="-me-2 flex items-center sm:hidden">
-                            <button
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                iconOnly
+                                aria-label={showingNavigationDropdown ? 'Close navigation menu' : 'Open navigation menu'}
+                                aria-expanded={showingNavigationDropdown}
                                 onClick={() =>
                                     setShowingNavigationDropdown(
                                         (previousState) => !previousState,
                                     )
                                 }
-                                className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
                             >
                                 <svg
                                     className="h-6 w-6"
@@ -116,7 +124,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         d="M6 18L18 6M6 6l12 12"
                                     />
                                 </svg>
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -136,12 +144,14 @@ export default function AuthenticatedLayout({ header, children }) {
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="border-t border-gray-200 pb-1 pt-4">
+                    <ThemeToggle className="authenticated-shell__mobile-theme-toggle" />
+
+                    <div className="border-t border-[var(--app-border)] pb-1 pt-4">
                         <div className="px-4">
-                            <div className="text-base font-medium text-gray-800">
+                            <div className="text-base font-medium text-[var(--app-text)]">
                                 {user.name}
                             </div>
-                            <div className="text-sm font-medium text-gray-500">
+                            <div className="text-sm font-medium text-[var(--app-text-secondary)]">
                                 {user.email}
                             </div>
                         </div>
@@ -163,7 +173,7 @@ export default function AuthenticatedLayout({ header, children }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
+                <header className="bg-[var(--app-surface)] shadow">
                     <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
                         {header}
                     </div>

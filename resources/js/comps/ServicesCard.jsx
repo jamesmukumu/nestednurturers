@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "@/Components/Button";
 
 export function ServiceCard() {
     const [services, setServices] = useState([
@@ -53,12 +54,9 @@ export function ServiceCard() {
                             <p className="flex-grow px-6 pb-5 text-lg leading-relaxed text-gray-600">
                                 {service.description}
                             </p>
-                            <a
-                                href="/contact"
-                                className="mb-6 mt-3 inline-flex items-center justify-center rounded bg-pr_btn px-6 py-3 font-semibold text-white shadow transition-transform hover:-translate-y-1 hover:shadow-lg"
-                            >
-                                Book Now
-                            </a>
+                            <Button asChild className="mb-6 mt-3">
+                                <span>Book Now</span>
+                            </Button>
                         </a>
                     </div>
                 ))}

@@ -1,8 +1,8 @@
-import { Head, Link } from '@inertiajs/react';
-import { Button } from 'primereact/button';
+import { Head } from '@inertiajs/react';
 import { Card } from 'primereact/card';
 import { Tag } from 'primereact/tag';
 import AdminLayout from '../../../Layouts/AdminLayout';
+import Button from '@/Components/Button';
 import './blogs.css';
 
 function ShowBlog({ blog }) {
@@ -17,10 +17,9 @@ function ShowBlog({ blog }) {
                     </div>
                     <div className="blogs-show__actions">
                         <Tag value={blog.is_published ? 'Published' : 'Draft'} severity={blog.is_published ? 'success' : 'warning'} />
-                        <Link href={`/blogs/${blog.id}/edit`} className="p-button p-component">
-                            <span className="p-button-icon p-button-icon-left pi pi-pencil" aria-hidden="true" />
-                            <span className="p-button-label">Edit blog</span>
-                        </Link>
+                        <Button href={`/dashboard/blogs/${blog.id}/edit`} leftIcon={<i className="pi pi-pencil" aria-hidden="true" />}>
+                            Edit blog
+                        </Button>
                     </div>
                 </header>
                 {blog.image_url && (

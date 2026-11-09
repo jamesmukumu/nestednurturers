@@ -1,6 +1,6 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Button } from 'primereact/button';
-import { Password } from 'primereact/password';
+import AuthPasswordInput from '@/Components/AuthPasswordInput';
+import AuthSubmitButton from '@/Components/AuthSubmitButton';
 import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function ConfirmPassword() {
@@ -25,12 +25,11 @@ export default function ConfirmPassword() {
             <form className="auth-form" onSubmit={submit}>
                 <div className="auth-form__field">
                     <label htmlFor="confirm-password">Password</label>
-                    <Password
+                    <AuthPasswordInput
                         inputId="confirm-password"
                         value={data.password}
                         autoComplete="current-password"
                         autoFocus
-                        toggleMask
                         feedback={false}
                         invalid={Boolean(errors.password)}
                         aria-invalid={Boolean(errors.password)}
@@ -39,13 +38,7 @@ export default function ConfirmPassword() {
                     />
                     {errors.password && <small className="p-error" id="confirm-password-error">{errors.password}</small>}
                 </div>
-                <Button
-                    className="auth-form__submit"
-                    type="submit"
-                    label="Confirm"
-                    loading={processing}
-                    disabled={processing}
-                />
+                <AuthSubmitButton processing={processing} label="Confirm" processingLabel="Confirming…" />
             </form>
         </GuestLayout>
     );

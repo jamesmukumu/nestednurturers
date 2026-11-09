@@ -1,3 +1,5 @@
+import Button from "@/Components/Button";
+
 export const PriceTemp = () => {
   let visitContact = ()=>{
     window.open("/contact")
@@ -38,14 +40,14 @@ export const PriceTemp = () => {
                   $1560.00 <span className="text-base font-medium">/4days a week</span>
                 </h2>
 
-                <button
+                <Button
                   type="button"
-                  role="button"
                   onClick={visitContact}
-                  className="w-full px-4 py-2 mt-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                  fullWidth
+                  className="mt-auto"
                 >
                   Contact Us
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -62,9 +64,9 @@ export const PriceTemp = () => {
                   $1560.00 <span className="text-base font-medium">/3Nights a week</span>
                 </h2>
 
-                <button onClick={visitContact} className="w-full px-4 py-2 mt-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:pr_btn focus:ring-opacity-80">
+                <Button type="button" onClick={visitContact} fullWidth className="mt-auto">
                   Contact Us
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -81,9 +83,9 @@ export const PriceTemp = () => {
                   $2730.00 <span className="text-base font-medium">/3 Days+ 3 Nights a week</span>
                 </h2>
 
-                <button onClick={visitContact} className="w-full px-4 py-2 mt-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:pr_btn focus:ring-opacity-80">
+                <Button type="button" onClick={visitContact} fullWidth className="mt-auto">
                   Contact Us
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -134,25 +136,25 @@ export const SinglePriceTemp = () => {
                   $1560.00 <span className="text-base font-medium">/4days a week</span>
                 </h2>
 
-                <button
+                <Button
                   type="button"
-                  role="button"
                   onClick={visitContact}
-                  className="w-full px-4 py-2 mt-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+                  fullWidth
+                  className="mt-auto"
                 >
                   Contact Us
-                </button>
+                </Button>
               </div>
             </div>
 
             {/* Second Essential Plan */}
             <div className="w-full   dark:bg-gray-800 flex flex-col">
               <div className="p-6 flex flex-col h-full">
-               <button onClick={()=>{
+               <Button type="button" onClick={()=>{
                 window.open("/pricing")
-               }} className="w-full px-4 py-2 mt-auto tracking-wide text-white capitalize transition-colors duration-300 transform bg-pr_btn rounded-lg hover:bg-pr_btn focus:outline-none focus:bg-pr_btn focus:ring focus:pr_btn focus:ring-opacity-80">
+               }} fullWidth className="mt-auto">
                   View More Packages
-                </button>
+                </Button>
               </div>
             </div>
 
@@ -163,4 +165,3 @@ export const SinglePriceTemp = () => {
       </div>
     );
 };
-

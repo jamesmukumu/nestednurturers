@@ -1,0 +1,268 @@
+.app-button {
+    position: relative;
+    display: inline-flex;
+    box-sizing: border-box;
+    min-width: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 0;
+    border-radius: 9999px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    letter-spacing: 0.025em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.app-button--md {
+    min-height: 3rem;
+    padding: 0.875rem 1.5rem;
+}
+
+.app-button--sm {
+    min-height: 2.75rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8125rem;
+}
+
+.app-button--lg {
+    min-height: 3.5rem;
+    padding: 1.125rem 1.75rem;
+    font-size: 1rem;
+}
+
+.app-button--full-width {
+    width: 100%;
+}
+
+.app-button.justify-start {
+    justify-content: flex-start;
+}
+
+.app-button.text-start {
+    text-align: left;
+}
+
+.app-button.text-black {
+    color: #000;
+}
+
+.dark .app-button.text-black {
+    color: #f3f4f6;
+}
+
+.app-button--icon-only {
+    width: 2.75rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    padding: 0.5rem;
+}
+
+.app-button--primary {
+    background: linear-gradient(to right, #ed69c2, #a94f9c);
+    color: #fff;
+    box-shadow: 0 8px 20px rgb(169 79 156 / 28%);
+}
+
+.app-button--primary:hover:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(-2px);
+    background: linear-gradient(to right, #e357b5, #98418b);
+    box-shadow: 0 12px 24px rgb(169 79 156 / 35%);
+}
+
+.app-button--secondary {
+    background: #fff;
+    color: #854078;
+    box-shadow: inset 0 0 0 1px #d98ac8;
+}
+
+.app-button--secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: #fff4fc;
+    box-shadow: inset 0 0 0 1px #a94f9c;
+}
+
+.dark .app-button--secondary {
+    background: #292333;
+    color: #f6d9ef;
+    box-shadow: inset 0 0 0 1px #b96ea8;
+}
+
+.dark .app-button--secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: #3a2a3d;
+    box-shadow: inset 0 0 0 1px #ed91d1;
+}
+
+.app-button--ghost {
+    background: transparent;
+    color: #854078;
+}
+
+.app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: rgb(217 138 200 / 14%);
+}
+
+.dark .app-button--ghost {
+    color: #f6d9ef;
+}
+
+.dark .app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: rgb(237 145 209 / 16%);
+}
+
+.app-button--danger {
+    background: linear-gradient(to right, #e45d74, #b4234a);
+    color: #fff;
+    box-shadow: 0 8px 20px rgb(180 35 74 / 24%);
+}
+
+.app-button--danger:hover:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(-2px);
+    background: linear-gradient(to right, #d94b65, #9f1f42);
+    box-shadow: 0 12px 24px rgb(180 35 74 / 32%);
+}
+
+.app-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(217 138 200 / 40%);
+}
+
+.app-button--secondary:focus-visible {
+    box-shadow: inset 0 0 0 1px #a94f9c, 0 0 0 4px rgb(217 138 200 / 40%);
+}
+
+.app-button--danger:focus-visible {
+    box-shadow: 0 0 0 4px rgb(217 75 101 / 30%);
+}
+
+.app-button:active:not(:disabled):not([aria-disabled="true"]) {
+    transform: translateY(0);
+}
+
+.app-button:disabled,
+.app-button[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.app-button__content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.app-button__arrow {
+    transition: transform 200ms ease;
+}
+
+.app-button:hover:not(:disabled):not([aria-disabled="true"]) .app-button__arrow {
+    transform: translateX(0.125rem);
+}
+
+.app-button__spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: app-button-spin 700ms linear infinite;
+    transform: translate(-50%, -50%);
+}
+
+.app-button[aria-busy="true"] .app-button__content {
+    visibility: hidden;
+}
+
+.app-button__badge {
+    position: absolute;
+    top: 0.125rem;
+    right: 0.125rem;
+}
+
+.p-button.app-button {
+    border-radius: 9999px;
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    transition: color 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.admin-shell__account-menu .p-menuitem-link.app-button {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.admin-shell__account-menu .p-menuitem-link.app-button--ghost {
+    background: transparent;
+    color: #854078;
+}
+
+.admin-shell__account-menu .p-menuitem-link.app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: rgb(217 138 200 / 14%);
+}
+
+.dark .admin-shell__account-menu .p-menuitem-link.app-button--ghost {
+    color: #f6d9ef;
+}
+
+.dark .admin-shell__account-menu .p-menuitem-link.app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: rgb(237 145 209 / 16%);
+}
+
+.admin-shell__account-menu .p-menuitem-link.app-button:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 4px rgb(217 138 200 / 40%);
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon,
+.p-paginator .p-paginator-element,
+.p-datepicker .p-datepicker-prev,
+.p-datepicker .p-datepicker-next {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    color: #854078;
+    transition: background 200ms ease, box-shadow 200ms ease;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:hover,
+.p-paginator .p-paginator-element:hover,
+.p-datepicker .p-datepicker-prev:hover,
+.p-datepicker .p-datepicker-next:hover {
+    background: rgb(217 138 200 / 14%);
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:focus-visible,
+.p-paginator .p-paginator-element:focus-visible,
+.p-datepicker .p-datepicker-prev:focus-visible,
+.p-datepicker .p-datepicker-next:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgb(217 138 200 / 40%);
+}
+
+@keyframes app-button-spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .app-button {
+        transition: none;
+    }
+
+    .app-button__spinner {
+        animation-duration: 1.4s;
+    }
+}

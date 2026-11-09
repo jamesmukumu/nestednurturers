@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Head, Link, router, usePage } from '@inertiajs/react';
-import { Button } from 'primereact/button';
+import { Head, router, usePage } from '@inertiajs/react';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { InputText } from 'primereact/inputtext';
@@ -9,6 +8,7 @@ import { Toast } from 'primereact/toast';
 import { confirmDialog, ConfirmDialog } from 'primereact/confirmdialog';
 import { format, parseISO } from 'date-fns';
 import AdminLayout from '../../../Layouts/AdminLayout';
+import Button from '@/Components/Button';
 import './blogs.css';
 
 function BlogsList({ blogs, filters }) {
@@ -29,7 +29,7 @@ function BlogsList({ blogs, filters }) {
     useEffect(() => {
         if (search === (filters.search || '')) return undefined;
         const timer = window.setTimeout(() => {
-            router.get('/blogs', { search: search || undefined }, {
+            router.get('/dashboard/blogs', { search: search || undefined }, {
                 preserveState: true,
                 preserveScroll: true,
                 replace: true,
@@ -39,7 +39,7 @@ function BlogsList({ blogs, filters }) {
     }, [search, filters.search]);
 
     const changePage = (event) => {
-        router.get('/blogs', {
+        router.get('/dashboard/blogs', {
             search: search || undefined,
             page: event.page + 1,
         }, {
@@ -55,8 +55,9 @@ function BlogsList({ blogs, filters }) {
             icon: 'pi pi-exclamation-triangle',
             acceptLabel: 'Delete',
             rejectLabel: 'Cancel',
-            acceptClassName: 'p-button-danger',
-            accept: () => router.delete(`/blogs/${blog.id}`, {
+            acceptClassName: 'app-button app-button--danger app-button--md',
+            rejectClassName: 'app-button app-button--secondary app-button--md',
+            accept: () => router.delete(`/dashboard/blogs/${blog.id}`, {
                 onError: () => toast.current?.show({
                     severity: 'error',
                     summary: 'Unable to delete blog',
@@ -92,29 +93,34 @@ function BlogsList({ blogs, filters }) {
 
     const actionsBody = (blog) => (
         <div className="blogs-list__actions">
-            <Link
-                href={`/blogs/${blog.id}`}
-                className="p-button p-component p-button-text p-button-rounded p-button-icon-only"
+            <Button
+                href={`/dashboard/blogs/${blog.id}`}
+                variant="ghost"
+                size="sm"
+                iconOnly
                 aria-label={`View ${blog.title}`}
             >
                 <i className="pi pi-eye" aria-hidden="true" />
-            </Link>
-            <Link
-                href={`/blogs/${blog.id}/edit`}
-                className="p-button p-component p-button-text p-button-rounded p-button-icon-only"
+            </Button>
+            <Button
+                href={`/dashboard/blogs/${blog.id}/edit`}
+                variant="ghost"
+                size="sm"
+                iconOnly
                 aria-label={`Edit ${blog.title}`}
             >
                 <i className="pi pi-pencil" aria-hidden="true" />
-            </Link>
+            </Button>
             <Button
                 type="button"
-                text
-                rounded
-                severity="danger"
-                icon="pi pi-trash"
+                variant="danger"
+                size="sm"
+                iconOnly
                 aria-label={`Delete ${blog.title}`}
                 onClick={() => deleteBlog(blog)}
-            />
+            >
+                <i className="pi pi-trash" aria-hidden="true" />
+            </Button>
         </div>
     );
 
@@ -129,10 +135,9 @@ function BlogsList({ blogs, filters }) {
                         <h1>Blogs</h1>
                         <p>Create, edit, and manage your blogs.</p>
                     </div>
-                    <Link href="/blogs/create" className="p-button p-component">
-                        <i className="p-button-icon p-button-icon-left pi pi-plus" aria-hidden="true" />
-                        <span className="p-button-label">Create Article</span>
-                    </Link>
+                    <Button href="/dashboard/blogs/create" leftIcon={<i className="pi pi-plus" aria-hidden="true" />}>
+                        Create Article
+                    </Button>
                 </header>
                 <div className="blogs-list__toolbar">
                     <label className="blogs-list__search">

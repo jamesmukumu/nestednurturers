@@ -1,8 +1,8 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
 import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
+import AuthSubmitButton from '@/Components/AuthSubmitButton';
+import AuthPasswordInput from '@/Components/AuthPasswordInput';
 import GuestLayout from '../../Layouts/GuestLayout';
 
 export default function Login({ status }) {
@@ -33,6 +33,7 @@ export default function Login({ status }) {
                         <label htmlFor="login-email">Email</label>
                         <InputText
                             id="login-email"
+                            className="auth-form__input"
                             type="email"
                             value={data.email}
                             autoComplete="email"
@@ -42,22 +43,25 @@ export default function Login({ status }) {
                             aria-describedby={errors.email ? 'login-email-error' : undefined}
                             onChange={(event) => setData('email', event.target.value)}
                         />
-                        {errors.email && <small className="p-error" id="login-email-error">{errors.email}</small>}
+                        <small className="auth-form__error" id="login-email-error">
+                            {errors.email || '\u00a0'}
+                        </small>
                     </div>
                     <div className="auth-form__field">
                         <label htmlFor="login-password">Password</label>
-                        <Password
+                        <AuthPasswordInput
                             inputId="login-password"
                             value={data.password}
                             autoComplete="current-password"
-                            toggleMask
                             feedback={false}
                             invalid={Boolean(errors.password)}
                             aria-invalid={Boolean(errors.password)}
                             aria-describedby={errors.password ? 'login-password-error' : undefined}
                             onChange={(event) => setData('password', event.target.value)}
                         />
-                        {errors.password && <small className="p-error" id="login-password-error">{errors.password}</small>}
+                        <small className="auth-form__error" id="login-password-error">
+                            {errors.password || '\u00a0'}
+                        </small>
                     </div>
                     <div className="auth-form__remember">
                         <Checkbox
@@ -67,13 +71,7 @@ export default function Login({ status }) {
                         />
                         <label htmlFor="login-remember">Remember me</label>
                     </div>
-                    <Button
-                        className="auth-form__submit"
-                        type="submit"
-                        label="Log in"
-                        loading={processing}
-                        disabled={processing}
-                    />
+                    <AuthSubmitButton processing={processing} label="Log in" processingLabel="Logging in…" />
                 </form>
             </div>
         </GuestLayout>

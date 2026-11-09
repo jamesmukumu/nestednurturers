@@ -1,6 +1,6 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
+import AuthSubmitButton from '@/Components/AuthSubmitButton';
 import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function ForgotPassword({ status }) {
@@ -38,12 +38,10 @@ export default function ForgotPassword({ status }) {
                     />
                     {errors.email && <small className="p-error" id="forgot-email-error">{errors.email}</small>}
                 </div>
-                <Button
-                    className="auth-form__submit"
-                    type="submit"
+                <AuthSubmitButton
+                    processing={processing}
                     label="Email Password Reset Link"
-                    loading={processing}
-                    disabled={processing}
+                    processingLabel="Sending link…"
                 />
             </form>
         </GuestLayout>
