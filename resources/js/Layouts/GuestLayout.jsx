@@ -1,18 +1,38 @@
-import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/react';
+import { Card } from 'primereact/card';
+import './GuestLayout.css';
 
-export default function GuestLayout({ children }) {
+const heroImage = '/images/services/mom-and-baby-transparent-smaller-white-outline.png';
+
+export default function GuestLayout({ children, title, subtitle, footer }) {
     return (
-        <div className="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
+        <main className="auth-page">
+            <aside className="auth-page__visual">
+                <img
+                    className="auth-page__image"
+                    src={heroImage}
+                    alt="Parent holding baby"
+                    loading="eager"
+                    fetchPriority="high"
+                />
+                <Link
+                    href="/"
+                    className="auth-page__brand"
+                    aria-label="Nested Nurturers home"
+                >
+                    Nested Nurturers
                 </Link>
-            </div>
-
-            <div className="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg">
-                {children}
-            </div>
-        </div>
+            </aside>
+            <section className="auth-page__content" aria-label="Account access">
+                <Card className="auth-page__card">
+                    <header className="auth-card-content__header">
+                        <h1>{title}</h1>
+                        <p>{subtitle}</p>
+                    </header>
+                    <div className="auth-card-content">{children}</div>
+                    {footer && <div className="auth-card-content__footer">{footer}</div>}
+                </Card>
+            </section>
+        </main>
     );
 }

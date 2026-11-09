@@ -1,93 +1,90 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import { Password } from 'primereact/password';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
 
 export default function ResetPassword({ token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        token: token,
-        email: email,
+        token,
+        email,
         password: '',
         password_confirmation: '',
     });
 
-    const submit = (e) => {
-        e.preventDefault();
-
+    const submit = (event) => {
+        event.preventDefault();
         post(route('password.store'), {
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout
+            title="Reset your password"
+            subtitle="Choose a new password for your account."
+            footer={<>Remember your password? <Link href={route('login')}>Back to login</Link></>}
+        >
             <Head title="Reset Password" />
-
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
+            <form className="auth-form" onSubmit={submit}>
+                <input type="hidden" name="token" value={data.token} />
+                <div className="auth-form__field">
+                    <label htmlFor="reset-email">Email</label>
+                    <InputText
+                        id="reset-email"
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
+                        autoComplete="email"
+                        invalid={Boolean(errors.email)}
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? 'reset-email-error' : undefined}
+                        onChange={(event) => setData('email', event.target.value)}
                     />
-
-                    <InputError message={errors.email} className="mt-2" />
+                    {errors.email && <small className="p-error" id="reset-email-error">{errors.email}</small>}
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
+                <div className="auth-form__field">
+                    <label htmlFor="reset-password">New password</label>
+                    <Password
+                        inputId="reset-password"
                         value={data.password}
-                        className="mt-1 block w-full"
                         autoComplete="new-password"
-                        isFocused={true}
-                        onChange={(e) => setData('password', e.target.value)}
+                        autoFocus
+                        toggleMask
+                        feedback={false}
+                        invalid={Boolean(errors.password)}
+                        aria-invalid={Boolean(errors.password)}
+                        aria-describedby={errors.password ? 'reset-password-error' : undefined}
+                        onChange={(event) => setData('password', event.target.value)}
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    {errors.password && <small className="p-error" id="reset-password-error">{errors.password}</small>}
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel
-                        htmlFor="password_confirmation"
-                        value="Confirm Password"
-                    />
-
-                    <TextInput
-                        type="password"
-                        id="password_confirmation"
-                        name="password_confirmation"
+                <div className="auth-form__field">
+                    <label htmlFor="reset-password-confirmation">Confirm password</label>
+                    <Password
+                        inputId="reset-password-confirmation"
                         value={data.password_confirmation}
-                        className="mt-1 block w-full"
                         autoComplete="new-password"
-                        onChange={(e) =>
-                            setData('password_confirmation', e.target.value)
-                        }
+                        toggleMask
+                        feedback={false}
+                        invalid={Boolean(errors.password_confirmation)}
+                        aria-invalid={Boolean(errors.password_confirmation)}
+                        aria-describedby={errors.password_confirmation ? 'reset-password-confirmation-error' : undefined}
+                        onChange={(event) => setData('password_confirmation', event.target.value)}
                     />
-
-                    <InputError
-                        message={errors.password_confirmation}
-                        className="mt-2"
-                    />
+                    {errors.password_confirmation && (
+                        <small className="p-error" id="reset-password-confirmation-error">
+                            {errors.password_confirmation}
+                        </small>
+                    )}
                 </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Reset Password
-                    </PrimaryButton>
-                </div>
+                <Button
+                    className="auth-form__submit"
+                    type="submit"
+                    label="Reset Password"
+                    loading={processing}
+                    disabled={processing}
+                />
             </form>
         </GuestLayout>
     );

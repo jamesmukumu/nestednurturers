@@ -1,54 +1,51 @@
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { Button } from 'primereact/button';
+import { Password } from 'primereact/password';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, useForm } from '@inertiajs/react';
 
 export default function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
         password: '',
     });
 
-    const submit = (e) => {
-        e.preventDefault();
-
+    const submit = (event) => {
+        event.preventDefault();
         post(route('password.confirm'), {
             onFinish: () => reset('password'),
         });
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout
+            title="Confirm your password"
+            subtitle="This is a secure area. Please confirm your password before continuing."
+            footer={<>Need to sign in again? <Link href={route('login')}>Back to login</Link></>}
+        >
             <Head title="Confirm Password" />
-
-            <div className="mb-4 text-sm text-gray-600">
-                This is a secure area of the application. Please confirm your
-                password before continuing.
-            </div>
-
-            <form onSubmit={submit}>
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
+            <form className="auth-form" onSubmit={submit}>
+                <div className="auth-form__field">
+                    <label htmlFor="confirm-password">Password</label>
+                    <Password
+                        inputId="confirm-password"
                         value={data.password}
-                        className="mt-1 block w-full"
-                        isFocused={true}
-                        onChange={(e) => setData('password', e.target.value)}
+                        autoComplete="current-password"
+                        autoFocus
+                        toggleMask
+                        feedback={false}
+                        invalid={Boolean(errors.password)}
+                        aria-invalid={Boolean(errors.password)}
+                        aria-describedby={errors.password ? 'confirm-password-error' : undefined}
+                        onChange={(event) => setData('password', event.target.value)}
                     />
-
-                    <InputError message={errors.password} className="mt-2" />
+                    {errors.password && <small className="p-error" id="confirm-password-error">{errors.password}</small>}
                 </div>
-
-                <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Confirm
-                    </PrimaryButton>
-                </div>
+                <Button
+                    className="auth-form__submit"
+                    type="submit"
+                    label="Confirm"
+                    loading={processing}
+                    disabled={processing}
+                />
             </form>
         </GuestLayout>
     );

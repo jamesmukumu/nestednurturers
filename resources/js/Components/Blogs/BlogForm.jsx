@@ -1,0 +1,334 @@
+import { useEffect, useRef, useState } from 'react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
+import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import { Checkbox } from 'primereact/checkbox';
+import { Dropdown } from 'primereact/dropdown';
+import { FileUpload } from 'primereact/fileupload';
+import { InputText } from 'primereact/inputtext';
+import { Toast } from 'primereact/toast';
+import BlogCategoryDialog from './BlogCategoryDialog';
+import RichTextEditor from '../RichTextEditor';
+import AdminLayout from '../../Layouts/AdminLayout';
+import './BlogForm.css';
+
+const maximumImageSize = 2 * 1024 * 1024;
+const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+const allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+
+function imageError(file) {
+    if (!file) return 'Please choose a cover image.';
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    if (!allowedTypes.includes(file.type) || !allowedExtensions.includes(extension) || file.size > maximumImageSize) {
+        return 'Choose a JPG, PNG, or WEBP image up to 2MB.';
+    }
+    return '';
+}
+
+function hasPlainText(value) {
+    const container = document.createElement('div');
+    container.innerHTML = value;
+    return Boolean((container.textContent || container.innerText || '').replace(/\u00a0/g, ' ').trim());
+}
+
+function validateImageLoads(file) {
+    return new Promise((resolve) => {
+        const url = URL.createObjectURL(file);
+        const image = new Image();
+        image.onload = () => {
+            URL.revokeObjectURL(url);
+            resolve(true);
+        };
+        image.onerror = () => {
+            URL.revokeObjectURL(url);
+            resolve(false);
+        };
+        image.src = url;
+    });
+}
+
+export default function BlogForm({ blog = null, categories: initialCategories = [] }) {
+    const isEdit = Boolean(blog);
+    const toast = useRef(null);
+    const [categories, setCategories] = useState(initialCategories);
+    const [categoryDialogVisible, setCategoryDialogVisible] = useState(false);
+    const [previewUrl, setPreviewUrl] = useState(blog?.image_url || null);
+    const [saving, setSaving] = useState(false);
+    const {
+        data,
+        setData,
+        errors,
+        setError,
+        clearErrors,
+    } = useForm({
+        title: blog?.title || '',
+        description: blog?.description || '',
+        overview: blog?.overview || '',
+        blog_categories_id: blog?.blog_categories_id || null,
+        image: null,
+        is_published: blog?.is_published || false,
+    });
+
+    useEffect(() => {
+        if (!data.image) {
+            setPreviewUrl(blog?.image_url || null);
+            return undefined;
+        }
+        const url = URL.createObjectURL(data.image);
+        setPreviewUrl(url);
+        return () => URL.revokeObjectURL(url);
+    }, [data.image, blog?.image_url]);
+
+    const onCategoryCreated = (category) => {
+        setCategories((current) => [...current, category].sort((a, b) => a.title.localeCompare(b.title)));
+        setData('blog_categories_id', category.id);
+        clearErrors('blog_categories_id');
+    };
+
+    const onImageSelected = async (event) => {
+        const file = event.files[0];
+        if (!file) return;
+        const error = imageError(file);
+        if (error) {
+            setData('image', null);
+            setError('image', error);
+            return;
+        }
+        if (!(await validateImageLoads(file))) {
+            setData('image', null);
+            setError('image', 'This image could not be opened. Please choose a valid image.');
+            return;
+        }
+        setData('image', file);
+        clearErrors('image');
+    };
+
+    const submit = (event) => {
+        event.preventDefault();
+        if (!data.title.trim()) setError('title', 'Please enter a title.');
+        if (!hasPlainText(data.description)) setError('description', 'Please enter the blog content.');
+        if (!hasPlainText(data.overview)) setError('overview', 'Please enter an overview.');
+        if (!data.blog_categories_id) setError('blog_categories_id', 'Please select a category.');
+        if (!isEdit && !data.image) setError('image', 'Please choose a cover image.');
+        if (
+            !data.title.trim()
+            || !hasPlainText(data.description)
+            || !hasPlainText(data.overview)
+            || !data.blog_categories_id
+            || (!isEdit && !data.image)
+        ) return;
+
+        const url = isEdit ? `/blogs/${blog.id}` : '/blogs';
+        setSaving(true);
+        router.post(url, {
+            ...data,
+            ...(isEdit ? { _method: 'put' } : {}),
+        }, {
+            forceFormData: true,
+            onError: (serverErrors) => {
+                setError(serverErrors);
+                toast.current?.show({
+                    severity: 'error',
+                    summary: 'Unable to save blog',
+                    detail: 'Review the highlighted fields and try again.',
+                });
+            },
+            onHttpException: () => toast.current?.show({
+                severity: 'error',
+                summary: 'Unable to save blog',
+                detail: 'The server could not save your blog. Please try again.',
+            }),
+            onException: () => toast.current?.show({
+                severity: 'error',
+                summary: 'Unable to save blog',
+                detail: 'A network error interrupted the request. Please try again.',
+            }),
+            onFinish: () => setSaving(false),
+        });
+    };
+
+    return (
+        <>
+            <Head title={isEdit ? 'Edit Article' : 'Create Article'} />
+            <Toast ref={toast} position="top-right" />
+            <BlogCategoryDialog
+                visible={categoryDialogVisible}
+                onHide={() => setCategoryDialogVisible(false)}
+                onCreated={onCategoryCreated}
+                toast={toast}
+            />
+            <section className="admin-page blog-form-page">
+                <header className="admin-page__header blog-form-page__header">
+                    <div>
+                        <h1>{isEdit ? 'Edit Article' : 'Create Article'}</h1>
+                        <p>{isEdit ? 'Update your blog details and cover image.' : 'Add details and prepare your article for publishing.'}</p>
+                    </div>
+                    <div className="blog-form-page__actions">
+                        <Link href="/blogs" className="p-button p-component p-button-secondary p-button-outlined">
+                            <span className="p-button-label">Cancel</span>
+                        </Link>
+                        <Button
+                            type="submit"
+                            form="blog-form"
+                            label={isEdit ? 'Save changes' : 'Create Article'}
+                            icon="pi pi-check"
+                            loading={saving}
+                            disabled={saving}
+                        />
+                    </div>
+                </header>
+                <Card className="admin-page__card blog-form__card">
+                    <form id="blog-form" onSubmit={submit} noValidate>
+                        <div className="blog-form__fields">
+                            <div className="blog-form__field">
+                                <label htmlFor="blog-title">Title <span aria-hidden="true">*</span></label>
+                                <InputText
+                                    id="blog-title"
+                                    value={data.title}
+                                    maxLength={255}
+                                    invalid={Boolean(errors.title)}
+                                    aria-invalid={Boolean(errors.title)}
+                                    aria-describedby={errors.title ? 'blog-title-error' : undefined}
+                                    onChange={(event) => {
+                                        setData('title', event.target.value);
+                                        clearErrors('title');
+                                    }}
+                                />
+                                {errors.title && <small className="p-error" id="blog-title-error">{errors.title}</small>}
+                            </div>
+
+                            <div className="blog-form__field">
+                                <label htmlFor="blog-overview">Overview <span aria-hidden="true">*</span></label>
+                                <div className={`blog-form__editor${errors.overview ? ' p-invalid' : ''}`}>
+                                    <RichTextEditor
+                                        id="blog-overview"
+                                        value={data.overview}
+                                        onChange={(value) => {
+                                            setData('overview', value);
+                                            clearErrors('overview');
+                                        }}
+                                        placeholder="Summarize the blog..."
+                                        height={200}
+                                    />
+                                </div>
+                                {errors.overview && <small className="p-error">{errors.overview}</small>}
+                            </div>
+
+                            <div className="blog-form__field">
+                                <label htmlFor="blog-description">Content <span aria-hidden="true">*</span></label>
+                                <div className={`blog-form__editor${errors.description ? ' p-invalid' : ''}`}>
+                                    <RichTextEditor
+                                        id="blog-description"
+                                        value={data.description}
+                                        onChange={(value) => {
+                                            setData('description', value);
+                                            clearErrors('description');
+                                        }}
+                                        placeholder="Write the blog content..."
+                                        height={360}
+                                    />
+                                </div>
+                                {errors.description && <small className="p-error">{errors.description}</small>}
+                            </div>
+
+                            <div className="blog-form__field">
+                                <label htmlFor="blog-category">Category <span aria-hidden="true">*</span></label>
+                                <div className="blog-form__category-row">
+                                    <Dropdown
+                                        inputId="blog-category"
+                                        value={data.blog_categories_id}
+                                        options={categories}
+                                        optionLabel="title"
+                                        optionValue="id"
+                                        placeholder="Select a category"
+                                        emptyMessage="No categories found"
+                                        emptyFilterMessage="No categories found"
+                                        filter
+                                        showClear
+                                        className={errors.blog_categories_id ? 'p-invalid' : ''}
+                                        aria-invalid={Boolean(errors.blog_categories_id)}
+                                        aria-describedby={errors.blog_categories_id ? 'blog-category-error' : undefined}
+                                        onChange={(event) => {
+                                            setData('blog_categories_id', event.value);
+                                            clearErrors('blog_categories_id');
+                                        }}
+                                    />
+                                    <Button
+                                        type="button"
+                                        label="Create Category"
+                                        icon="pi pi-plus"
+                                        outlined
+                                        onClick={() => setCategoryDialogVisible(true)}
+                                    />
+                                </div>
+                                {errors.blog_categories_id && (
+                                    <small className="p-error" id="blog-category-error">{errors.blog_categories_id}</small>
+                                )}
+                            </div>
+
+                            <div className="blog-form__field">
+                                <label htmlFor="blog-image-input">
+                                    Cover image {!isEdit && <span aria-hidden="true">*</span>}
+                                </label>
+                                <FileUpload
+                                    id="blog-image"
+                                    mode="basic"
+                                    name="image"
+                                    accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                                    maxFileSize={maximumImageSize}
+                                    customUpload
+                                    auto={false}
+                                    chooseLabel={data.image ? 'Replace image' : 'Choose image'}
+                                    chooseOptions={{ icon: 'pi pi-upload', className: 'p-button-outlined' }}
+                                    onSelect={onImageSelected}
+                                    onValidationFail={() => setError('image', 'Choose a JPG, PNG, or WEBP image up to 2MB.')}
+                                    pt={{
+                                        input: {
+                                            id: 'blog-image-input',
+                                            'aria-invalid': Boolean(errors.image),
+                                            'aria-describedby': errors.image ? 'blog-image-hint blog-image-error' : 'blog-image-hint',
+                                        },
+                                        chooseButton: { 'aria-label': 'Choose blog cover image' },
+                                    }}
+                                />
+                                <small className="blog-form__hint" id="blog-image-hint">
+                                    JPG, PNG, or WEBP, up to 2MB.
+                                </small>
+                                {previewUrl && (
+                                    <div className="blog-form__image-preview">
+                                        <img src={previewUrl} alt="Blog cover preview" />
+                                        {data.image && (
+                                            <Button
+                                                type="button"
+                                                label={isEdit ? 'Use current image' : 'Remove image'}
+                                                icon="pi pi-times"
+                                                text
+                                                severity="secondary"
+                                                onClick={() => {
+                                                    setData('image', null);
+                                                    clearErrors('image');
+                                                }}
+                                            />
+                                        )}
+                                    </div>
+                                )}
+                                {errors.image && <small className="p-error" id="blog-image-error">{errors.image}</small>}
+                            </div>
+
+                            <div className="blog-form__publish">
+                                <Checkbox
+                                    inputId="blog-is-published"
+                                    checked={Boolean(data.is_published)}
+                                    onChange={(event) => setData('is_published', event.checked)}
+                                />
+                                <label htmlFor="blog-is-published">Publish this blog</label>
+                            </div>
+                        </div>
+                    </form>
+                </Card>
+            </section>
+        </>
+    );
+}
+
+BlogForm.layout = (page) => <AdminLayout>{page}</AdminLayout>;

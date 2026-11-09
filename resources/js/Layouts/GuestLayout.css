@@ -1,0 +1,207 @@
+.auth-page {
+    display: grid;
+    height: 100dvh;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    overflow: hidden;
+    background: var(--surface-ground);
+}
+
+.auth-page__visual {
+    position: sticky;
+    top: 0;
+    display: flex;
+    height: 100dvh;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #d7c7b9;
+}
+
+.auth-page__visual::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgb(29 30 27 / 42%), transparent 35%, rgb(29 30 27 / 14%));
+    content: '';
+}
+
+.auth-page__image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.auth-page__brand {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    text-shadow: 0 1px 8px rgb(0 0 0 / 30%);
+}
+
+.auth-page__brand:focus-visible,
+.auth-card-content__footer a:focus-visible {
+    border-radius: 0.25rem;
+    outline: 2px solid var(--primary-color);
+    outline-offset: 3px;
+}
+
+.auth-page__content {
+    display: flex;
+    height: 100dvh;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: clamp(1.25rem, 5vw, 4rem);
+    background: #fff;
+}
+
+.auth-page__card.p-card {
+    width: min(100%, 28rem);
+    margin-block: auto;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+    background: #fff;
+    box-shadow: var(--card-shadow, 0 8px 24px rgb(15 23 42 / 8%));
+}
+
+.auth-page__card .p-card-body {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.auth-page__card .p-card-content {
+    padding: 0;
+}
+
+.auth-card-content__header {
+    margin-bottom: 1.75rem;
+}
+
+.auth-card-content__header h1 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.75rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.auth-card-content__header p,
+.auth-card-content__footer {
+    margin: 0.625rem 0 0;
+    color: var(--text-color-secondary);
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+.auth-form {
+    display: grid;
+    gap: 1.125rem;
+}
+
+.auth-form__field {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.auth-form__field > label {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.auth-form__field > .p-inputtext,
+.auth-form__field > .p-password,
+.auth-form__field > .p-password .p-inputtext {
+    width: 100%;
+}
+
+.auth-form__remember {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.auth-form__remember label {
+    color: var(--text-color-secondary);
+    font-size: 0.875rem;
+}
+
+.auth-form__submit.p-button {
+    width: 100%;
+    justify-content: center;
+}
+
+.auth-card-content__footer {
+    padding-top: 1.25rem;
+    text-align: center;
+}
+
+.auth-card-content__footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.auth-card-content__footer a:hover {
+    text-decoration: underline;
+}
+
+.auth-page__logout {
+    border: 0;
+    background: transparent;
+    color: var(--primary-color);
+    cursor: pointer;
+    font: inherit;
+}
+
+.auth-page__logout:hover {
+    text-decoration: underline;
+}
+
+.auth-form__status {
+    margin: 0 0 1rem;
+    color: var(--green-600, #16a34a);
+}
+
+@media (max-width: 991px) {
+    .auth-page {
+        height: auto;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: 11rem minmax(calc(100dvh - 11rem), auto);
+        min-height: 100dvh;
+        overflow: visible;
+    }
+
+    .auth-page__visual {
+        position: relative;
+        height: 11rem;
+    }
+
+    .auth-page__image {
+        object-position: center 43%;
+    }
+
+    .auth-page__brand {
+        font-size: 1.1rem;
+    }
+
+    .auth-page__content {
+        height: auto;
+        min-height: calc(100dvh - 11rem);
+        padding: 1.5rem 1rem 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-page__card .p-card-body {
+        padding: 1.25rem;
+    }
+
+    .auth-card-content__header h1 {
+        font-size: 1.5rem;
+    }
+}

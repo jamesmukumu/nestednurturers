@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\User;
+use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 
 test('login screen can be rendered', function () {
     $response = $this->get('/login');
@@ -8,34 +9,36 @@ test('login screen can be rendered', function () {
     $response->assertStatus(200);
 });
 
-test('users can authenticate using the login screen', function () {
-    $user = User::factory()->create();
+test('admins can authenticate using the login screen', function () {
+    $admin = Admin::factory()->create([
+        'password' => Hash::make('password'),
+    ]);
 
     $response = $this->post('/login', [
-        'email' => $user->email,
+        'email' => $admin->email,
         'password' => 'password',
     ]);
 
-    $this->assertAuthenticated();
+    $this->assertAuthenticatedAs($admin, 'admin');
     $response->assertRedirect(route('dashboard', absolute: false));
 });
 
-test('users can not authenticate with invalid password', function () {
-    $user = User::factory()->create();
+test('admins can not authenticate with invalid password', function () {
+    $admin = Admin::factory()->create();
 
     $this->post('/login', [
-        'email' => $user->email,
+        'email' => $admin->email,
         'password' => 'wrong-password',
     ]);
 
-    $this->assertGuest();
+    $this->assertGuest('admin');
 });
 
-test('users can logout', function () {
-    $user = User::factory()->create();
+test('admins can logout', function () {
+    $admin = Admin::factory()->create();
 
-    $response = $this->actingAs($user)->post('/logout');
+    $response = $this->actingAs($admin, 'admin')->post('/logout');
 
-    $this->assertGuest();
-    $response->assertRedirect('/');
+    $this->assertGuest('admin');
+    $response->assertRedirect(route('login'));
 });

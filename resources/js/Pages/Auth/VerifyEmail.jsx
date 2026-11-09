@@ -1,49 +1,39 @@
-import PrimaryButton from '@/Components/PrimaryButton';
-import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { Button } from 'primereact/button';
+import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function VerifyEmail({ status }) {
     const { post, processing } = useForm({});
 
-    const submit = (e) => {
-        e.preventDefault();
-
+    const submit = (event) => {
+        event.preventDefault();
         post(route('verification.send'));
     };
 
     return (
-        <GuestLayout>
+        <GuestLayout
+            title="Verify your email"
+            subtitle="Check your inbox for the verification link. If you did not receive it, request another below."
+            footer={
+                <Link href={route('logout')} method="post" as="button" className="auth-page__logout">
+                    Log out
+                </Link>
+            }
+        >
             <Head title="Email Verification" />
-
-            <div className="mb-4 text-sm text-gray-600">
-                Thanks for signing up! Before getting started, could you verify
-                your email address by clicking on the link we just emailed to
-                you? If you didn't receive the email, we will gladly send you
-                another.
-            </div>
-
             {status === 'verification-link-sent' && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    A new verification link has been sent to the email address
-                    you provided during registration.
-                </div>
+                <p className="auth-form__status" role="status">
+                    A new verification link has been sent to the email address you provided during registration.
+                </p>
             )}
-
-            <form onSubmit={submit}>
-                <div className="mt-4 flex items-center justify-between">
-                    <PrimaryButton disabled={processing}>
-                        Resend Verification Email
-                    </PrimaryButton>
-
-                    <Link
-                        href={route('logout')}
-                        method="post"
-                        as="button"
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        Log Out
-                    </Link>
-                </div>
+            <form className="auth-form" onSubmit={submit}>
+                <Button
+                    className="auth-form__submit"
+                    type="submit"
+                    label="Resend Verification Email"
+                    loading={processing}
+                    disabled={processing}
+                />
             </form>
         </GuestLayout>
     );

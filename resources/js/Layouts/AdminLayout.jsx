@@ -25,14 +25,17 @@ function getInitials(name = '') {
 function getCurrentPage(url) {
     const path = url.split('?')[0];
 
-    if (path === '/dashboard/editor') return 'Rich text editor';
+    if (path === '/blogs') return 'Blogs';
+    if (path === '/blogs/create') return 'Create Article';
+    if (/^\/blogs\/[^/]+\/edit$/.test(path)) return 'Edit Article';
+    if (/^\/blogs\/[^/]+$/.test(path)) return 'Blog';
     if (path === '/dashboard/settings') return 'Settings';
     if (path === '/dashboard') return 'Dashboard';
     return 'Not found';
 }
 
 function SidebarNavigation({ collapsed, url, onNavigate }) {
-    const [expandedItems, setExpandedItems] = useState(['Editor']);
+    const [expandedItems, setExpandedItems] = useState(['Blogs']);
     const path = url.split('?')[0];
 
     const toggleItem = (label) => {
@@ -52,7 +55,7 @@ function SidebarNavigation({ collapsed, url, onNavigate }) {
                     )}
                     {section.items.map((item) => {
                         const active = item.href
-                            ? path === item.href
+                            ? path === item.href || path.startsWith(`${item.href}/`)
                             : item.children?.some((child) => child.href === path);
 
                         if (item.children) {
@@ -106,7 +109,7 @@ function SidebarNavigation({ collapsed, url, onNavigate }) {
                             );
                         }
 
-                        const itemActive = path === item.href;
+                        const itemActive = path === item.href || path.startsWith(`${item.href}/`);
 
                         return (
                             <Link

@@ -1,0 +1,115 @@
+.blog-form-page .admin-page__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.blog-form-page__actions,
+.blog-form__category-row,
+.blog-form__image-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.blog-form__card .p-card-body {
+    padding: clamp(1rem, 3vw, 2rem);
+}
+
+.blog-form__fields {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.blog-form__field {
+    display: grid;
+    min-width: 0;
+    gap: 0.5rem;
+}
+
+.blog-form__field > label {
+    color: var(--text-color);
+    font-size: 0.9375rem;
+    font-weight: 600;
+}
+
+.blog-form__field > label span {
+    color: var(--red-500, #ef4444);
+}
+
+.blog-form__field > .p-inputtext,
+.blog-form__category-row > .p-dropdown {
+    width: 100%;
+}
+
+.blog-form__category-row {
+    align-items: stretch;
+}
+
+.blog-form__category-row > .p-dropdown {
+    flex: 1 1 16rem;
+}
+
+.blog-form__editor {
+    min-width: 0;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+}
+
+.blog-form__editor.p-invalid {
+    border-color: var(--red-500, #ef4444);
+}
+
+.blog-form__hint {
+    color: var(--text-color-secondary);
+    font-size: 0.8125rem;
+}
+
+.blog-form__image-preview {
+    justify-content: flex-start;
+}
+
+.blog-form__image-preview img {
+    display: block;
+    width: min(100%, 24rem);
+    max-height: 14rem;
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius);
+    object-fit: cover;
+}
+
+.blog-form__publish {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.blog-category-dialog {
+    width: min(100vw - 2rem, 32rem);
+}
+
+.blog-category-dialog__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+@media (max-width: 639.98px) {
+    .blog-form-page .admin-page__header {
+        flex-direction: column;
+    }
+
+    .blog-form-page__actions {
+        width: 100%;
+    }
+
+    .blog-form-page__actions > * {
+        flex: 1;
+    }
+
+    .blog-form__category-row > .p-button {
+        width: 100%;
+    }
+}

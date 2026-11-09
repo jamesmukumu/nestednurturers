@@ -2,13 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import 'jodit/es2021/jodit.min.css';
 
 export default function RichTextEditor({
+    id,
     value,
     onChange,
+    onBlur,
     placeholder = 'Write something...',
     height = 360,
     readOnly = false,
 }) {
     const [Editor, setEditor] = useState(null);
+    const [loadError, setLoadError] = useState(false);
     const config = useMemo(
         () => ({
             height,
@@ -50,8 +53,8 @@ export default function RichTextEditor({
             .then(({ default: JoditEditor }) => {
                 if (active) setEditor(() => JoditEditor);
             })
-            .catch((error) => {
-                console.error('Unable to load the rich text editor.', error);
+            .catch(() => {
+                if (active) setLoadError(true);
             });
 
         return () => {
@@ -59,20 +62,33 @@ export default function RichTextEditor({
         };
     }, []);
 
+    if (loadError) {
+        return (
+            <div className="rich-text-editor__loading p-error" role="alert">
+                The rich-text editor could not be loaded. Refresh the page to try again.
+            </div>
+        );
+    }
+
     if (!Editor) {
         return (
-            <div className="admin-editor__loading" aria-live="polite">
+            <div className="rich-text-editor__loading" aria-live="polite">
                 Loading editor...
             </div>
         );
     }
 
     return (
-        <div className="admin-editor">
+        <div className="rich-text-editor">
             <Editor
+                id={id}
                 config={config}
                 value={value}
-                onBlur={(content) => onChange(content)}
+                onChange={(content) => onChange(content)}
+                onBlur={(content) => {
+                    if (typeof content === 'string') onChange(content);
+                    onBlur?.();
+                }}
             />
         </div>
     );

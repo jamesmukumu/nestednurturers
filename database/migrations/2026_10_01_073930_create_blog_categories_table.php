@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string("title")->unique(true)->nullable(false);
+            $table->mediumText("description")->nullable(true);
+            $table->foreignId("admins_id")->nullable(false)->constrained("admins")->onDelete("cascade");
+            $table->string("slug")->nullable(true)->unique(true)->index(true);
+
         });
     }
 
