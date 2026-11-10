@@ -13,6 +13,16 @@ import darkThemeUrl from "primereact/resources/themes/lara-dark-indigo/theme.css
  
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 const themeUrls = { light: lightThemeUrl, dark: darkThemeUrl };
+const publicPages = import.meta.glob([
+    "./Pages/About.jsx",
+    "./Pages/Blog/Show.jsx",
+    "./Pages/Blogs/Index.jsx",
+    "./Pages/Contacts.jsx",
+    "./Pages/Faq.jsx",
+    "./Pages/Home.jsx",
+    "./Pages/Pricing.jsx",
+    "./Pages/Services.jsx",
+]);
 
 createServer((page) =>
     createInertiaApp({
@@ -22,7 +32,7 @@ createServer((page) =>
         resolve: (name) =>
             resolvePageComponent(
                 `./Pages/${name}.jsx`,
-                import.meta.glob("./Pages/**/*.jsx"),
+                publicPages,
             ),
         setup({ App, props }) {
             return (
