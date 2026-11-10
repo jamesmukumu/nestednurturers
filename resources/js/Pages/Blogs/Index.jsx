@@ -7,7 +7,7 @@ import { Header } from '@/comps/Header';
 import { Seo } from '@/comps/SEO';
 import './blogs.css';
 
-const heroImage = '/images/services/mature-doula-providing-inhome-blood-pressure-monitoring-support-expectant-mothers_209190-192189.jpg';
+const heroImage = 'images/services/mother-playing-with-baby-helping-her-crawl-on-bed-indoor-e1634117890229-1024x682.jpg';
 
 function formattedDate(value) {
     if (!value) return '';
@@ -72,8 +72,8 @@ export default function BlogsIndex({ blogs, categories, filters }) {
                         <div>
                             <span className="public-blogs__eyebrow">Knowledge Hub</span>
                             <h1>
-                                Learn, Build &amp;
-                                <span> Stay Ahead</span>
+                                Love, Care &amp;
+                                <span> Support Doulas</span>
                             </h1>
                             <p>Helpful knowledge and compassionate guidance for every step of your growing family.</p>
                         </div>

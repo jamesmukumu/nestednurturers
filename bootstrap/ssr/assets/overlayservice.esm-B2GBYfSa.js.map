@@ -1,0 +1,1 @@
+{"version":3,"file":"overlayservice.esm-B2GBYfSa.js","sources":["../../../node_modules/primereact/overlayservice/overlayservice.esm.js"],"sourcesContent":["'use client';\nimport { EventBus } from 'primereact/utils';\n\nvar OverlayService = EventBus();\n\nexport { OverlayService };\n"],"names":[],"mappings":";AAGG,IAAC,iBAAiB,SAAQ;","x_google_ignoreList":[0]}

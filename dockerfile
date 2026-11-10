@@ -16,7 +16,6 @@ RUN apt-get update \
         libicu-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
-        libpq-dev \
         libxml2-dev \
         libzip-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -26,7 +25,7 @@ RUN apt-get update \
         intl \
         opcache \
         pcntl \
-        pdo_pgsql \
+        pdo_mysql \
         zip \
     && rm -rf /var/lib/apt/lists/*
 

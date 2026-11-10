@@ -1,39 +1,59 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { InputText } from 'primereact/inputtext';
 import AuthSubmitButton from '@/Components/AuthSubmitButton';
-import Button from '@/Components/Button';
-import GuestLayout from '@/Layouts/GuestLayout';
+import GuestLayout from '../../Layouts/GuestLayout';
 
-export default function VerifyEmail({ status }) {
-    const { post, processing } = useForm({});
+export default function VerifyEmail({ status, error, email: initialEmail, expirationMinutes = 5 }) {
+    const { data, setData, post, processing, errors } = useForm({
+        email: initialEmail || '',
+    });
 
     const submit = (event) => {
         event.preventDefault();
-        post(route('verification.send'));
+        post(route('admin.verification.send'));
     };
 
     return (
         <GuestLayout
             title="Verify your email"
-            subtitle="Check your inbox for the verification link. If you did not receive it, request another below."
-            footer={
-                <Button href={route('logout')} method="post" as="button" variant="ghost" size="sm" className="auth-page__logout">
-                    Log out
-                </Button>
-            }
+            subtitle="Use the link we emailed you to activate your admin account."
+            footer={<>Ready to log in? <Link href={route('login')}>Log in</Link></>}
         >
-            <Head title="Email Verification" />
-            {status === 'verification-link-sent' && (
-                <p className="auth-form__status" role="status">
-                    A new verification link has been sent to the email address you provided during registration.
+            <Head title="Verify your email" />
+            <div className="auth-card-content">
+                {status && <p className="auth-form__status" role="status">{status}</p>}
+                {error && <p className="auth-form__error" role="alert">{error}</p>}
+                <p className="auth-card-content__header">
+                    The verification link expires after {expirationMinutes} minute{expirationMinutes === 1 ? '' : 's'}.
+                    If it has expired, request a new one below.
                 </p>
-            )}
-            <form className="auth-form" onSubmit={submit}>
-                <AuthSubmitButton
-                    processing={processing}
-                    label="Resend Verification Email"
-                    processingLabel="Sending…"
-                />
-            </form>
+                <form className="auth-form" onSubmit={submit}>
+                    <div className="auth-form__field">
+                        <label htmlFor="verification-email">Email</label>
+                        <InputText
+                            id="verification-email"
+                            className="auth-form__input"
+                            type="email"
+                            value={data.email}
+                            autoComplete="email"
+                            required
+                            readOnly={Boolean(initialEmail)}
+                            invalid={Boolean(errors.email)}
+                            aria-invalid={Boolean(errors.email)}
+                            aria-describedby={errors.email ? 'verification-email-error' : undefined}
+                            onChange={(event) => setData('email', event.target.value)}
+                        />
+                        <small className="auth-form__error" id="verification-email-error">
+                            {errors.email || '\u00a0'}
+                        </small>
+                    </div>
+                    <AuthSubmitButton
+                        processing={processing}
+                        label="Resend verification email"
+                        processingLabel="Sending..."
+                    />
+                </form>
+            </div>
         </GuestLayout>
     );
 }

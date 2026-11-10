@@ -23,7 +23,8 @@ class AdminFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => Hash::make('password'),
             'phonenumber' => fake()->unique()->numerify('+1##########'),
-            'isEmailVerified' => false,
+            'email_verified_at' => now(),
+            'isEmailVerified' => true,
             'isAdmin' => true,
             'remember_token' => Str::random(10),
         ];

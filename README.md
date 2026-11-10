@@ -29,18 +29,39 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 
 ## Running with Docker and Inertia SSR
 
-The Compose stack runs Laravel with PHP-FPM, serves it through Nginx, builds and runs the Inertia React SSR bundle in a Node service, and starts PostgreSQL.
+The Compose stack runs Laravel with PHP-FPM, serves it through Nginx, builds and runs the Inertia React SSR bundle in a Node service, starts a persistent Laravel database-queue worker, and runs MySQL 8.4.
 
-1. Copy `.env.example` to `.env` and set a unique `APP_KEY` and database password. Generate an application key with `php artisan key:generate` if PHP and Composer are installed locally.
+1. Copy `.env.example` to `.env` and set a unique `APP_KEY`, `DB_PASSWORD`, and `DB_ROOT_PASSWORD`. Generate an application key with `php artisan key:generate` if PHP and Composer are installed locally.
 2. Start the stack with `docker compose up --build -d`.
 3. Run database migrations with `docker compose exec app php artisan migrate --force`.
 4. Open [http://localhost:8080](http://localhost:8080), or use the port set by `APP_PORT`.
 
-The app container enables Inertia SSR and points it at the internal SSR service. The SSR bundle is built as part of the Docker image; rebuild after changing frontend code. PostgreSQL data and Laravel storage are kept in named volumes.
+The app and queue containers connect to the internal MySQL service using the credentials in `.env`. The app container enables Inertia SSR and points it at the internal SSR service. The SSR bundle is built as part of the Docker image; rebuild after changing frontend code. MySQL data and Laravel storage are kept in named volumes.
 
 ## Local frontend development
 
 When running Laravel locally with `php artisan serve`, also run `npm run dev` so Vite can serve frontend assets. If you are not running the Vite dev server, run `npm run build` first to create the Vite manifest. The build command generates both the client assets and the configured Inertia SSR bundle.
+
+## Queue worker and admin email verification
+
+Admin registration queues its verification email on the `default` database queue. The Compose `queue` service runs Laravel's worker continuously, restarts it if it exits, and starts after MySQL is healthy; no separate `queue:work` command or host Supervisor setup is needed on the VPS. The existing migrations create the jobs and failed-jobs tables.
+
+Configure a working mail transport and keep `QUEUE_CONNECTION=database`. The Docker Compose production stack sets this connection explicitly. Verification links expire after five minutes by default; set `AUTH_VERIFICATION_EXPIRE` to change this value.
+
+Start or deploy the worker with the rest of the stack:
+
+```sh
+docker compose up --build -d
+docker compose logs -f queue
+```
+
+After code deployments, recreate the worker container so it loads the new application code:
+
+```sh
+docker compose up --build -d app queue
+```
+
+For local development outside Compose, run `php artisan queue:work` in a separate terminal.
 
 ## Laravel Sponsors
 

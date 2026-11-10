@@ -2,9 +2,9 @@
 
 use App\Models\Admin;
 use App\Models\Consultation;
-use Illuminate\Support\Facades\Notification;
+use App\Mail\EmailVerifierMailer;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Testing\AssertableInertia as Assert;
-use Illuminate\Auth\Notifications\VerifyEmail;
 
 function createConsultation(array $overrides = []): Consultation
 {
@@ -121,10 +121,15 @@ test('sidebar pending count is refreshed after an enquiry status change', functi
 });
 
 test('profile shares verification state from the authenticated admin', function () {
-    $unverifiedAdmin = Admin::factory()->create(['isEmailVerified' => false]);
+    $unverifiedAdmin = Admin::factory()->create([
+        'email_verified_at' => null,
+        'isEmailVerified' => false,
+    ]);
     $this->actingAs($unverifiedAdmin, 'admin')
         ->get('/dashboard/profile')
-        ->assertInertia(fn (Assert $page) => $page->where('auth.emailVerified', false));
+        ->assertRedirect(route('admin.verification.notice'))
+        ->assertSessionHas('pending_admin_verification_id', $unverifiedAdmin->id);
+    $this->assertGuest('admin');
 
     $verifiedAdmin = verifiedAdmin();
     $this->actingAs($verifiedAdmin, 'admin')
@@ -133,18 +138,22 @@ test('profile shares verification state from the authenticated admin', function 
 });
 
 test('verification email route is throttled', function () {
-    Notification::fake();
-    $admin = Admin::factory()->create(['isEmailVerified' => false]);
-    $this->actingAs($admin, 'admin');
-
-    foreach (range(1, 6) as $attempt) {
-        $this->post(route('verification.send'), [], ['Accept' => 'application/json'])
-            ->assertOk()
-            ->assertJsonPath('status', 'verification-link-sent');
+    Mail::fake();
+    $admin = Admin::factory()->create([
+        'email_verified_at' => null,
+        'isEmailVerified' => false,
+    ]);
+    foreach (range(1, 3) as $attempt) {
+        $this->from(route('admin.verification.notice'))
+            ->withSession(['pending_admin_verification_id' => $admin->id])
+            ->post(route('admin.verification.send'))
+            ->assertRedirect(route('admin.verification.notice'));
     }
 
-    $this->post(route('verification.send'), [], ['Accept' => 'application/json'])
+    $this->from(route('admin.verification.notice'))
+        ->withSession(['pending_admin_verification_id' => $admin->id])
+        ->post(route('admin.verification.send'))
         ->assertStatus(429);
 
-    Notification::assertSentTo($admin, VerifyEmail::class);
+    Mail::assertQueued(EmailVerifierMailer::class, 3);
 });

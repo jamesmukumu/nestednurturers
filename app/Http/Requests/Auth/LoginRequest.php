@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\Admin;
 
 class LoginRequest extends FormRequest
 {
@@ -40,8 +41,12 @@ class LoginRequest extends FormRequest
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
+        $guard = Auth::guard('admin');
+        $provider = $guard->getProvider();
+        $credentials = $this->only('email', 'password');
+        $admin = $provider->retrieveByCredentials($credentials);
 
-        if (! Auth::guard('admin')->attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (! $admin || ! $provider->validateCredentials($admin, $credentials)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -50,6 +55,23 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        if (! ($admin instanceof Admin) || $admin->email_verified_at === null) {
+            if ($guard->check()) {
+                $guard->logout();
+            }
+
+            if ($admin instanceof Admin) {
+                $this->session()->put('pending_admin_verification_id', $admin->getKey());
+            }
+
+            throw ValidationException::withMessages([
+                'email' => 'Please verify your email address before logging in.',
+            ]);
+        }
+
+        $this->session()->forget('pending_admin_verification_id');
+        $guard->login($admin, $this->boolean('remember'));
     }
 
     /**
