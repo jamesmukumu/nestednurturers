@@ -1,241 +1,290 @@
 {
   "node_modules/jodit/es2021/jodit.min.css": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
   ],
-  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
-  "node_modules/primereact/api/api.esm.js": [],
+  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
+  "node_modules/primereact/api/api.esm.js": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
   "node_modules/primereact/autocomplete/autocomplete.esm.js": [
-    "/build/assets/SEO-CsWNaySx.js",
-    "/build/assets/SEO-B5U4kmJ6.css"
+    "/build/assets/Contact-CWUIO6ds.js",
+    "/build/assets/Contact-B5U4kmJ6.css"
   ],
   "node_modules/primereact/avatar/avatar.esm.js": [
-    "/build/assets/AdminLayout-P8kTgT3x.js",
-    "/build/assets/AdminLayout-B-roIdz9.css"
+    "/build/assets/AdminLayout-DuFPRx9L.js",
+    "/build/assets/AdminLayout-CJwApa95.css"
   ],
   "node_modules/primereact/breadcrumb/breadcrumb.esm.js": [
-    "/build/assets/AdminLayout-P8kTgT3x.js",
-    "/build/assets/AdminLayout-B-roIdz9.css"
+    "/build/assets/AdminLayout-DuFPRx9L.js",
+    "/build/assets/AdminLayout-CJwApa95.css"
   ],
   "node_modules/primereact/button/button.esm.js": [
-    "/build/assets/button.esm-DFXl1vmj.js"
+    "/build/assets/button.esm-BxFUYIz-.js"
   ],
   "node_modules/primereact/card/card.esm.js": [
-    "/build/assets/card.esm-DtgtPLN5.js"
-  ],
-  "node_modules/primereact/checkbox/checkbox.esm.js": [
-    "/build/assets/checkbox.esm-yIli7C_m.js"
+    "/build/assets/card.esm-Dfu5Ic7s.js"
   ],
   "node_modules/primereact/column/column.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/componentbase/componentbase.esm.js": [
-    "/build/assets/button.esm-DFXl1vmj.js"
+    "/build/assets/portal.esm-D9mKEukT.js"
   ],
   "node_modules/primereact/confirmdialog/confirmdialog.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/Index-CjTiVdrY.js",
+    "/build/assets/blogs-FLD_VIcU.css"
   ],
   "node_modules/primereact/csstransition/csstransition.esm.js": [
-    "/build/assets/overlayservice.esm-Cnx_LE1W.js"
+    "/build/assets/iconbase.esm-C6Zu_kc1.js"
   ],
   "node_modules/primereact/datatable/datatable.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/dialog/dialog.esm.js": [
-    "/build/assets/dialog.esm-X9fKkEQt.js"
+    "/build/assets/dialog.esm-DP0uyxH6.js"
   ],
   "node_modules/primereact/dropdown/dropdown.esm.js": [
-    "/build/assets/dialog.esm-X9fKkEQt.js"
+    "/build/assets/dropdown.esm-CKXiqnMR.js"
   ],
   "node_modules/primereact/fileupload/fileupload.esm.js": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
   ],
   "node_modules/primereact/hooks/hooks.esm.js": [
-    "/build/assets/button.esm-DFXl1vmj.js"
+    "/build/assets/portal.esm-D9mKEukT.js"
   ],
   "node_modules/primereact/iconbase/iconbase.esm.js": [
-    "/build/assets/button.esm-DFXl1vmj.js"
+    "/build/assets/iconbase.esm-C6Zu_kc1.js"
   ],
   "node_modules/primereact/icons/angledoubleleft/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/paginator.esm-NnQVNDD7.js"
   ],
   "node_modules/primereact/icons/angledoubleright/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/paginator.esm-NnQVNDD7.js"
   ],
   "node_modules/primereact/icons/angledown/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/paginator.esm-NnQVNDD7.js"
   ],
   "node_modules/primereact/icons/angleleft/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/paginator.esm-NnQVNDD7.js"
   ],
   "node_modules/primereact/icons/angleright/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/paginator.esm-NnQVNDD7.js"
   ],
   "node_modules/primereact/icons/angleup/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/paginator.esm-NnQVNDD7.js"
   ],
   "node_modules/primereact/icons/arrowdown/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/arrowup/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/bars/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/check/index.esm.js": [
-    "/build/assets/index.esm-DFr_3dIQ.js"
+    "/build/assets/virtualscroller.esm-DaOHCdsa.js"
   ],
   "node_modules/primereact/icons/chevrondown/index.esm.js": [
-    "/build/assets/virtualscroller.esm-0yPTCOZF.js"
+    "/build/assets/virtualscroller.esm-DaOHCdsa.js"
   ],
   "node_modules/primereact/icons/chevronright/index.esm.js": [
-    "/build/assets/AdminLayout-P8kTgT3x.js",
-    "/build/assets/AdminLayout-B-roIdz9.css"
+    "/build/assets/AdminLayout-DuFPRx9L.js",
+    "/build/assets/AdminLayout-CJwApa95.css"
   ],
   "node_modules/primereact/icons/chevronup/index.esm.js": [
-    "/build/assets/dialog.esm-X9fKkEQt.js"
+    "/build/assets/dropdown.esm-CKXiqnMR.js"
   ],
   "node_modules/primereact/icons/exclamationtriangle/index.esm.js": [
-    "/build/assets/virtualscroller.esm-0yPTCOZF.js"
+    "/build/assets/toast.esm-BAa0NENd.js"
   ],
   "node_modules/primereact/icons/eye/index.esm.js": [
-    "/build/assets/password.esm-zARRcMf_.js"
+    "/build/assets/AuthPasswordInput-BH5ul5EL.js"
   ],
   "node_modules/primereact/icons/eyeslash/index.esm.js": [
-    "/build/assets/password.esm-zARRcMf_.js"
+    "/build/assets/AuthPasswordInput-BH5ul5EL.js"
   ],
   "node_modules/primereact/icons/filter/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/filterslash/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/infocircle/index.esm.js": [
-    "/build/assets/virtualscroller.esm-0yPTCOZF.js"
+    "/build/assets/toast.esm-BAa0NENd.js"
   ],
   "node_modules/primereact/icons/pencil/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/plus/index.esm.js": [
-    "/build/assets/dialog.esm-X9fKkEQt.js"
+    "/build/assets/index.esm-igEVmVoM.js"
   ],
   "node_modules/primereact/icons/search/index.esm.js": [
-    "/build/assets/dialog.esm-X9fKkEQt.js"
+    "/build/assets/dropdown.esm-CKXiqnMR.js"
   ],
   "node_modules/primereact/icons/sortalt/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/sortamountdown/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/sortamountupalt/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/spinner/index.esm.js": [
-    "/build/assets/button.esm-DFXl1vmj.js"
+    "/build/assets/virtualscroller.esm-DaOHCdsa.js"
   ],
   "node_modules/primereact/icons/times/index.esm.js": [
-    "/build/assets/sidebar.esm-BweA3SBs.js"
+    "/build/assets/sidebar.esm-Dou14AQP.js"
   ],
   "node_modules/primereact/icons/timescircle/index.esm.js": [
-    "/build/assets/virtualscroller.esm-0yPTCOZF.js"
+    "/build/assets/toast.esm-BAa0NENd.js"
   ],
   "node_modules/primereact/icons/trash/index.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/datatable.esm-CXiPATCp.js"
   ],
   "node_modules/primereact/icons/upload/index.esm.js": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
   ],
   "node_modules/primereact/icons/windowmaximize/index.esm.js": [
-    "/build/assets/dialog.esm-X9fKkEQt.js"
+    "/build/assets/dialog.esm-DP0uyxH6.js"
   ],
   "node_modules/primereact/icons/windowminimize/index.esm.js": [
-    "/build/assets/dialog.esm-X9fKkEQt.js"
+    "/build/assets/dialog.esm-DP0uyxH6.js"
   ],
   "node_modules/primereact/inputnumber/inputnumber.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/paginator.esm-NnQVNDD7.js"
   ],
   "node_modules/primereact/inputtext/inputtext.esm.js": [
-    "/build/assets/inputtext.esm-COqCfzPS.js"
+    "/build/assets/inputtext.esm-DDz9PXvh.js"
   ],
   "node_modules/primereact/inputtextarea/inputtextarea.esm.js": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
   ],
   "node_modules/primereact/keyfilter/keyfilter.esm.js": [
-    "/build/assets/inputtext.esm-COqCfzPS.js"
+    "/build/assets/inputtext.esm-DDz9PXvh.js"
   ],
   "node_modules/primereact/menu/menu.esm.js": [
-    "/build/assets/AdminLayout-P8kTgT3x.js",
-    "/build/assets/AdminLayout-B-roIdz9.css"
+    "/build/assets/AdminLayout-DuFPRx9L.js",
+    "/build/assets/AdminLayout-CJwApa95.css"
   ],
   "node_modules/primereact/messages/messages.esm.js": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
   ],
   "node_modules/primereact/overlayservice/overlayservice.esm.js": [
-    "/build/assets/overlayservice.esm-Cnx_LE1W.js"
+    "/build/assets/overlayservice.esm-B2GBYfSa.js"
   ],
   "node_modules/primereact/paginator/paginator.esm.js": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/paginator.esm-NnQVNDD7.js"
   ],
   "node_modules/primereact/password/password.esm.js": [
-    "/build/assets/password.esm-zARRcMf_.js"
+    "/build/assets/AuthPasswordInput-BH5ul5EL.js"
   ],
   "node_modules/primereact/portal/portal.esm.js": [
-    "/build/assets/button.esm-DFXl1vmj.js"
+    "/build/assets/portal.esm-D9mKEukT.js"
   ],
   "node_modules/primereact/progressbar/progressbar.esm.js": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
+  ],
+  "node_modules/primereact/resources/themes/lara-dark-indigo/theme.css?transform-only": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
+  "node_modules/primereact/resources/themes/lara-dark-indigo/theme.css?url": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
+  "node_modules/primereact/resources/themes/lara-light-indigo/theme.css?transform-only": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
+  "node_modules/primereact/resources/themes/lara-light-indigo/theme.css?url": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
   ],
   "node_modules/primereact/ripple/ripple.esm.js": [
-    "/build/assets/button.esm-DFXl1vmj.js"
+    "/build/assets/sidebar.esm-Dou14AQP.js"
   ],
   "node_modules/primereact/sidebar/sidebar.esm.js": [
-    "/build/assets/sidebar.esm-BweA3SBs.js"
+    "/build/assets/sidebar.esm-Dou14AQP.js"
   ],
   "node_modules/primereact/tag/tag.esm.js": [
-    "/build/assets/blogs-DSrTBjHC.js",
-    "/build/assets/blogs-DpJPIUKM.css"
+    "/build/assets/tag.esm-CsuX49Li.js"
   ],
   "node_modules/primereact/toast/toast.esm.js": [
-    "/build/assets/virtualscroller.esm-0yPTCOZF.js"
+    "/build/assets/toast.esm-BAa0NENd.js"
   ],
   "node_modules/primereact/tooltip/tooltip.esm.js": [
-    "/build/assets/button.esm-DFXl1vmj.js"
+    "/build/assets/inputtext.esm-DDz9PXvh.js"
   ],
-  "node_modules/primereact/utils/utils.esm.js": [],
+  "node_modules/primereact/utils/utils.esm.js": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
   "node_modules/primereact/virtualscroller/virtualscroller.esm.js": [
-    "/build/assets/virtualscroller.esm-0yPTCOZF.js"
+    "/build/assets/virtualscroller.esm-DaOHCdsa.js"
   ],
   "node_modules/react-datepicker/dist/react-datepicker.css": [
-    "/build/assets/SEO-CsWNaySx.js",
-    "/build/assets/SEO-B5U4kmJ6.css"
+    "/build/assets/Contact-CWUIO6ds.js",
+    "/build/assets/Contact-B5U4kmJ6.css"
   ],
   "resources/js/Components/ApplicationLogo.jsx": [
-    "/build/assets/AuthenticatedLayout-D-0K0EjU.js"
+    "/build/assets/AuthenticatedLayout-b-MF9INV.js"
+  ],
+  "resources/js/Components/AuthPasswordInput.jsx": [
+    "/build/assets/AuthPasswordInput-BH5ul5EL.js"
+  ],
+  "resources/js/Components/AuthSubmitButton.jsx": [
+    "/build/assets/GuestLayout-Db_kUh-S.js",
+    "/build/assets/GuestLayout-Dkn2HVRy.css"
   ],
   "resources/js/Components/Blogs/BlogCategoryDialog.jsx": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
   ],
   "resources/js/Components/Blogs/BlogForm.css": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
   ],
   "resources/js/Components/Blogs/BlogForm.jsx": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
+  ],
+  "resources/js/Components/Button.jsx": [
+    "/build/assets/Button-phcvJh3z.js"
+  ],
+  "resources/js/Components/Checkbox.jsx": [
+    "/build/assets/Checkbox-JURGK4El.js"
   ],
   "resources/js/Components/DangerButton.jsx": [
-    "/build/assets/DeleteUserForm-B4OEn7WD.js"
+    "/build/assets/DeleteUserForm-BbZ0YN6w.js"
   ],
   "resources/js/Components/Dropdown.jsx": [
-    "/build/assets/AuthenticatedLayout-D-0K0EjU.js"
+    "/build/assets/AuthenticatedLayout-b-MF9INV.js"
   ],
   "resources/js/Components/InputError.jsx": [
     "/build/assets/TextInput-Bg4NQvTq.js"
@@ -244,167 +293,230 @@
     "/build/assets/TextInput-Bg4NQvTq.js"
   ],
   "resources/js/Components/Modal.jsx": [
-    "/build/assets/DeleteUserForm-B4OEn7WD.js"
+    "/build/assets/DeleteUserForm-BbZ0YN6w.js"
   ],
   "resources/js/Components/NavLink.jsx": [
-    "/build/assets/AuthenticatedLayout-D-0K0EjU.js"
+    "/build/assets/AuthenticatedLayout-b-MF9INV.js"
   ],
   "resources/js/Components/PrimaryButton.jsx": [
-    "/build/assets/PrimaryButton-DgVfVBwo.js"
+    "/build/assets/PrimaryButton-DJi07px5.js"
   ],
   "resources/js/Components/ResponsiveNavLink.jsx": [
-    "/build/assets/AuthenticatedLayout-D-0K0EjU.js"
+    "/build/assets/AuthenticatedLayout-b-MF9INV.js"
   ],
   "resources/js/Components/RichTextEditor.jsx": [
-    "/build/assets/BlogForm-BlIgEvsy.js",
-    "/build/assets/BlogForm-ITbIP-uN.css"
+    "/build/assets/BlogForm-Cje94Ytt.js",
+    "/build/assets/BlogForm-5zHM63Wg.css"
   ],
   "resources/js/Components/SecondaryButton.jsx": [
-    "/build/assets/DeleteUserForm-B4OEn7WD.js"
+    "/build/assets/DeleteUserForm-BbZ0YN6w.js"
   ],
   "resources/js/Components/TextInput.jsx": [
     "/build/assets/TextInput-Bg4NQvTq.js"
   ],
+  "resources/js/Components/ThemeManager.jsx": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
+  "resources/js/Components/ThemeToggle.jsx": [
+    "/build/assets/ThemeToggle-CE-bVUI6.js"
+  ],
   "resources/js/Layouts/AdminLayout.css": [
-    "/build/assets/AdminLayout-P8kTgT3x.js",
-    "/build/assets/AdminLayout-B-roIdz9.css"
+    "/build/assets/AdminLayout-DuFPRx9L.js",
+    "/build/assets/AdminLayout-CJwApa95.css"
   ],
   "resources/js/Layouts/AdminLayout.jsx": [
-    "/build/assets/AdminLayout-P8kTgT3x.js",
-    "/build/assets/AdminLayout-B-roIdz9.css"
+    "/build/assets/AdminLayout-DuFPRx9L.js",
+    "/build/assets/AdminLayout-CJwApa95.css"
   ],
   "resources/js/Layouts/AuthenticatedLayout.jsx": [
-    "/build/assets/AuthenticatedLayout-D-0K0EjU.js"
+    "/build/assets/AuthenticatedLayout-b-MF9INV.js"
   ],
   "resources/js/Layouts/GuestLayout.css": [
-    "/build/assets/GuestLayout-R2lxzB2W.js",
-    "/build/assets/GuestLayout-C9q4k3LE.css"
+    "/build/assets/GuestLayout-Db_kUh-S.js",
+    "/build/assets/GuestLayout-Dkn2HVRy.css"
   ],
   "resources/js/Layouts/GuestLayout.jsx": [
-    "/build/assets/GuestLayout-R2lxzB2W.js",
-    "/build/assets/GuestLayout-C9q4k3LE.css"
+    "/build/assets/GuestLayout-Db_kUh-S.js",
+    "/build/assets/GuestLayout-Dkn2HVRy.css"
   ],
   "resources/js/Layouts/navigation.js": [
-    "/build/assets/AdminLayout-P8kTgT3x.js",
-    "/build/assets/AdminLayout-B-roIdz9.css"
+    "/build/assets/AdminLayout-DuFPRx9L.js",
+    "/build/assets/AdminLayout-CJwApa95.css"
   ],
   "resources/js/Pages/About.jsx": [
-    "/build/assets/About-ISjPX9ax.js"
+    "/build/assets/About-CT1AgC4N.js"
   ],
   "resources/js/Pages/Admin/Blogs/Create.jsx": [
-    "/build/assets/Create-cJluLGgb.js"
+    "/build/assets/Create-CCJPdHok.js"
   ],
   "resources/js/Pages/Admin/Blogs/Edit.jsx": [
-    "/build/assets/Edit-Cs4oVzvD.js"
+    "/build/assets/Edit-dbrd_fqH.js"
   ],
   "resources/js/Pages/Admin/Blogs/Index.jsx": [
-    "/build/assets/Index-D7jWbm-m.js"
+    "/build/assets/Index-CjTiVdrY.js",
+    "/build/assets/blogs-FLD_VIcU.css"
   ],
   "resources/js/Pages/Admin/Blogs/Show.jsx": [
-    "/build/assets/Show-DVzD9ORe.js"
-  ],
-  "resources/js/Pages/Admin/Blogs/blogs.css": [
-    "/build/assets/blogs-DSrTBjHC.js",
-    "/build/assets/blogs-DpJPIUKM.css"
+    "/build/assets/Show-DMeUvM7l.js",
+    "/build/assets/blogs-FLD_VIcU.css"
   ],
   "resources/js/Pages/Admin/Dashboard.jsx": [
-    "/build/assets/Dashboard-qlFwkkqJ.js"
+    "/build/assets/Dashboard-BirCKe3X.js"
+  ],
+  "resources/js/Pages/Admin/Enquiries/Index.jsx": [
+    "/build/assets/Index-CTP7mjiL.js"
+  ],
+  "resources/js/Pages/Admin/Enquiries/Show.jsx": [
+    "/build/assets/Show-0zyqs_wd.js"
+  ],
+  "resources/js/Pages/Admin/Enquiries/components.jsx": [
+    "/build/assets/components-r35cbbUK.js"
+  ],
+  "resources/js/Pages/Admin/Enquiries/enquiries.css": [
+    "/build/assets/enquiries-CfiI4ifY.js",
+    "/build/assets/enquiries-CDgiQL8q.css"
+  ],
+  "resources/js/Pages/Admin/Enquiries/status.js": [
+    "/build/assets/enquiries-CfiI4ifY.js",
+    "/build/assets/enquiries-CDgiQL8q.css"
   ],
   "resources/js/Pages/Admin/NotFound.jsx": [
-    "/build/assets/NotFound-C64aO_j1.js"
+    "/build/assets/NotFound-sswB_zEW.js"
+  ],
+  "resources/js/Pages/Admin/Profile.jsx": [
+    "/build/assets/Profile-Be8clt5F.js",
+    "/build/assets/Profile-LG7-6Zb9.css"
   ],
   "resources/js/Pages/Admin/Settings.jsx": [
-    "/build/assets/Settings-RNFAS-U1.js"
+    "/build/assets/Settings-B13DfnrG.js"
+  ],
+  "resources/js/Pages/Admin/profile.css": [
+    "/build/assets/Profile-Be8clt5F.js",
+    "/build/assets/Profile-LG7-6Zb9.css"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.jsx": [
-    "/build/assets/ConfirmPassword-YWP9w-Dh.js"
+    "/build/assets/ConfirmPassword-aSZCTw42.js"
   ],
   "resources/js/Pages/Auth/ForgotPassword.jsx": [
-    "/build/assets/ForgotPassword-BkSlzZsI.js"
+    "/build/assets/ForgotPassword-hpOrmpNk.js"
   ],
   "resources/js/Pages/Auth/Login.jsx": [
-    "/build/assets/Login-CxDk3rRi.js"
+    "/build/assets/Login-DHRw7lVK.js"
   ],
   "resources/js/Pages/Auth/Register.jsx": [
-    "/build/assets/Register-Cg3yUfNO.js"
+    "/build/assets/Register-CAIie6-V.js"
   ],
   "resources/js/Pages/Auth/ResetPassword.jsx": [
-    "/build/assets/ResetPassword-LwGIAQwL.js"
+    "/build/assets/ResetPassword-Krry2amx.js"
   ],
   "resources/js/Pages/Auth/VerifyEmail.jsx": [
-    "/build/assets/VerifyEmail-DJAha68Q.js"
+    "/build/assets/VerifyEmail-DRyfcny6.js"
+  ],
+  "resources/js/Pages/Blog/Show.jsx": [
+    "/build/assets/Show-Cb618Vc-.js",
+    "/build/assets/blogs-DTr1hkVL.css"
+  ],
+  "resources/js/Pages/Blogs/Index.jsx": [
+    "/build/assets/Index-Cok4oGjX.js",
+    "/build/assets/blogs-DTr1hkVL.css"
   ],
   "resources/js/Pages/Contacts.jsx": [
-    "/build/assets/Contacts-g5FdQXq9.js"
+    "/build/assets/Contacts-DOwpEKv-.js"
   ],
   "resources/js/Pages/Dashboard.jsx": [
-    "/build/assets/Dashboard-D6hRzW-4.js"
+    "/build/assets/Dashboard-Cta8bUR8.js"
   ],
   "resources/js/Pages/Faq.jsx": [
-    "/build/assets/Faq-Cb7mpRXD.js"
+    "/build/assets/Faq-COWXzqSZ.js"
   ],
   "resources/js/Pages/Home.jsx": [
-    "/build/assets/Home-DRapGh2Y.js"
+    "/build/assets/Home-DW0RJiDC.js"
   ],
   "resources/js/Pages/Pricing.jsx": [
-    "/build/assets/Pricing-DwpXPT3s.js"
+    "/build/assets/Pricing--hfIiUmm.js"
   ],
   "resources/js/Pages/Profile/Edit.jsx": [
-    "/build/assets/Edit-b1FKKxuj.js"
+    "/build/assets/Edit-DtgMBWhU.js"
   ],
   "resources/js/Pages/Profile/Partials/DeleteUserForm.jsx": [
-    "/build/assets/DeleteUserForm-B4OEn7WD.js"
+    "/build/assets/DeleteUserForm-BbZ0YN6w.js"
   ],
   "resources/js/Pages/Profile/Partials/UpdatePasswordForm.jsx": [
-    "/build/assets/UpdatePasswordForm-FrH_yvdN.js"
+    "/build/assets/UpdatePasswordForm-DFUslPto.js"
   ],
   "resources/js/Pages/Profile/Partials/UpdateProfileInformationForm.jsx": [
-    "/build/assets/UpdateProfileInformationForm-DX74gi6n.js"
+    "/build/assets/UpdateProfileInformationForm-CHqOjk3n.js"
   ],
   "resources/js/Pages/Services.jsx": [
-    "/build/assets/Services-4jwUqGty.js"
+    "/build/assets/Services-COJ6S9Vn.js"
   ],
   "resources/js/Pages/Welcome.jsx": [
     "/build/assets/Welcome-SEhQsnTJ.js"
   ],
-  "resources/js/bootstrap.js": [],
+  "resources/js/bootstrap.js": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
   "resources/js/comps/CityAutocompleteField.jsx": [
-    "/build/assets/SEO-CsWNaySx.js",
-    "/build/assets/SEO-B5U4kmJ6.css"
+    "/build/assets/Contact-CWUIO6ds.js",
+    "/build/assets/Contact-B5U4kmJ6.css"
   ],
   "resources/js/comps/Contact.jsx": [
-    "/build/assets/SEO-CsWNaySx.js",
-    "/build/assets/SEO-B5U4kmJ6.css"
+    "/build/assets/Contact-CWUIO6ds.js",
+    "/build/assets/Contact-B5U4kmJ6.css"
   ],
   "resources/js/comps/Foot.jsx": [
-    "/build/assets/SEO-CsWNaySx.js",
-    "/build/assets/SEO-B5U4kmJ6.css"
+    "/build/assets/SEO-DXEFBRNA.js"
   ],
   "resources/js/comps/Header.jsx": [
-    "/build/assets/SEO-CsWNaySx.js",
-    "/build/assets/SEO-B5U4kmJ6.css"
+    "/build/assets/SEO-DXEFBRNA.js"
   ],
   "resources/js/comps/PricingComp.jsx": [
-    "/build/assets/Home-DRapGh2Y.js"
+    "/build/assets/Home-DW0RJiDC.js"
   ],
   "resources/js/comps/Reviews.jsx": [
-    "/build/assets/Home-DRapGh2Y.js"
+    "/build/assets/Home-DW0RJiDC.js"
   ],
   "resources/js/comps/SEO.jsx": [
-    "/build/assets/SEO-CsWNaySx.js",
-    "/build/assets/SEO-B5U4kmJ6.css"
+    "/build/assets/SEO-DXEFBRNA.js"
   ],
   "resources/js/comps/ServicesCard.jsx": [
-    "/build/assets/Home-DRapGh2Y.js"
+    "/build/assets/Home-DW0RJiDC.js"
   ],
   "resources/js/comps/fq.jsx": [
-    "/build/assets/Faq-Cb7mpRXD.js"
+    "/build/assets/Faq-COWXzqSZ.js"
   ],
   "resources/js/hooks/useMediaQuery.js": [
-    "/build/assets/AdminLayout-P8kTgT3x.js",
-    "/build/assets/AdminLayout-B-roIdz9.css"
+    "/build/assets/AdminLayout-DuFPRx9L.js",
+    "/build/assets/AdminLayout-CJwApa95.css"
   ],
-  "resources/js/ssr.jsx": [],
-  "resources/js/store/index.js": [],
-  "resources/js/store/uiSlice.js": []
+  "resources/js/ssr.jsx": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
+  "resources/js/store/index.js": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
+  "resources/js/store/themeSlice.js": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ],
+  "resources/js/store/uiSlice.js": [
+    "/build/assets/InterVariable-CWi-zmRD.woff2",
+    "/build/assets/InterVariable-Italic-d6KXgdvN.woff2",
+    "/build/assets/theme-DwVsNFN2.css",
+    "/build/assets/theme-mKkrTW3Q.css"
+  ]
 }

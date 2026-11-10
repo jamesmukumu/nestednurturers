@@ -1,10 +1,14 @@
 <?php
 
 use App\Models\Admin;
+use App\Mail\EmailVerifierMailer;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Testing\AssertableInertia as Assert;
 
-test('admins can register and are logged in', function () {
+test('admin registration queues email verification without logging in', function () {
+    Mail::fake();
+
     $this->get('/register')
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page->component('Auth/Register'));
@@ -15,10 +19,13 @@ test('admins can register and are logged in', function () {
         'phonenumber' => '+12025550123',
         'password' => 'secure-pass-123',
         'password_confirmation' => 'secure-pass-123',
-    ])->assertRedirect('/dashboard');
+    ])->assertRedirect(route('admin.verification.notice'));
 
-    $this->assertAuthenticatedAs(Admin::where('email', 'taylor@example.test')->first(), 'admin');
-    expect(Hash::check('secure-pass-123', Admin::where('email', 'taylor@example.test')->value('password')))->toBeTrue();
+    $admin = Admin::where('email', 'taylor@example.test')->firstOrFail();
+    $this->assertGuest('admin');
+    $this->assertSame($admin->id, session('pending_admin_verification_id'));
+    expect(Hash::check('secure-pass-123', $admin->password))->toBeTrue();
+    Mail::assertQueued(EmailVerifierMailer::class, fn (EmailVerifierMailer $mail) => $mail->hasTo($admin->email));
 });
 
 test('admin registration validates schema fields and password confirmation', function () {

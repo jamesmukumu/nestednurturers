@@ -1,11 +1,11 @@
-import { jsx } from "react/jsx-runtime";
+import { jsx, jsxs } from "react/jsx-runtime";
 import axios from "axios";
 import { createInertiaApp } from "@inertiajs/react";
 import createServer from "@inertiajs/react/server";
 import { renderToString } from "react-dom/server";
 import * as React from "react";
-import React__default, { useState } from "react";
-import { Provider } from "react-redux";
+import React__default, { useState, useEffect } from "react";
+import { useDispatch, useSelector, Provider } from "react-redux";
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 if (typeof window !== "undefined") {
   window.axios = axios;
@@ -2984,12 +2984,58 @@ const {
   toggleMobileSidebar
 } = uiSlice.actions;
 const uiReducer = uiSlice.reducer;
+const storageKey = "app-theme";
+const validModes = ["light", "dark", "system"];
+function prefersDark() {
+  return typeof window !== "undefined" && typeof window.matchMedia === "function" && window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+function getInitialTheme() {
+  let mode = "system";
+  if (typeof window !== "undefined") {
+    try {
+      const storedMode = window.localStorage.getItem(storageKey);
+      if (validModes.includes(storedMode)) mode = storedMode;
+    } catch (error) {
+      console.error("Unable to read the theme preference from local storage.", error);
+    }
+  }
+  return {
+    mode,
+    resolved: mode === "system" ? prefersDark() ? "dark" : "light" : mode
+  };
+}
+const themeSlice = createSlice({
+  name: "theme",
+  initialState: getInitialTheme,
+  reducers: {
+    setMode(state, action) {
+      if (validModes.includes(action.payload)) {
+        state.mode = action.payload;
+        if (action.payload !== "system") state.resolved = action.payload;
+      }
+    },
+    toggleTheme(state) {
+      state.mode = state.resolved === "dark" ? "light" : "dark";
+      state.resolved = state.mode;
+    },
+    setResolved(state, action) {
+      if (action.payload === "light" || action.payload === "dark") {
+        state.resolved = action.payload;
+      }
+    }
+  }
+});
+const { setMode, toggleTheme, setResolved } = themeSlice.actions;
+const selectThemeMode = (state) => state.theme.mode;
+const themeReducer = themeSlice.reducer;
 const store = configureStore({
   reducer: {
-    ui: uiReducer
+    ui: uiReducer,
+    theme: themeReducer
   }
 });
 let lastSidebarCollapsed = store.getState().ui.sidebarCollapsed;
+let lastThemeMode = store.getState().theme.mode;
 store.subscribe(() => {
   if (typeof window === "undefined") return;
   const sidebarCollapsed = store.getState().ui.sidebarCollapsed;
@@ -3004,17 +3050,63 @@ store.subscribe(() => {
     console.error("Unable to save the sidebar preference to local storage.", error);
   }
 });
+store.subscribe(() => {
+  if (typeof window === "undefined") return;
+  const themeMode = store.getState().theme.mode;
+  if (themeMode === lastThemeMode) return;
+  lastThemeMode = themeMode;
+  try {
+    window.localStorage.setItem("app-theme", themeMode);
+  } catch (error) {
+    console.error("Unable to save the theme preference to local storage.", error);
+  }
+});
+function ThemeManager({ themeUrls: themeUrls2 }) {
+  const dispatch = useDispatch();
+  const mode = useSelector((state) => state.theme.mode);
+  const resolved = useSelector((state) => state.theme.resolved);
+  useEffect(() => {
+    const root = document.documentElement;
+    root.classList.toggle("dark", resolved === "dark");
+    root.dataset.theme = resolved;
+    root.style.colorScheme = resolved;
+    const stylesheet = document.getElementById("primereact-theme");
+    const nextHref = themeUrls2[resolved];
+    if (stylesheet && stylesheet.getAttribute("href") !== nextHref) {
+      stylesheet.setAttribute("href", nextHref);
+    }
+  }, [resolved, themeUrls2]);
+  useEffect(() => {
+    if (mode !== "system" || typeof window.matchMedia !== "function") return void 0;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const updateResolved = (event) => dispatch(setResolved(event.matches ? "dark" : "light"));
+    updateResolved(media);
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", updateResolved);
+      return () => media.removeEventListener("change", updateResolved);
+    }
+    media.addListener(updateResolved);
+    return () => media.removeListener(updateResolved);
+  }, [dispatch, mode]);
+  return null;
+}
+const lightThemeUrl = "/build/assets/theme-DwVsNFN2.css";
+const darkThemeUrl = "/build/assets/theme-mKkrTW3Q.css";
 const appName = "NestedNurturers";
+const themeUrls = { light: lightThemeUrl, dark: darkThemeUrl };
 const renderPage = (page) => createInertiaApp({
   page,
   render: renderToString,
   title: (title) => `${title} - ${appName}`,
   resolve: (name) => resolvePageComponent(
     `./Pages/${name}.jsx`,
-    /* @__PURE__ */ Object.assign({ "./Pages/About.jsx": () => import("./assets/About-ISjPX9ax.js"), "./Pages/Admin/Blogs/Create.jsx": () => import("./assets/Create-cJluLGgb.js"), "./Pages/Admin/Blogs/Edit.jsx": () => import("./assets/Edit-Cs4oVzvD.js"), "./Pages/Admin/Blogs/Index.jsx": () => import("./assets/Index-D7jWbm-m.js"), "./Pages/Admin/Blogs/Show.jsx": () => import("./assets/Show-DVzD9ORe.js"), "./Pages/Admin/Dashboard.jsx": () => import("./assets/Dashboard-qlFwkkqJ.js"), "./Pages/Admin/NotFound.jsx": () => import("./assets/NotFound-C64aO_j1.js"), "./Pages/Admin/Settings.jsx": () => import("./assets/Settings-RNFAS-U1.js"), "./Pages/Auth/ConfirmPassword.jsx": () => import("./assets/ConfirmPassword-YWP9w-Dh.js"), "./Pages/Auth/ForgotPassword.jsx": () => import("./assets/ForgotPassword-BkSlzZsI.js"), "./Pages/Auth/Login.jsx": () => import("./assets/Login-CxDk3rRi.js"), "./Pages/Auth/Register.jsx": () => import("./assets/Register-Cg3yUfNO.js"), "./Pages/Auth/ResetPassword.jsx": () => import("./assets/ResetPassword-LwGIAQwL.js"), "./Pages/Auth/VerifyEmail.jsx": () => import("./assets/VerifyEmail-DJAha68Q.js"), "./Pages/Contacts.jsx": () => import("./assets/Contacts-g5FdQXq9.js"), "./Pages/Dashboard.jsx": () => import("./assets/Dashboard-D6hRzW-4.js"), "./Pages/Faq.jsx": () => import("./assets/Faq-Cb7mpRXD.js"), "./Pages/Home.jsx": () => import("./assets/Home-DRapGh2Y.js"), "./Pages/Pricing.jsx": () => import("./assets/Pricing-DwpXPT3s.js"), "./Pages/Profile/Edit.jsx": () => import("./assets/Edit-b1FKKxuj.js"), "./Pages/Profile/Partials/DeleteUserForm.jsx": () => import("./assets/DeleteUserForm-B4OEn7WD.js"), "./Pages/Profile/Partials/UpdatePasswordForm.jsx": () => import("./assets/UpdatePasswordForm-FrH_yvdN.js"), "./Pages/Profile/Partials/UpdateProfileInformationForm.jsx": () => import("./assets/UpdateProfileInformationForm-DX74gi6n.js"), "./Pages/Services.jsx": () => import("./assets/Services-4jwUqGty.js"), "./Pages/Welcome.jsx": () => import("./assets/Welcome-SEhQsnTJ.js") })
+    /* @__PURE__ */ Object.assign({ "./Pages/About.jsx": () => import("./assets/About-CT1AgC4N.js"), "./Pages/Admin/Blogs/Create.jsx": () => import("./assets/Create-CCJPdHok.js"), "./Pages/Admin/Blogs/Edit.jsx": () => import("./assets/Edit-dbrd_fqH.js"), "./Pages/Admin/Blogs/Index.jsx": () => import("./assets/Index-CjTiVdrY.js"), "./Pages/Admin/Blogs/Show.jsx": () => import("./assets/Show-DMeUvM7l.js"), "./Pages/Admin/Dashboard.jsx": () => import("./assets/Dashboard-BirCKe3X.js"), "./Pages/Admin/Enquiries/Index.jsx": () => import("./assets/Index-CTP7mjiL.js"), "./Pages/Admin/Enquiries/Show.jsx": () => import("./assets/Show-0zyqs_wd.js"), "./Pages/Admin/Enquiries/components.jsx": () => import("./assets/components-r35cbbUK.js"), "./Pages/Admin/NotFound.jsx": () => import("./assets/NotFound-sswB_zEW.js"), "./Pages/Admin/Profile.jsx": () => import("./assets/Profile-Be8clt5F.js"), "./Pages/Admin/Settings.jsx": () => import("./assets/Settings-B13DfnrG.js"), "./Pages/Auth/ConfirmPassword.jsx": () => import("./assets/ConfirmPassword-aSZCTw42.js"), "./Pages/Auth/ForgotPassword.jsx": () => import("./assets/ForgotPassword-hpOrmpNk.js"), "./Pages/Auth/Login.jsx": () => import("./assets/Login-DHRw7lVK.js"), "./Pages/Auth/Register.jsx": () => import("./assets/Register-CAIie6-V.js"), "./Pages/Auth/ResetPassword.jsx": () => import("./assets/ResetPassword-Krry2amx.js"), "./Pages/Auth/VerifyEmail.jsx": () => import("./assets/VerifyEmail-DRyfcny6.js"), "./Pages/Blog/Show.jsx": () => import("./assets/Show-Cb618Vc-.js"), "./Pages/Blogs/Index.jsx": () => import("./assets/Index-Cok4oGjX.js"), "./Pages/Contacts.jsx": () => import("./assets/Contacts-DOwpEKv-.js"), "./Pages/Dashboard.jsx": () => import("./assets/Dashboard-Cta8bUR8.js"), "./Pages/Faq.jsx": () => import("./assets/Faq-COWXzqSZ.js"), "./Pages/Home.jsx": () => import("./assets/Home-DW0RJiDC.js"), "./Pages/Pricing.jsx": () => import("./assets/Pricing--hfIiUmm.js"), "./Pages/Profile/Edit.jsx": () => import("./assets/Edit-DtgMBWhU.js"), "./Pages/Profile/Partials/DeleteUserForm.jsx": () => import("./assets/DeleteUserForm-BbZ0YN6w.js"), "./Pages/Profile/Partials/UpdatePasswordForm.jsx": () => import("./assets/UpdatePasswordForm-DFUslPto.js"), "./Pages/Profile/Partials/UpdateProfileInformationForm.jsx": () => import("./assets/UpdateProfileInformationForm-CHqOjk3n.js"), "./Pages/Services.jsx": () => import("./assets/Services-COJ6S9Vn.js"), "./Pages/Welcome.jsx": () => import("./assets/Welcome-SEhQsnTJ.js") })
   ),
   setup({ App, props }) {
-    return /* @__PURE__ */ jsx(Provider, { store, children: /* @__PURE__ */ jsx(PrimeReactProvider, { children: /* @__PURE__ */ jsx(App, { ...props }) }) });
+    return /* @__PURE__ */ jsx(Provider, { store, children: /* @__PURE__ */ jsxs(PrimeReactProvider, { children: [
+      /* @__PURE__ */ jsx(ThemeManager, { themeUrls }),
+      /* @__PURE__ */ jsx(App, { ...props })
+    ] }) });
   }
 });
 {
@@ -3035,6 +3127,8 @@ export {
   FilterService as d,
   renderPage as default,
   FilterOperator as e,
+  selectThemeMode as f,
+  setMode as g,
   localeOption as l,
   mergeProps as m,
   setMobileSidebarOpen as s,

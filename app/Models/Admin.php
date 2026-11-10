@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Mail\EmailVerifierMailer;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 
 class Admin extends Authenticatable implements MustVerifyEmailContract
 {
@@ -45,7 +48,7 @@ class Admin extends Authenticatable implements MustVerifyEmailContract
 
     public function hasVerifiedEmail(): bool
     {
-        return $this->email_verified_at !== null || $this->isEmailVerified;
+        return $this->email_verified_at !== null;
     }
 
     public function markEmailAsVerified(): bool
@@ -54,6 +57,22 @@ class Admin extends Authenticatable implements MustVerifyEmailContract
             'email_verified_at' => $this->freshTimestamp(),
             'isEmailVerified' => true,
         ])->save();
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        $verificationUrl = URL::temporarySignedRoute(
+            'admin.verification.verify',
+            now()->addMinutes(config('auth.verification.expire', 5)),
+            [
+                'id' => $this->getKey(),
+                'hash' => sha1($this->getEmailForVerification()),
+            ],
+        );
+
+        Mail::to($this->getEmailForVerification())->queue(
+            new EmailVerifierMailer($this, $verificationUrl),
+        );
     }
 
     public function blogs(): HasMany

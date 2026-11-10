@@ -28,10 +28,13 @@ class AuthController extends Controller
             'password',
         ]));
 
-        Auth::guard('admin')->login($admin);
         $request->session()->regenerate();
+        $request->session()->forget('pending_admin_verification_id');
+        $request->session()->put('pending_admin_verification_id', $admin->getKey());
+        $admin->sendEmailVerificationNotification();
 
-        return redirect()->intended(route('dashboard'));
+        return redirect()->route('admin.verification.notice')
+            ->with('status', 'Your account was created. Verify your email address to activate it.');
     }
 
     public function showLogin(): Response

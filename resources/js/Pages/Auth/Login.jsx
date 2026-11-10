@@ -18,6 +18,7 @@ export default function Login({ status }) {
             onFinish: () => reset('password'),
         });
     };
+    const needsVerification = errors.email === 'Please verify your email address before logging in.';
 
     return (
         <GuestLayout
@@ -46,6 +47,9 @@ export default function Login({ status }) {
                         <small className="auth-form__error" id="login-email-error">
                             {errors.email || '\u00a0'}
                         </small>
+                        {needsVerification && (
+                            <Link href={route('admin.verification.notice')}>Resend verification email</Link>
+                        )}
                     </div>
                     <div className="auth-form__field">
                         <label htmlFor="login-password">Password</label>

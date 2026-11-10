@@ -53,13 +53,16 @@ class PublicBlogController extends Controller
      */
     private function present(Blog $blog, bool $includeContent = true): array
     {
+        $overview = $this->sanitizeHtml($blog->overview ?? '');
+        $description = $this->sanitizeHtml($blog->description ?? '');
+
         return [
             'title' => $blog->title,
             'slug' => $blog->slug,
             'overview' => $includeContent
-                ? $blog->overview
-                : trim(html_entity_decode(strip_tags($blog->overview), ENT_QUOTES | ENT_HTML5, 'UTF-8')),
-            'description' => $includeContent ? $blog->description : null,
+                ? $overview
+                : trim(html_entity_decode(strip_tags($overview), ENT_QUOTES | ENT_HTML5, 'UTF-8')),
+            'description' => $includeContent ? $description : '',
             'image_url' => $blog->image_path !== ''
                 ? Storage::disk('public')->url($blog->image_path)
                 : null,
@@ -70,5 +73,14 @@ class PublicBlogController extends Controller
                 'title' => $blog->category->title,
             ] : null,
         ];
+    }
+
+    private function sanitizeHtml(?string $value): string
+    {
+        if ($value === null) {
+            return '';
+        }
+
+        return trim($value);
     }
 }

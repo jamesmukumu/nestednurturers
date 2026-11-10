@@ -4,9 +4,9 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AdminProfileController;
-use App\Http\Controllers\Auth\EmailVerificationNotificationController;
-use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\AdminEmailVerificationController;
+use App\Http\Controllers\Auth\AdminEmailVerificationNotificationController;
+use App\Http\Controllers\Auth\AdminEmailVerificationPromptController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\EnquiryStatusController;
 use App\Http\Controllers\PublicBlogController;
@@ -38,16 +38,18 @@ Route::get('/blogs', [PublicBlogController::class, 'index'])->name('public.blogs
 Route::get('/blog/{slug}', [PublicBlogController::class, 'show'])->name('public.blogs.show');
 Route::redirect('/dashboard/editor', '/dashboard/blogs');
 
-Route::middleware('auth:admin')->group(function () {
-    Route::get('/email/verify', EmailVerificationPromptController::class)
-        ->name('verification.notice');
-    Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
+Route::prefix('admin/email')->name('admin.verification.')->group(function () {
+    Route::get('/verify', AdminEmailVerificationPromptController::class)
+        ->name('notice');
+    Route::get('/verify/{id}/{hash}', AdminEmailVerificationController::class)
         ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
-    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-        ->middleware('throttle:6,1')
-        ->name('verification.send');
+        ->name('verify');
+    Route::post('/verification-notification', AdminEmailVerificationNotificationController::class)
+        ->middleware('throttle:3,1')
+        ->name('send');
+});
 
+Route::middleware(['auth:admin', 'admin.verified'])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
