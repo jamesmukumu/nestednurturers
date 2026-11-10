@@ -3,6 +3,12 @@
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\EnquiryStatusController;
 use App\Http\Controllers\PublicBlogController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,9 +39,23 @@ Route::get('/blog/{slug}', [PublicBlogController::class, 'show'])->name('public.
 Route::redirect('/dashboard/editor', '/dashboard/blogs');
 
 Route::middleware('auth:admin')->group(function () {
+    Route::get('/email/verify', EmailVerificationPromptController::class)
+        ->name('verification.notice');
+    Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+
     Route::get('/dashboard', function () {
         return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
+
+    Route::get('/dashboard/profile', [AdminProfileController::class, 'show'])
+        ->name('dashboard.profile');
+    Route::get('/dashboard/profile/data', [AdminProfileController::class, 'data'])
+        ->name('dashboard.profile.data');
 
     Route::prefix('dashboard/blogs')->name('admin.blogs.')->controller(BlogController::class)->group(function () {
         Route::get('/', 'index')->name('index');
@@ -48,6 +68,15 @@ Route::middleware('auth:admin')->group(function () {
     });
     Route::get('/blog-categories', [BlogCategoryController::class, 'index'])->name('blog-categories.index');
     Route::post('/blog-categories', [BlogCategoryController::class, 'store'])->name('blog-categories.store');
+
+    Route::middleware('verified')->group(function () {
+        Route::resource('enquiries', EnquiryController::class)
+            ->only(['index', 'show'])
+            ->parameters(['enquiries' => 'consultation']);
+        Route::patch('/enquiries/{consultation}/status', EnquiryStatusController::class)
+            ->middleware('throttle:6,1')
+            ->name('enquiries.status');
+    });
 
     Route::get('/dashboard/settings', function () {
         return Inertia::render('Admin/Settings');

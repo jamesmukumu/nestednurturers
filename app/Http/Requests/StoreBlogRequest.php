@@ -29,6 +29,7 @@ class StoreBlogRequest extends FormRequest
                 Rule::exists('blog_categories', 'id')->where('admins_id', $adminId),
             ],
             'image' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'reading_time' => ['required', 'integer', 'min:1', 'max:300'],
             'is_published' => ['sometimes', 'boolean'],
         ];
     }

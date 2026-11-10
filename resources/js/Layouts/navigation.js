@@ -5,7 +5,14 @@ export const navigation = [
             {
                 label: 'Dashboard',
                 href: '/dashboard',
+                exact: true,
                 icon: 'pi pi-th-large',
+            },
+            {
+                label: 'Website consultations',
+                href: '/enquiries',
+                icon: 'pi pi-inbox',
+                badge: true,
             },
         ],
     },
@@ -22,6 +29,12 @@ export const navigation = [
     {
         heading: 'Settings',
         items: [
+            {
+                label: 'Profile',
+                href: '/dashboard/profile',
+                icon: 'pi pi-user',
+                emailVerificationIndicator: true,
+            },
             {
                 label: 'Settings',
                 href: '/dashboard/settings',

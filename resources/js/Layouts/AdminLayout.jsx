@@ -14,6 +14,28 @@ import { navigation } from './navigation';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import './AdminLayout.css';
 
+function matchesNavigationPath(path, href, exact = false) {
+    return exact ? path === href : path === href || path.startsWith(`${href}/`);
+}
+
+function resolveActiveNavigation(path) {
+    const candidates = navigation.flatMap((section) =>
+        section.items.flatMap((item) => [
+            ...(item.href ? [{ item, href: item.href, exact: item.exact }] : []),
+            ...(item.children ?? []).map((child) => ({
+                item,
+                child,
+                href: child.href,
+                exact: child.exact,
+            })),
+        ]),
+    );
+
+    return candidates
+        .filter((candidate) => matchesNavigationPath(path, candidate.href, candidate.exact))
+        .sort((a, b) => Number(Boolean(b.exact)) - Number(Boolean(a.exact)) || b.href.length - a.href.length)[0];
+}
+
 function getInitials(name = '') {
     return name
         .split(/\s+/)
@@ -30,7 +52,10 @@ function getCurrentPage(url) {
     if (path === '/dashboard/blogs/create') return 'Create Article';
     if (/^\/dashboard\/blogs\/[^/]+\/edit$/.test(path)) return 'Edit Article';
     if (/^\/dashboard\/blogs\/[^/]+$/.test(path)) return 'Blog';
+    if (path === '/dashboard/profile') return 'Profile';
     if (path === '/dashboard/settings') return 'Settings';
+    if (path === '/enquiries') return 'Website consultations';
+    if (/^\/enquiries\/[^/]+$/.test(path)) return 'Enquiry details';
     if (path === '/dashboard') return 'Dashboard';
     return 'Not found';
 }
@@ -58,9 +83,16 @@ function menuActionTemplate(item, options) {
     );
 }
 
-function SidebarNavigation({ collapsed, url, onNavigate }) {
+function SidebarNavigation({
+    collapsed,
+    url,
+    onNavigate,
+    pendingEnquiriesCount,
+    emailVerified,
+}) {
     const [expandedItems, setExpandedItems] = useState(['Blogs']);
-    const path = url.split('?')[0];
+    const path = url.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
+    const activeNavigation = resolveActiveNavigation(path);
 
     const toggleItem = (label) => {
         setExpandedItems((current) =>
@@ -73,96 +105,118 @@ function SidebarNavigation({ collapsed, url, onNavigate }) {
     return (
         <nav className="admin-shell__navigation" role="navigation" aria-label="Admin navigation">
             {navigation.map((section) => (
-                <section className="admin-shell__nav-section" key={section.heading}>
-                    {!collapsed && (
-                        <h2 className="admin-shell__nav-heading">{section.heading}</h2>
-                    )}
-                    {section.items.map((item) => {
-                        const active = item.href
-                            ? path === item.href || path.startsWith(`${item.href}/`)
-                            : item.children?.some((child) => child.href === path);
+                    <section className="admin-shell__nav-section" key={section.heading}>
+                        {!collapsed && (
+                            <h2 className="admin-shell__nav-heading">{section.heading}</h2>
+                        )}
+                        {section.items.map((item) => {
+                            const active = activeNavigation?.item === item && !activeNavigation.child;
+                            const needsEmailVerification = item.emailVerificationIndicator && !emailVerified;
+                            const enquiryBadge = item.badge ? Number(pendingEnquiriesCount || 0) : 0;
+                            const accessibleLabel = [
+                                item.label,
+                                needsEmailVerification ? 'email not verified' : null,
+                                enquiryBadge > 0 ? `${enquiryBadge} pending enquiries` : null,
+                            ].filter(Boolean).join(', ');
 
-                        if (item.children) {
-                            const expanded = expandedItems.includes(item.label);
+                            if (item.children) {
+                                const expanded = expandedItems.includes(item.label);
+
+                                return (
+                                    <div className="admin-shell__nav-group" key={item.label}>
+                                        <Button
+                                            type="button"
+                                            variant="ghost"
+                                            size="sm"
+                                            className={`admin-shell__nav-link${active ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
+                                            aria-label={collapsed ? accessibleLabel : undefined}
+                                            aria-current={active ? 'page' : undefined}
+                                            aria-expanded={expanded}
+                                            data-pr-tooltip={collapsed ? accessibleLabel : undefined}
+                                            data-pr-position="right"
+                                            onClick={() => toggleItem(item.label)}
+                                        >
+                                            <i className={`admin-shell__nav-icon ${item.icon}`} aria-hidden="true" />
+                                            {!collapsed && <span className="admin-shell__nav-label">{item.label}</span>}
+                                            {!collapsed && (
+                                                <i
+                                                    className={`admin-shell__nav-chevron pi ${expanded ? 'pi-chevron-down' : 'pi-chevron-right'}`}
+                                                    aria-hidden="true"
+                                                />
+                                            )}
+                                        </Button>
+                                        {expanded && (
+                                            <div className={`admin-shell__subnav${collapsed ? ' is-collapsed' : ''}`}>
+                                                {item.children.map((child) => {
+                                                    const childActive = activeNavigation?.child === child;
+
+                                                    return (
+                                                        <Button
+                                                            key={child.href}
+                                                            href={child.href}
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            className={`admin-shell__nav-link admin-shell__subnav-link${childActive ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
+                                                            aria-label={collapsed ? child.label : undefined}
+                                                            aria-current={childActive ? 'page' : undefined}
+                                                            data-pr-tooltip={collapsed ? child.label : undefined}
+                                                            data-pr-position="right"
+                                                            onClick={onNavigate}
+                                                        >
+                                                            <i className={`admin-shell__nav-icon ${child.icon}`} aria-hidden="true" />
+                                                            {!collapsed && <span className="admin-shell__nav-label">{child.label}</span>}
+                                                        </Button>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
+                                    </div>
+                                );
+                            }
+
+                            const itemActive = active;
 
                             return (
-                                <div className="admin-shell__nav-group" key={item.label}>
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        className={`admin-shell__nav-link${active ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
-                                        aria-label={collapsed ? item.label : undefined}
-                                        aria-expanded={expanded}
-                                        data-pr-tooltip={collapsed ? item.label : undefined}
-                                        data-pr-position="right"
-                                        onClick={() => toggleItem(item.label)}
-                                    >
-                                        <i className={`admin-shell__nav-icon ${item.icon}`} aria-hidden="true" />
-                                        {!collapsed && <span className="admin-shell__nav-label">{item.label}</span>}
-                                        {!collapsed && (
-                                            <i
-                                                className={`admin-shell__nav-chevron pi ${expanded ? 'pi-chevron-down' : 'pi-chevron-right'}`}
-                                                aria-hidden="true"
-                                            />
-                                        )}
-                                    </Button>
-                                    {expanded && (
-                                        <div className={`admin-shell__subnav${collapsed ? ' is-collapsed' : ''}`}>
-                                            {item.children.map((child) => {
-                                                const childActive = path === child.href;
-
-                                                return (
-                                                    <Button
-                                                        key={child.href}
-                                                        href={child.href}
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        className={`admin-shell__nav-link admin-shell__subnav-link${childActive ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
-                                                        aria-label={collapsed ? child.label : undefined}
-                                                        aria-current={childActive ? 'page' : undefined}
-                                                        data-pr-tooltip={collapsed ? child.label : undefined}
-                                                        data-pr-position="right"
-                                                        onClick={onNavigate}
-                                                    >
-                                                        <i className={`admin-shell__nav-icon ${child.icon}`} aria-hidden="true" />
-                                                        {!collapsed && <span className="admin-shell__nav-label">{child.label}</span>}
-                                                    </Button>
-                                                );
-                                            })}
-                                        </div>
+                                <Button
+                                    key={item.href}
+                                    href={item.href}
+                                    variant="ghost"
+                                    size="sm"
+                                    className={`admin-shell__nav-link${itemActive ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
+                                    aria-label={collapsed ? accessibleLabel : needsEmailVerification ? accessibleLabel : undefined}
+                                    aria-current={itemActive ? 'page' : undefined}
+                                    data-pr-tooltip={collapsed ? accessibleLabel : undefined}
+                                    data-pr-position="right"
+                                    onClick={onNavigate}
+                                >
+                                    <i className={`admin-shell__nav-icon ${item.icon}`} aria-hidden="true" />
+                                    {!collapsed && <span className="admin-shell__nav-label">{item.label}</span>}
+                                    {!collapsed && enquiryBadge > 0 && (
+                                        <span className="admin-shell__nav-badge" aria-hidden="true">
+                                            {enquiryBadge > 99 ? '99+' : enquiryBadge}
+                                        </span>
                                     )}
-                                </div>
+                                    {needsEmailVerification && (
+                                        <span className="admin-shell__verification-dot" aria-hidden="true" />
+                                    )}
+                                </Button>
                             );
-                        }
-
-                        const itemActive = path === item.href || path.startsWith(`${item.href}/`);
-
-                        return (
-                            <Button
-                                key={item.href}
-                                href={item.href}
-                                variant="ghost"
-                                size="sm"
-                                className={`admin-shell__nav-link${itemActive ? ' is-active' : ''}${collapsed ? ' is-collapsed admin-shell__tooltip-target' : ''}`}
-                                aria-label={collapsed ? item.label : undefined}
-                                aria-current={itemActive ? 'page' : undefined}
-                                data-pr-tooltip={collapsed ? item.label : undefined}
-                                data-pr-position="right"
-                                onClick={onNavigate}
-                            >
-                                <i className={`admin-shell__nav-icon ${item.icon}`} aria-hidden="true" />
-                                {!collapsed && <span className="admin-shell__nav-label">{item.label}</span>}
-                            </Button>
-                        );
-                    })}
-                </section>
+                        })}
+                    </section>
             ))}
         </nav>
     );
 }
 
-function SidebarContents({ collapsed, onNavigate, user, menuRef, url }) {
+function SidebarContents({
+    collapsed,
+    onNavigate,
+    user,
+    menuRef,
+    url,
+    pendingEnquiriesCount,
+    emailVerified,
+}) {
     return (
         <div className="admin-shell__sidebar-inner">
             <Link href="/dashboard" className="admin-shell__brand" aria-label="Nested Nurturers dashboard">
@@ -181,6 +235,8 @@ function SidebarContents({ collapsed, onNavigate, user, menuRef, url }) {
                 collapsed={collapsed}
                 url={url}
                 onNavigate={onNavigate}
+                pendingEnquiriesCount={pendingEnquiriesCount}
+                emailVerified={emailVerified}
             />
 
             <div className={`admin-shell__user${collapsed ? ' is-collapsed' : ''}`}>
@@ -213,6 +269,8 @@ export default function AdminLayout({ children }) {
     const mobileSidebarOpen = useSelector((state) => state.ui.mobileSidebarOpen);
     const { url, props } = usePage();
     const user = props.auth?.user;
+    const emailVerified = Boolean(props.auth?.emailVerified);
+    const pendingEnquiriesCount = Number(props.pendingEnquiriesCount || 0);
     const isDesktop = useMediaQuery('(min-width: 992px)');
     const menuRef = useRef(null);
     const pageTitle = getCurrentPage(url);
@@ -223,6 +281,12 @@ export default function AdminLayout({ children }) {
 
     const menuItems = useMemo(
         () => [
+            {
+                label: 'Profile',
+                icon: 'pi pi-user',
+                url: '/dashboard/profile',
+                template: menuActionTemplate,
+            },
             {
                 label: 'Settings',
                 icon: 'pi pi-cog',
@@ -275,6 +339,8 @@ export default function AdminLayout({ children }) {
                     user={user}
                     menuRef={menuRef}
                     url={url}
+                    pendingEnquiriesCount={pendingEnquiriesCount}
+                    emailVerified={emailVerified}
                 />
             </aside>
 
@@ -311,6 +377,8 @@ export default function AdminLayout({ children }) {
                         collapsed={false}
                         url={url}
                         onNavigate={handleNavigation}
+                        pendingEnquiriesCount={pendingEnquiriesCount}
+                        emailVerified={emailVerified}
                     />
                     <div className="admin-shell__mobile-user">
                         <Avatar label={getInitials(user?.name)} shape="circle" className="admin-shell__avatar" />

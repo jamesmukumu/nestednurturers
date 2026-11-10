@@ -7,7 +7,7 @@
     justify-content: center;
     gap: 0.5rem;
     border: 0;
-    border-radius: 9999px;
+    border-radius: var(--app-radius-control);
     font-family: inherit;
     font-size: 0.875rem;
     font-weight: 600;
@@ -49,11 +49,7 @@
 }
 
 .app-button.text-black {
-    color: #000;
-}
-
-.dark .app-button.text-black {
-    color: #f3f4f6;
+    color: var(--app-text);
 }
 
 .app-button--icon-only {
@@ -64,79 +60,72 @@
 }
 
 .app-button--primary {
-    background: linear-gradient(to right, #ed69c2, #a94f9c);
+    background: linear-gradient(to right, var(--app-action-start), var(--app-action-end));
     color: #fff;
-    box-shadow: 0 8px 20px rgb(169 79 156 / 28%);
+    box-shadow: 0 4px 14px rgb(75 43 75 / 16%);
 }
 
 .app-button--primary:hover:not(:disabled):not([aria-disabled="true"]) {
     transform: translateY(-2px);
-    background: linear-gradient(to right, #e357b5, #98418b);
-    box-shadow: 0 12px 24px rgb(169 79 156 / 35%);
+    background: linear-gradient(to right, var(--app-action-hover-start), var(--app-action-hover-end));
+    box-shadow: 0 8px 18px rgb(75 43 75 / 22%);
 }
 
 .app-button--secondary {
-    background: #fff;
-    color: #854078;
-    box-shadow: inset 0 0 0 1px #d98ac8;
+    background: var(--app-surface);
+    color: var(--app-primary);
+    box-shadow: inset 0 0 0 1px var(--app-border);
 }
 
 .app-button--secondary:hover:not(:disabled):not([aria-disabled="true"]) {
-    background: #fff4fc;
-    box-shadow: inset 0 0 0 1px #a94f9c;
+    background: var(--surface-hover);
+    box-shadow: inset 0 0 0 1px var(--app-primary);
 }
 
 .dark .app-button--secondary {
-    background: #292333;
-    color: #f6d9ef;
-    box-shadow: inset 0 0 0 1px #b96ea8;
+    background: var(--app-surface);
+    color: var(--app-primary);
+    box-shadow: inset 0 0 0 1px var(--app-border);
 }
 
 .dark .app-button--secondary:hover:not(:disabled):not([aria-disabled="true"]) {
-    background: #3a2a3d;
-    box-shadow: inset 0 0 0 1px #ed91d1;
+    background: var(--surface-hover);
+    box-shadow: inset 0 0 0 1px var(--app-primary);
 }
 
 .app-button--ghost {
     background: transparent;
-    color: #854078;
+    color: var(--app-primary);
 }
 
 .app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
-    background: rgb(217 138 200 / 14%);
-}
-
-.dark .app-button--ghost {
-    color: #f6d9ef;
-}
-
-.dark .app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
-    background: rgb(237 145 209 / 16%);
+    background: color-mix(in srgb, var(--app-primary) 12%, transparent);
 }
 
 .app-button--danger {
-    background: linear-gradient(to right, #e45d74, #b4234a);
+    background: linear-gradient(to right, var(--app-danger-start), var(--app-danger-end));
     color: #fff;
-    box-shadow: 0 8px 20px rgb(180 35 74 / 24%);
+    box-shadow: 0 4px 14px rgb(75 43 75 / 16%);
 }
 
 .app-button--danger:hover:not(:disabled):not([aria-disabled="true"]) {
     transform: translateY(-2px);
-    background: linear-gradient(to right, #d94b65, #9f1f42);
-    box-shadow: 0 12px 24px rgb(180 35 74 / 32%);
+    background: linear-gradient(to right, var(--app-danger-hover-start), var(--app-danger-hover-end));
+    box-shadow: 0 8px 18px rgb(75 43 75 / 22%);
 }
 
 .app-button:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 4px rgb(217 138 200 / 40%);
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--app-focus);
 }
 
 .app-button--secondary:focus-visible {
-    box-shadow: inset 0 0 0 1px #a94f9c, 0 0 0 4px rgb(217 138 200 / 40%);
+    box-shadow: inset 0 0 0 1px var(--app-primary), 0 0 0 4px var(--app-focus);
 }
 
 .app-button--danger:focus-visible {
-    box-shadow: 0 0 0 4px rgb(217 75 101 / 30%);
+    box-shadow: 0 0 0 4px var(--app-focus);
 }
 
 .app-button:active:not(:disabled):not([aria-disabled="true"]) {
@@ -188,7 +177,7 @@
 }
 
 .p-button.app-button {
-    border-radius: 9999px;
+    border-radius: var(--app-radius-control);
     font-family: inherit;
     font-size: 0.875rem;
     font-weight: 600;
@@ -203,24 +192,17 @@
 
 .admin-shell__account-menu .p-menuitem-link.app-button--ghost {
     background: transparent;
-    color: #854078;
+    color: var(--app-primary);
 }
 
 .admin-shell__account-menu .p-menuitem-link.app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
-    background: rgb(217 138 200 / 14%);
-}
-
-.dark .admin-shell__account-menu .p-menuitem-link.app-button--ghost {
-    color: #f6d9ef;
-}
-
-.dark .admin-shell__account-menu .p-menuitem-link.app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
-    background: rgb(237 145 209 / 16%);
+    background: color-mix(in srgb, var(--app-primary) 12%, transparent);
 }
 
 .admin-shell__account-menu .p-menuitem-link.app-button:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 4px rgb(217 138 200 / 40%);
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--app-focus);
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icon,
@@ -230,25 +212,26 @@
     min-width: 2.75rem;
     min-height: 2.75rem;
     border: 0;
-    border-radius: 9999px;
+    border-radius: var(--app-radius-control);
     background: transparent;
-    color: #854078;
-    transition: background 200ms ease, box-shadow 200ms ease;
+    color: var(--app-primary);
+    transition: background var(--app-transition), box-shadow var(--app-transition);
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icon:hover,
 .p-paginator .p-paginator-element:hover,
 .p-datepicker .p-datepicker-prev:hover,
 .p-datepicker .p-datepicker-next:hover {
-    background: rgb(217 138 200 / 14%);
+    background: color-mix(in srgb, var(--app-primary) 12%, transparent);
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icon:focus-visible,
 .p-paginator .p-paginator-element:focus-visible,
 .p-datepicker .p-datepicker-prev:focus-visible,
 .p-datepicker .p-datepicker-next:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgb(217 138 200 / 40%);
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px var(--app-focus);
 }
 
 @keyframes app-button-spin {

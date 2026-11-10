@@ -1,0 +1,611 @@
+.enquiries-page {
+    width: 100%;
+    max-width: 90rem;
+    min-width: 0;
+    margin-inline: auto;
+    color: var(--app-text);
+}
+
+.enquiries-page__header,
+.enquiries-toolbar,
+.enquiries-pagination,
+.enquiry-detail__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.enquiries-page__header {
+    margin-bottom: 1.5rem;
+}
+
+.enquiries-page__header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 650;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.enquiries-page__header p {
+    margin: 0.5rem 0 0;
+    color: var(--app-text-secondary);
+}
+
+.enquiries-panel,
+.enquiry-detail__card {
+    min-width: 0;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-card, 0.75rem);
+    background: var(--app-surface);
+    box-shadow: var(--app-shadow);
+}
+
+.enquiries-panel {
+    overflow: hidden;
+}
+
+.enquiries-toolbar {
+    flex-wrap: wrap;
+    padding: 1rem;
+    border-bottom: 1px solid var(--app-border);
+}
+
+.enquiries-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+}
+
+.enquiries-filter,
+.enquiries-button,
+.enquiries-pagination__button,
+.enquiries-sort-button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid transparent;
+    border-radius: var(--app-radius-control, 0.625rem);
+    padding: 0.5rem 0.875rem;
+    color: var(--app-text-secondary);
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color var(--app-transition, 180ms ease), background-color var(--app-transition, 180ms ease), border-color var(--app-transition, 180ms ease);
+}
+
+.enquiries-filter:hover,
+.enquiries-button--secondary:hover,
+.enquiries-pagination__button:hover:not(:disabled) {
+    color: var(--app-text);
+    background: var(--surface-hover);
+}
+
+.enquiries-filter.is-selected,
+.enquiries-pagination__button.is-current {
+    border-color: color-mix(in srgb, var(--app-primary) 30%, var(--app-border));
+    color: var(--app-primary);
+    background: var(--app-nav-active-bg);
+}
+
+.enquiries-search {
+    display: flex;
+    flex: 1 1 15rem;
+    min-width: min(100%, 12rem);
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-control, 0.625rem);
+    padding: 0 0.75rem;
+    color: var(--app-text-secondary);
+    background: var(--app-page);
+}
+
+.enquiries-search input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    color: var(--app-text);
+    background: transparent;
+    font: inherit;
+}
+
+.enquiries-search input::placeholder {
+    color: var(--app-text-muted);
+}
+
+.enquiries-select {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--app-text-secondary);
+    font-size: 0.875rem;
+}
+
+.enquiries-select select {
+    min-height: 2.75rem;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-control, 0.625rem);
+    padding: 0.375rem 0.625rem;
+    color: var(--app-text);
+    background: var(--app-page);
+    font: inherit;
+}
+
+.enquiries-datatable {
+    overflow: hidden;
+    border-top: 1px solid var(--app-border);
+    background: var(--app-surface);
+    transition: opacity 180ms ease;
+}
+
+.enquiries-datatable.is-refreshing {
+    opacity: 0.65;
+}
+
+.enquiries-datatable .p-datatable-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.enquiries-datatable .p-datatable-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.enquiries-datatable .p-datatable-thead > tr > th,
+.enquiries-datatable .p-datatable-tbody > tr > td {
+    padding: 0.875rem;
+    border-bottom: 1px solid var(--app-border);
+    vertical-align: middle;
+}
+
+.enquiries-datatable .p-datatable-thead > tr > th {
+    color: var(--app-text-secondary);
+    background: var(--app-page);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+}
+
+.enquiries-datatable .p-datatable-tbody > tr {
+    cursor: pointer;
+    transition: background-color 150ms ease;
+}
+
+.enquiries-datatable .p-datatable-tbody > tr:last-child > td {
+    border-bottom: 0;
+}
+
+.enquiries-datatable .p-datatable-tbody > tr:hover {
+    background: var(--surface-hover);
+}
+
+.enquiries-datatable .p-datatable-tbody > tr > td {
+    max-width: 18rem;
+    color: var(--app-text);
+    font-size: 0.875rem;
+    overflow-wrap: anywhere;
+}
+
+.enquiries-datatable .p-datatable-tbody > tr > td a,
+.enquiry-detail a {
+    color: var(--app-primary);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2em;
+}
+
+.enquiries-table__contact {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.enquiries-table__contact a {
+    display: inline-flex;
+    min-height: 1.75rem;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.enquiries-table__contact .pi {
+    flex: 0 0 auto;
+    color: var(--app-text-secondary);
+}
+
+.enquiries-table__name {
+    display: grid;
+    min-height: 2.75rem;
+    align-content: center;
+    font-weight: 600;
+}
+
+.enquiries-table__name small {
+    margin-top: 0.25rem;
+    color: var(--app-text-secondary);
+    font-size: 0.75rem;
+    font-weight: 450;
+}
+
+.enquiries-status {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.8125rem;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.enquiries-status.is-pending {
+    border-color: color-mix(in srgb, var(--app-warning) 42%, var(--app-border));
+    color: var(--app-warning);
+    background: color-mix(in srgb, var(--app-warning) 11%, var(--app-surface));
+}
+
+.enquiries-status.is-addressed {
+    border-color: color-mix(in srgb, var(--app-success) 42%, var(--app-border));
+    color: var(--app-success-strong);
+    background: color-mix(in srgb, var(--app-success) 10%, var(--app-surface));
+}
+
+.enquiries-button--secondary {
+    border-color: var(--app-border);
+    color: var(--app-primary);
+    background: var(--app-surface);
+}
+
+.enquiries-button:disabled,
+.enquiries-pagination__button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.enquiries-datatable .enquiries-button {
+    min-height: 2.75rem;
+    padding-inline: 0.625rem;
+    font-size: 0.8125rem;
+    white-space: nowrap;
+}
+
+.enquiries-datatable .p-datatable-tbody > tr > td > .p-column-title {
+    color: var(--app-text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.enquiries-datatable .p-datatable-emptymessage > td {
+    padding: 2rem 1rem;
+    color: var(--app-text-secondary);
+    text-align: center;
+}
+
+.enquiries-empty,
+.enquiries-error {
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    padding: 3rem 1.25rem;
+    text-align: center;
+}
+
+.enquiries-empty > .pi {
+    color: var(--app-primary);
+    font-size: 1.75rem;
+}
+
+.enquiries-empty p,
+.enquiries-error p {
+    margin: 0;
+    color: var(--app-text-secondary);
+}
+
+.enquiries-error {
+    justify-items: start;
+    border-bottom: 1px solid var(--app-border);
+    color: var(--app-danger-strong);
+    text-align: left;
+}
+
+.enquiries-inline-error {
+    margin: 0;
+    border-bottom: 1px solid var(--app-border);
+    padding: 0.75rem 1rem;
+    color: var(--app-danger-strong);
+}
+
+.enquiries-refreshing {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    color: var(--app-text-secondary);
+    font-size: 0.8125rem;
+}
+
+.enquiries-pagination {
+    flex-wrap: wrap;
+    padding: 1rem;
+    border-top: 1px solid var(--app-border);
+}
+
+.enquiries-pagination > p {
+    margin: 0;
+    color: var(--app-text-secondary);
+    font-size: 0.875rem;
+}
+
+.enquiries-pagination nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.enquiries-pagination__button {
+    min-width: 2.75rem;
+    padding-inline: 0.5rem;
+}
+
+.enquiries-pagination__ellipsis {
+    display: inline-flex;
+    min-width: 1.75rem;
+    justify-content: center;
+    color: var(--app-text-secondary);
+}
+
+.enquiries-toast {
+    position: fixed;
+    z-index: 20;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    display: flex;
+    max-width: min(32rem, calc(100vw - 2rem));
+    min-height: 3.25rem;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-card, 0.75rem);
+    padding: 0.625rem 0.875rem;
+    color: var(--app-text);
+    background: var(--app-surface-raised);
+    box-shadow: var(--app-shadow);
+}
+
+.enquiries-toast button {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    border: 0;
+    border-radius: var(--app-radius-control, 0.625rem);
+    padding: 0.5rem;
+    color: var(--app-primary);
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+}
+
+.enquiries-back-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--app-primary);
+    text-decoration: none;
+}
+
+.enquiry-detail {
+    display: grid;
+    gap: 1rem;
+}
+
+.enquiry-detail .enquiries-page__header {
+    margin-bottom: 0;
+}
+
+.enquiry-detail__actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.enquiry-detail__card {
+    padding: 1.25rem;
+}
+
+.enquiry-detail__card h2 {
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
+    font-weight: 650;
+}
+
+.enquiry-detail__list {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.enquiry-detail__row {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.4fr) minmax(0, 1fr);
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--app-border);
+}
+
+.enquiry-detail__row:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.enquiry-detail__row dt {
+    color: var(--app-text-secondary);
+    font-weight: 550;
+}
+
+.enquiry-detail__row dd {
+    min-width: 0;
+    margin: 0;
+    color: var(--app-text);
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.enquiries-skeleton {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+}
+
+.enquiries-skeleton span {
+    min-height: 3.5rem;
+    border-radius: var(--app-radius-control, 0.625rem);
+    background: var(--surface-hover);
+    animation: enquiries-pulse 1.3s ease-in-out infinite;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+}
+
+.enquiries-page :focus-visible,
+.enquiry-detail :focus-visible {
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--app-focus);
+}
+
+@keyframes enquiries-pulse {
+    50% { opacity: 0.55; }
+}
+
+@media (max-width: 800px) {
+    .enquiries-toolbar {
+        align-items: stretch;
+    }
+
+    .enquiries-search {
+        order: 3;
+        flex-basis: 100%;
+    }
+}
+
+@media (max-width: 639px) {
+    .enquiries-page__header,
+    .enquiries-pagination {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .enquiries-toolbar {
+        flex-direction: column;
+    }
+
+    .enquiries-filters {
+        width: 100%;
+    }
+
+    .enquiries-filter {
+        flex: 1;
+    }
+
+    .enquiries-search {
+        order: initial;
+        flex-basis: auto;
+    }
+
+    .enquiries-select {
+        justify-content: space-between;
+    }
+
+    .enquiries-datatable .p-datatable-tbody > tr {
+        margin: 0.75rem;
+        overflow: hidden;
+        border: 1px solid var(--app-border);
+        border-radius: var(--app-radius-card, 0.75rem);
+        background: var(--app-page);
+    }
+
+    .enquiries-datatable .p-datatable-tbody > tr > td {
+        max-width: none;
+        padding: 0.625rem 0.875rem;
+        border-bottom: 1px solid var(--app-border);
+        text-align: right;
+    }
+
+    .enquiries-datatable .p-datatable-tbody > tr > td:last-child {
+        border-bottom: 0;
+    }
+
+    .enquiries-datatable .p-datatable-tbody > tr > td > .p-column-title {
+        margin-right: auto;
+        padding-right: 1rem;
+        text-align: left;
+    }
+
+    .enquiries-datatable .p-datatable-tbody > tr > td > .enquiries-table__contact,
+    .enquiries-datatable .p-datatable-tbody > tr > td > .enquiries-table__name {
+        text-align: left;
+    }
+
+    .enquiries-datatable .p-datatable-tbody > tr > td > .enquiries-button {
+        width: 100%;
+        min-height: 2.75rem;
+    }
+
+    .enquiries-pagination nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .enquiry-detail .enquiries-page__header,
+    .enquiry-detail__actions {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .enquiry-detail__actions {
+        width: 100%;
+    }
+
+    .enquiry-detail__actions .enquiries-button {
+        width: 100%;
+    }
+
+    .enquiry-detail__row {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.25rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .enquiries-filter,
+    .enquiries-button,
+    .enquiries-pagination__button,
+    .enquiries-datatable,
+    .enquiries-datatable .p-datatable-tbody > tr {
+        transition: none;
+    }
+
+    .enquiries-skeleton span {
+        animation: none;
+    }
+}

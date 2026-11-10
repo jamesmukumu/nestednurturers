@@ -14,6 +14,7 @@ function blogPayload(BlogCategory $category, string $title = 'A useful blog titl
         'overview' => '<p>A clear overview of the blog for readers.</p>',
         'description' => '<p>Useful blog content that explains the main topic.</p>',
         'blog_categories_id' => $category->id,
+        'reading_time' => 7,
         'is_published' => '1',
     ];
 }
@@ -86,7 +87,7 @@ test('an admin can create, update, and delete an owned blog', function () {
         ->and($blog->blog_categories_id)->toBe($category->id)
         ->and($blog->is_published)->toBeTrue()
         ->and($blog->slug)->toBe('a-useful-blog-title')
-        ->and($blog->reading_time)->toBeGreaterThan(0);
+        ->and($blog->reading_time)->toBe(7);
     Storage::disk('public')->assertExists($blog->image_path);
 
     $newCategory = BlogCategory::factory()->create(['admins_id' => $admin->id]);
@@ -95,7 +96,8 @@ test('an admin can create, update, and delete an owned blog', function () {
     ])->assertRedirect('/dashboard/blogs');
 
     expect($blog->fresh()->title)->toBe('An updated blog title')
-        ->and($blog->fresh()->blog_categories_id)->toBe($newCategory->id);
+        ->and($blog->fresh()->blog_categories_id)->toBe($newCategory->id)
+        ->and($blog->fresh()->reading_time)->toBe(7);
 
     $imagePath = $blog->fresh()->image_path;
     $this->delete("/dashboard/blogs/{$blog->id}")->assertRedirect('/dashboard/blogs');
@@ -116,6 +118,24 @@ test('blog validation rejects categories belonging to another admin', function (
         ])
         ->assertRedirect('/dashboard/blogs/create')
         ->assertSessionHasErrors('blog_categories_id');
+
+    expect(Blog::count())->toBe(0);
+});
+
+test('blog reading time must be between 1 and 300 minutes', function () {
+    $admin = Admin::factory()->create();
+    $category = BlogCategory::factory()->create(['admins_id' => $admin->id]);
+    Storage::fake('public');
+
+    $this->actingAs($admin, 'admin')
+        ->from('/dashboard/blogs/create')
+        ->post('/dashboard/blogs', [
+            ...blogPayload($category),
+            'reading_time' => 301,
+            'image' => UploadedFile::fake()->image('cover.png'),
+        ])
+        ->assertRedirect('/dashboard/blogs/create')
+        ->assertSessionHasErrors('reading_time');
 
     expect(Blog::count())->toBe(0);
 });

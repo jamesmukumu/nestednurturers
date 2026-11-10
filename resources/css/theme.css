@@ -1,63 +1,91 @@
 :root {
     color-scheme: light;
-    --app-page: #f5f7fa;
-    --app-surface: #ffffff;
-    --app-surface-raised: #ffffff;
-    --app-border: #dce3eb;
-    --app-text: #263445;
-    --app-text-secondary: #536477;
-    --app-text-muted: #68798b;
-    --app-primary: #718eaf;
-    --app-primary-hover: #5e7c9f;
-    --app-accent: #ff76dc;
+    --app-page: #f8f9fb;
+    --app-surface: #f2f4f7;
+    --app-surface-raised: #eceff3;
+    --app-border: #d8dee6;
+    --app-text: #1f2328;
+    --app-text-secondary: #52606d;
+    --app-text-muted: #65727f;
+    --app-primary: #496882;
+    --app-primary-hover: #39566f;
+    --app-accent: #a94f9c;
+    --app-action-start: #994485;
+    --app-action-end: #90447f;
+    --app-action-hover-start: #854075;
+    --app-action-hover-end: #783665;
+    --app-danger-start: #c8445b;
+    --app-danger-end: #a31e42;
+    --app-danger-hover-start: #b4234a;
+    --app-danger-hover-end: #8f1b3a;
     --app-success: #24835c;
+    --app-success-strong: #1b6548;
     --app-warning: #946200;
     --app-danger: #c43b52;
+    --app-danger-strong: #a42d43;
     --app-info: #3d729e;
-    --app-focus: rgb(255 118 220 / 45%);
+    --app-focus: rgb(73 104 130 / 42%);
     --app-shadow: 0 12px 32px rgb(34 53 73 / 8%);
+    --app-nav-active-bg: color-mix(in srgb, var(--app-primary) 12%, var(--app-surface));
+    --app-nav-active-hover: color-mix(in srgb, var(--app-primary) 16%, var(--app-surface));
+    --app-nav-active-pressed: color-mix(in srgb, var(--app-primary) 20%, var(--app-surface));
+    --app-radius-control: 0.625rem;
+    --app-radius-card: 0.75rem;
+    --app-transition: 180ms ease;
+    --bg: var(--app-page);
+    --surface: var(--app-surface);
+    --text: var(--app-text);
+    --primary: var(--app-primary);
+    --accent: var(--app-accent);
+    --border: var(--app-border);
+    --border-radius: var(--app-radius-control);
     --surface-ground: var(--app-page);
     --surface-card: var(--app-surface);
     --surface-overlay: var(--app-surface-raised);
     --surface-border: var(--app-border);
-    --surface-hover: #eaf0f6;
+    --surface-hover: #e7edf2;
     --text-color: var(--app-text);
     --text-color-secondary: var(--app-text-secondary);
     --primary-color: var(--app-primary);
     --primary-color-text: #ffffff;
-    --highlight-bg: #e8eef5;
-    --highlight-text-color: #263445;
+    --highlight-bg: #e2eaf1;
+    --highlight-text-color: #1f2328;
 }
 
 html.dark {
     color-scheme: dark;
-    --app-page: #171d26;
-    --app-surface: #202936;
-    --app-surface-raised: #283443;
-    --app-border: #3a4859;
-    --app-text: #e6edf5;
-    --app-text-secondary: #bbc8d6;
-    --app-text-muted: #a4b2c1;
-    --app-primary: #98b4d2;
-    --app-primary-hover: #b2c9e0;
-    --app-accent: #ff91e3;
+    --app-page: #0f1115;
+    --app-surface: #16181d;
+    --app-surface-raised: #1c2028;
+    --app-border: #343942;
+    --app-text: #e6e8eb;
+    --app-text-secondary: #c1c7d0;
+    --app-text-muted: #a8b0bb;
+    --app-primary: #a9c5e0;
+    --app-primary-hover: #c0d7eb;
+    --app-accent: #e3a0cf;
     --app-success: #69c69a;
+    --app-success-strong: #8ae0b0;
     --app-warning: #e8be62;
     --app-danger: #f08391;
+    --app-danger-strong: #ff9aa5;
     --app-info: #84bce4;
-    --app-focus: rgb(255 145 227 / 48%);
+    --app-focus: rgb(169 197 224 / 50%);
     --app-shadow: 0 14px 36px rgb(0 0 0 / 22%);
+    --app-nav-active-bg: color-mix(in srgb, var(--app-primary) 14%, var(--app-surface));
+    --app-nav-active-hover: color-mix(in srgb, var(--app-primary) 18%, var(--app-surface));
+    --app-nav-active-pressed: color-mix(in srgb, var(--app-primary) 22%, var(--app-surface));
     --surface-ground: var(--app-page);
     --surface-card: var(--app-surface);
     --surface-overlay: var(--app-surface-raised);
     --surface-border: var(--app-border);
-    --surface-hover: #303e4e;
+    --surface-hover: #262b34;
     --text-color: var(--app-text);
     --text-color-secondary: var(--app-text-secondary);
     --primary-color: var(--app-primary);
     --primary-color-text: #14202d;
-    --highlight-bg: #35485d;
-    --highlight-text-color: #f0f5fa;
+    --highlight-bg: #283542;
+    --highlight-text-color: #e6e8eb;
 }
 
 html,
@@ -65,6 +93,42 @@ html body {
     background-color: var(--app-page);
     color: var(--app-text);
     transition: background-color 180ms ease, color 180ms ease;
+}
+
+body {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+input[type="checkbox"].app-checkbox,
+input[type="checkbox"] {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex: 0 0 1.125rem;
+    margin: 0;
+    border: 1px solid var(--app-text-secondary);
+    border-radius: 0.25rem;
+    accent-color: var(--app-primary);
+    cursor: pointer;
+}
+
+input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--app-primary);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px var(--app-focus);
+}
+
+input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.bg-white {
+    background-color: var(--app-surface);
+}
+
+.text-black {
+    color: var(--app-text);
 }
 
 .theme-toggle {
@@ -155,13 +219,8 @@ html body {
 
 .admin-shell__brand:focus-visible,
 .admin-shell__nav-link:focus-visible {
-    outline: 2px solid var(--app-accent);
+    outline: 2px solid var(--app-primary);
     outline-offset: 2px;
-}
-
-.admin-shell__nav-link.is-active {
-    color: var(--text-color);
-    background: var(--surface-hover);
 }
 
 .p-component,
