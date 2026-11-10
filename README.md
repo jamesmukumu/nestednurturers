@@ -31,7 +31,7 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 
 The Compose stack runs Laravel with PHP-FPM, serves it through Nginx, builds and runs the Inertia React SSR bundle in a Node service, starts a persistent Laravel database-queue worker, and runs MySQL 8.4.
 
-1. Copy `.env.example` to `.env` and set a unique `APP_KEY` and `DB_PASSWORD`. Generate an application key with `php artisan key:generate` if PHP and Composer are installed locally.
+1. Copy `.env.example` to `.env` and set a unique `APP_KEY`, `DB_PASSWORD`, and `DB_ROOT_PASSWORD`. Generate an application key with `php artisan key:generate` if PHP and Composer are installed locally.
 2. Start the stack with `docker compose up --build -d`.
 3. Run database migrations with `docker compose exec app php artisan migrate --force`.
 4. Open [http://localhost:8080](http://localhost:8080), or use the port set by `APP_PORT`.
