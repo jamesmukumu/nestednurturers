@@ -48,7 +48,6 @@ class BlogController extends Controller
         unset($validated['image']);
         $validated['image_path'] = $image->store('blogs', 'public');
         $validated['slug'] = $this->uniqueSlug($validated['title']);
-        $validated['reading_time'] = $this->readingTime($validated['description']);
         $validated['is_published'] = $validated['is_published'] ?? false;
 
         $admin->blogs()->create($validated);
@@ -92,7 +91,6 @@ class BlogController extends Controller
         }
 
         $validated['slug'] = $this->uniqueSlug($validated['title'], $record->id);
-        $validated['reading_time'] = $this->readingTime($validated['description']);
         $validated['is_published'] = $validated['is_published'] ?? false;
         $record->update($validated);
         if ($newImagePath !== null && $previousImagePath !== '') {
@@ -146,14 +144,6 @@ class BlogController extends Controller
     private function baseSlug(string $title): string
     {
         return Str::slug($title) ?: 'blog';
-    }
-
-    private function readingTime(string $content): int
-    {
-        $plainText = html_entity_decode(strip_tags($content), ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        $wordCount = str_word_count($plainText);
-
-        return max(1, (int) ceil($wordCount / 200));
     }
 
     /**

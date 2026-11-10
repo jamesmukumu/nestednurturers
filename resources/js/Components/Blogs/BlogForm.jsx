@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Head, router, useForm } from '@inertiajs/react';
 import { Card } from 'primereact/card';
-import { Checkbox } from 'primereact/checkbox';
 import { Dropdown } from 'primereact/dropdown';
 import { FileUpload } from 'primereact/fileupload';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import BlogCategoryDialog from './BlogCategoryDialog';
+import Checkbox from '@/Components/Checkbox';
 import RichTextEditor from '../RichTextEditor';
 import Button from '@/Components/Button';
 import AdminLayout from '../../Layouts/AdminLayout';
@@ -65,6 +65,7 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
         description: blog?.description || '',
         overview: blog?.overview || '',
         blog_categories_id: blog?.blog_categories_id || null,
+        reading_time: blog?.reading_time || 1,
         image: null,
         is_published: blog?.is_published || false,
     });
@@ -198,6 +199,32 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                                 {errors.title && <small className="p-error" id="blog-title-error">{errors.title}</small>}
                             </div>
 
+                            <div className="blog-form__field blog-form__reading-time">
+                                <label htmlFor="blog-reading-time">Reading time (minutes) <span aria-hidden="true">*</span></label>
+                                <InputText
+                                    id="blog-reading-time"
+                                    type="number"
+                                    inputMode="numeric"
+                                    min="1"
+                                    max="300"
+                                    step="1"
+                                    value={data.reading_time}
+                                    invalid={Boolean(errors.reading_time)}
+                                    aria-invalid={Boolean(errors.reading_time)}
+                                    aria-describedby={errors.reading_time ? 'blog-reading-time-error' : 'blog-reading-time-hint'}
+                                    onChange={(event) => {
+                                        setData('reading_time', event.target.value);
+                                        clearErrors('reading_time');
+                                    }}
+                                />
+                                <small className="blog-form__hint" id="blog-reading-time-hint">
+                                    Enter a number from 1 to 300 minutes.
+                                </small>
+                                {errors.reading_time && (
+                                    <small className="p-error" id="blog-reading-time-error">{errors.reading_time}</small>
+                                )}
+                            </div>
+
                             <div className="blog-form__field">
                                 <label htmlFor="blog-overview">Overview <span aria-hidden="true">*</span></label>
                                 <div className={`blog-form__editor${errors.overview ? ' p-invalid' : ''}`}>
@@ -321,9 +348,10 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
 
                             <div className="blog-form__publish">
                                 <Checkbox
-                                    inputId="blog-is-published"
+                                    id="blog-is-published"
+                                    className="blog-form__checkbox"
                                     checked={Boolean(data.is_published)}
-                                    onChange={(event) => setData('is_published', event.checked)}
+                                    onChange={(event) => setData('is_published', event.target.checked)}
                                 />
                                 <label htmlFor="blog-is-published">Publish this blog</label>
                             </div>

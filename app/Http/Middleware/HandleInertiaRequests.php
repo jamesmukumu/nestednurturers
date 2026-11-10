@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Consultation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Middleware;
 
@@ -30,6 +32,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $admin = $request->user('admin');
+
         return [
             ...parent::share($request),
             'uscities' => fn() => collect(
@@ -41,10 +45,20 @@ class HandleInertiaRequests extends Middleware
                     fn(array $city) => $city['city'] . ' (' . $city['state'] . ')',
                 )->values()->all(),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $admin,
+                'emailVerified' => $admin?->hasVerifiedEmail() ?? false,
+                'canViewEnquiries' => $admin?->can('viewAny', Consultation::class) ?? false,
             ],
+            'pendingEnquiriesCount' => fn () => $admin?->can('viewAny', Consultation::class)
+                ? Cache::remember(
+                    'pending_enquiries_count',
+                    now()->addSeconds(45),
+                    fn () => Consultation::pending()->count(),
+                )
+                : 0,
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
+                'status' => fn () => $request->session()->get('status'),
             ],
         ];
     }

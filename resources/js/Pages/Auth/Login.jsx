@@ -1,6 +1,6 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Checkbox } from 'primereact/checkbox';
 import { InputText } from 'primereact/inputtext';
+import Checkbox from '@/Components/Checkbox';
 import AuthSubmitButton from '@/Components/AuthSubmitButton';
 import AuthPasswordInput from '@/Components/AuthPasswordInput';
 import GuestLayout from '../../Layouts/GuestLayout';
@@ -65,9 +65,9 @@ export default function Login({ status }) {
                     </div>
                     <div className="auth-form__remember">
                         <Checkbox
-                            inputId="login-remember"
+                            id="login-remember"
                             checked={data.remember}
-                            onChange={(event) => setData('remember', event.checked)}
+                            onChange={(event) => setData('remember', event.target.checked)}
                         />
                         <label htmlFor="login-remember">Remember me</label>
                     </div>

@@ -1,9 +1,8 @@
 import { Link } from '@inertiajs/react';
 import { Card } from 'primereact/card';
-import ThemeToggle from '@/Components/ThemeToggle';
 import './GuestLayout.css';
 
-const heroImage = '/images/services/mom-and-baby-transparent-smaller-white-outline.png';
+const heroImage = '/images/services/mature-doula-providing-inhome-blood-pressure-monitoring-support-expectant-mothers_209190-192189.jpg';
 
 export default function GuestLayout({ children, title, subtitle, footer }) {
     return (
@@ -20,11 +19,15 @@ export default function GuestLayout({ children, title, subtitle, footer }) {
                     className="auth-page__brand"
                     aria-label="Nested Nurturers home"
                 >
-                    Nested Nurturers
+                    <img
+                        className="auth-page__logo"
+                        src="/images/updates-logo.jpeg"
+                        alt=""
+                        loading="lazy"
+                    />
                 </Link>
             </aside>
             <section className="auth-page__content" aria-label="Account access">
-                <ThemeToggle className="auth-page__theme-toggle" />
                 <Card className="auth-page__card">
                     <header className="auth-card-content__header">
                         <h1>{title}</h1>
