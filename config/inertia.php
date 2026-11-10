@@ -29,6 +29,17 @@ return [
 
         'bundle' => base_path('bootstrap/ssr/ssr.js'),
 
+        'pages' => [
+            'About',
+            'Blog/Show',
+            'Blogs/Index',
+            'Contacts',
+            'Faq',
+            'Home',
+            'Pricing',
+            'Services',
+        ],
+
     ],
 
     /*

@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Ssr\PublicPagesSsrGateway;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Inertia\Ssr\Gateway;
 use Route;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -12,7 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(Gateway::class, PublicPagesSsrGateway::class);
     }
 
     /**
