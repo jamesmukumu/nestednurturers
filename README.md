@@ -1,95 +1,159 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Nested Nurturers
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Nested Nurturers is the website and operations hub for a postpartum doula and sleep-support practice serving growing families in the SF Bay Area. It helps prospective clients learn about care options, request a free consultation, and gives the care team a private workspace for managing enquiries and publishing resources.
 
-## About Laravel
+## What it does
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Public website
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Introduces Nested Nurturers' prenatal, birth, postpartum, overnight, and sleep-support offerings.
+- Presents services, pricing, FAQs, testimonials, and practice information.
+- Publishes search-friendly blog articles and a sitemap.
+- Renders the primary public pages server-side for a faster first load and better search indexing.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Consultation intake
 
-## Learning Laravel
+- Lets families choose a weekday consultation time in their own time zone.
+- Collects contact details, location, desired support, expected due date, preferred start date, desired nights, and referral source.
+- Stores each request with a unique consultation ID and sends an email notification.
+- Supports queued follow-up reminders for outstanding enquiries.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Admin workspace
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Uses a separate, verified admin login.
+- Lets the team review, search, filter, and paginate consultation requests.
+- Tracks whether an enquiry is pending or addressed, including who handled it and when.
+- Provides blog and category management, plus profile and settings pages.
 
-## Running with Docker and Inertia SSR
+## Technology
 
-The Compose stack runs Laravel with PHP-FPM, serves it through Nginx, builds and runs the Inertia React SSR bundle in a Node service, starts a persistent Laravel database-queue worker, and runs MySQL 8.4.
+- **Backend:** PHP 8.2+, Laravel 11, MySQL 8.4
+- **Frontend:** React 18, Inertia.js, Vite, Tailwind CSS, Redux Toolkit, PrimeReact
+- **Content and SEO:** public blog, JSON-LD metadata, sitemap generation
+- **Background work:** Laravel database queue for mail and follow-up work
+- **Deployment:** Docker Compose with PHP-FPM, Nginx, Node-based Inertia SSR, MySQL, and a queue worker
 
-1. Copy `.env.example` to `.env` and set a unique `APP_KEY` and `DB_PASSWORD`. Generate an application key with `php artisan key:generate` if PHP and Composer are installed locally.
-2. Start the stack with `docker compose up --build -d`.
-3. Run database migrations with `docker compose exec app php artisan migrate --force`.
-4. Open [http://localhost:8080](http://localhost:8080), or use the port set by `APP_PORT`.
+## Local development
 
-The app and queue containers connect to the internal MySQL service using the credentials in `.env`. The app container enables Inertia SSR and points it at the internal SSR service. The SSR bundle is built as part of the Docker image; rebuild after changing frontend code. MySQL data and Laravel storage are kept in named volumes.
+### Prerequisites
 
-## Local frontend development
+- PHP 8.2 or newer with Composer
+- Node.js 22 or newer with npm
+- MySQL 8.4 (or a compatible MySQL server)
 
-When running Laravel locally with `php artisan serve`, also run `npm run dev` so Vite can serve frontend assets. If you are not running the Vite dev server, run `npm run build` first to create the Vite manifest. The build command generates both the client assets and the configured Inertia SSR bundle.
+### Set up the application
 
-## Queue worker and admin email verification
+```sh
+git clone <repository-url>
+cd nestednurturers
+composer setup
+```
 
-Admin registration queues its verification email on the `default` database queue. The Compose `queue` service runs Laravel's worker continuously, restarts it if it exits, and starts after MySQL is healthy; no separate `queue:work` command or host Supervisor setup is needed on the VPS. The existing migrations create the jobs and failed-jobs tables.
+`composer setup` installs PHP and JavaScript dependencies, creates `.env` when needed, generates an application key, runs migrations, and builds the frontend.
 
-Configure a working mail transport and keep `QUEUE_CONNECTION=database`. The Docker Compose production stack sets this connection explicitly. Verification links expire after five minutes by default; set `AUTH_VERIFICATION_EXPIRE` to change this value.
+Before running the app, review `.env` and configure at least the database connection and mail transport. For local development, `MAIL_MAILER=log` writes outgoing messages to the Laravel log; use a real mail provider when testing email delivery.
 
-Start or deploy the worker with the rest of the stack:
+### Run the development services
+
+```sh
+composer dev
+```
+
+This starts the Laravel server, Vite development server, and database queue listener together. Visit the address shown by Laravel, normally [http://localhost:8000](http://localhost:8000).
+
+Alternatively, run the services separately:
+
+```sh
+php artisan serve
+npm run dev
+php artisan queue:work
+```
+
+## Docker deployment
+
+The production Compose stack includes these services:
+
+| Service | Responsibility |
+| --- | --- |
+| `web` | Nginx web server, exposed on `APP_PORT` (default `8080`) |
+| `app` | Laravel PHP-FPM application |
+| `ssr` | Inertia React server-side rendering service |
+| `queue` | Persistent Laravel database queue worker |
+| `db` | MySQL 8.4 database |
+
+1. Copy `.env.example` to `.env`.
+2. Set a strong, unique `APP_KEY` and `DB_PASSWORD`. Set `APP_PORT` if port `8080` is unavailable.
+3. Configure a production `APP_URL` and a working mail transport.
+4. Build and start the stack:
 
 ```sh
 docker compose up --build -d
+docker compose exec app php artisan migrate --force
+```
+
+Open [http://localhost:8080](http://localhost:8080), or the port configured in `APP_PORT`.
+
+Application storage and MySQL data use named Docker volumes. Rebuild the `app`, `ssr`, and `queue` services after backend or frontend deployment changes:
+
+```sh
+docker compose up --build -d app ssr queue
+```
+
+Follow background processing with:
+
+```sh
 docker compose logs -f queue
 ```
 
-After code deployments, recreate the worker container so it loads the new application code:
+### Scheduled follow-ups
+
+The application schedules `app:consultations-follow-up` every minute. Docker Compose does not currently define a scheduler service, so run one alongside the stack if those reminders are required:
 
 ```sh
-docker compose up --build -d app queue
+docker compose exec app php artisan schedule:work
 ```
 
-For local development outside Compose, run `php artisan queue:work` in a separate terminal.
+For a long-running production deployment, run that command under your process manager or add a dedicated scheduler service.
 
-## Laravel Sponsors
+## Useful commands
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```sh
+# Run the test suite
+composer test
 
-### Premium Partners
+# Build browser and SSR bundles
+npm run build
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Apply outstanding database migrations
+php artisan migrate
 
-## Contributing
+# Process queued work locally
+php artisan queue:work
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Key routes
 
-## Code of Conduct
+| Area | Routes |
+| --- | --- |
+| Public site | `/`, `/about`, `/services`, `/pricing`, `/faq`, `/contact` |
+| Resources | `/blogs`, `/blog/{slug}`, `/sitemap` |
+| Consultation intake | `POST /api/submit/enquiry` |
+| Admin | `/dashboard`, `/enquiries`, `/dashboard/blogs` |
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Admin routes require an authenticated, verified admin account. Do not commit `.env` or production credentials.
 
-## Security Vulnerabilities
+## Project structure
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```text
+app/                    Laravel actions, controllers, jobs, mail, and models
+database/               Migrations, factories, and seeders
+resources/js/           Inertia pages, React components, layouts, and state
+resources/views/        Blade application and email templates
+routes/                 Public, admin, auth, API, and scheduled routes
+docker/                 Nginx configuration
+tests/                  Pest feature and unit tests
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This is a private application for Nested Nurturers. All rights reserved.
