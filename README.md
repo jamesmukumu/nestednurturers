@@ -156,6 +156,14 @@ backup pipeline. `run` and `exec` also require `-T`. On failure the script
 prints bounded container diagnostics and exits nonzero; review those logs
 carefully because application logs may contain sensitive information.
 
+**Frontend image build fails with JavaScript heap out of memory:** The Docker
+frontend build sets Node's old-space limit to 640 MiB for both Vite builds.
+The host or build container still needs additional memory for Node's other
+allocations, build tools, and running services; the heap limit does not reserve
+or increase available memory. Check available memory, swap and Docker cgroup
+limits before retrying. For a manually invoked Compose build, the limit can be
+overridden with `docker compose build --build-arg NODE_BUILD_HEAP_MB=768 app queue scheduler web ssr`.
+
 ## Useful commands
 
 ```sh
