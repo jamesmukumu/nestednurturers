@@ -22,11 +22,11 @@ class MailerController extends Controller
                 'name' => ['required', 'string', 'min:2', 'max:255'],
                 'timezone' => ['required', 'string', 'timezone'],
                 'location' => ['required', 'string', 'min:2', 'max:255'],
-                'expected_due_time' => ['required', 'date', 'before_or_equal:today'],
-                'preferred_doula_services_start' => ['required', 'date', 'before_or_equal:today'],
+                'expected_due_time' => ['nullable', 'date', 'before_or_equal:today'],
+                'preferred_doula_services_start' => ['nullable', 'date', 'before_or_equal:today'],
                 'services_seeked' => ['nullable', 'string', 'max:2000'],
                 'duration_of_support' => ['required', 'string', 'max:100'],
-                'no_nights_per_week' => ['required', 'string', 'max:2000'],
+                'no_nights_per_week' => ['nullable', 'string', 'max:2000'],
                 'howHeard' => ['nullable', 'string', 'max:2000'],
             ]);
 
@@ -36,11 +36,17 @@ class MailerController extends Controller
             $validatedRequest['name'] = (string) $validatedRequest['name'];
             $validatedRequest['timezone'] = (string) $validatedRequest['timezone'];
             $validatedRequest['location'] = (string) $validatedRequest['location'];
-            $validatedRequest['expected_due_time'] = Carbon::parse($validatedRequest['expected_due_time'])->format('Y-m-d');
-            $validatedRequest['preferred_doula_services_start'] = Carbon::parse($validatedRequest['preferred_doula_services_start'])->format('Y-m-d');
+            $validatedRequest['expected_due_time'] = isset($validatedRequest['expected_due_time'])
+                ? Carbon::parse($validatedRequest['expected_due_time'])->format('Y-m-d')
+                : Carbon::today()->format('Y-m-d');
+            $validatedRequest['preferred_doula_services_start'] = isset($validatedRequest['preferred_doula_services_start'])
+                ? Carbon::parse($validatedRequest['preferred_doula_services_start'])->format('Y-m-d')
+                : Carbon::today()->format('Y-m-d');
             $validatedRequest['services_seeked'] = (string) ($validatedRequest['services_seeked'] ?? '');
             $validatedRequest['duration_of_support'] = (string) $validatedRequest['duration_of_support'];
-            $validatedRequest['no_nights_per_week'] = (string) $validatedRequest['no_nights_per_week'];
+            $validatedRequest['no_nights_per_week'] = isset($validatedRequest['no_nights_per_week'])
+                ? (string) $validatedRequest['no_nights_per_week']
+                : '[]';
             $validatedRequest['howHeard'] = isset($validatedRequest['howHeard'])
                 ? (string) $validatedRequest['howHeard']
                 : null;
