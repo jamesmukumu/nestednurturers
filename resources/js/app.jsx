@@ -30,13 +30,18 @@ createInertiaApp({
         ),
     setup({ el, App, props }) {
         const root = createRoot(el);
+        const themeInsertionPoint = document.getElementById('primereact-theme-insertion-point');
+        if (!themeInsertionPoint) {
+            throw new Error('PrimeReact theme insertion point is missing.');
+        }
+
         let themeLink = document.getElementById('primereact-theme');
         if (!themeLink) {
             themeLink = document.createElement('link');
             themeLink.id = 'primereact-theme';
             themeLink.rel = 'stylesheet';
-            document.head.appendChild(themeLink);
         }
+        themeInsertionPoint.after(themeLink);
         themeLink.href = themeUrls[store.getState().theme.resolved];
 
         root.render(

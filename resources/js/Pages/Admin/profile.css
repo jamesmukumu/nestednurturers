@@ -27,7 +27,6 @@
     color: var(--app-text-secondary);
 }
 
-.profile-connection,
 .profile-status {
     display: inline-flex;
     min-height: 2.75rem;
@@ -40,11 +39,6 @@
     background: var(--app-surface);
     font-size: 0.875rem;
     font-weight: 550;
-}
-
-.profile-connection.is-offline {
-    border-color: var(--app-danger);
-    color: var(--app-danger);
 }
 
 .profile-card {
@@ -320,7 +314,7 @@
 
 .profile-button--primary {
     color: #fff;
-    background: linear-gradient(to right, var(--app-action-start), var(--app-action-end));
+    background: var(--app-action);
 }
 
 .profile-button--secondary {
@@ -384,7 +378,6 @@
     min-height: 10rem;
 }
 
-.profile-connection *,
 .profile-status * {
     flex: 0 0 auto;
 }

@@ -148,6 +148,23 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
         });
     };
 
+    const actions = (
+        <div className="blog-form-page__actions">
+            <Button href="/dashboard/blogs" variant="secondary">
+                Cancel
+            </Button>
+            <Button
+                type="submit"
+                form="blog-form"
+                loading={saving}
+                loadingLabel={isEdit ? 'Saving changes…' : 'Creating article…'}
+                leftIcon={<i className="pi pi-check" aria-hidden="true" />}
+            >
+                {isEdit ? 'Save changes' : 'Create Article'}
+            </Button>
+        </div>
+    );
+
     return (
         <>
             <Head title={isEdit ? 'Edit Article' : 'Create Article'} />
@@ -164,22 +181,9 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                         <h1>{isEdit ? 'Edit Article' : 'Create Article'}</h1>
                         <p>{isEdit ? 'Update your blog details and cover image.' : 'Add details and prepare your article for publishing.'}</p>
                     </div>
-                    <div className="blog-form-page__actions">
-                        <Button href="/dashboard/blogs" variant="secondary">
-                            Cancel
-                        </Button>
-                        <Button
-                            type="submit"
-                            form="blog-form"
-                            loading={saving}
-                            loadingLabel={isEdit ? 'Saving changes…' : 'Creating article…'}
-                            leftIcon={<i className="pi pi-check" aria-hidden="true" />}
-                        >
-                            {isEdit ? 'Save changes' : 'Create Article'}
-                        </Button>
-                    </div>
+                    {isEdit && actions}
                 </header>
-                <Card className="admin-page__card blog-form__card">
+                <Card className={`admin-page__card blog-form__card${isEdit ? '' : ' blog-form__card--create'}`}>
                     <form id="blog-form" onSubmit={submit} noValidate>
                         <div className="blog-form__fields">
                             <div className="blog-form__field">
@@ -230,6 +234,7 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                                 <div className={`blog-form__editor${errors.overview ? ' p-invalid' : ''}`}>
                                     <RichTextEditor
                                         id="blog-overview"
+                                        label="Overview"
                                         value={data.overview}
                                         onChange={(value) => {
                                             setData('overview', value);
@@ -247,6 +252,7 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                                 <div className={`blog-form__editor${errors.description ? ' p-invalid' : ''}`}>
                                     <RichTextEditor
                                         id="blog-description"
+                                        label="Content"
                                         value={data.description}
                                         onChange={(value) => {
                                             setData('description', value);
@@ -356,6 +362,7 @@ export default function BlogForm({ blog = null, categories: initialCategories = 
                                 <label htmlFor="blog-is-published">Publish this blog</label>
                             </div>
                         </div>
+                        {!isEdit && actions}
                     </form>
                 </Card>
             </section>

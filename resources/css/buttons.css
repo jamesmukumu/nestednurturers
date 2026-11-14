@@ -60,14 +60,14 @@
 }
 
 .app-button--primary {
-    background: linear-gradient(to right, var(--app-action-start), var(--app-action-end));
+    background: var(--app-action);
     color: #fff;
     box-shadow: 0 4px 14px rgb(75 43 75 / 16%);
 }
 
 .app-button--primary:hover:not(:disabled):not([aria-disabled="true"]) {
     transform: translateY(-2px);
-    background: linear-gradient(to right, var(--app-action-hover-start), var(--app-action-hover-end));
+    background: var(--app-action-hover);
     box-shadow: 0 8px 18px rgb(75 43 75 / 22%);
 }
 

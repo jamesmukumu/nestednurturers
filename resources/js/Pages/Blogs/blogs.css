@@ -113,9 +113,9 @@
 }
 
 .public-blogs__filter.is-active {
-    border-color: var(--app-action-end);
+    border-color: var(--app-action);
     color: #fff;
-    background: var(--app-action-end);
+    background: var(--app-action);
     box-shadow: 0 4px 12px rgb(75 43 75 / 16%);
 }
 
