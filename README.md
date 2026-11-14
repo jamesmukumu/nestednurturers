@@ -108,7 +108,11 @@ docker compose logs -f queue
 
 ### Scheduled follow-ups
 
-The scheduler runs `app:consultations-follow-up` every minute. The queue and scheduler containers use `restart: unless-stopped` and process healthchecks. The database worker normally exits after one hour (`--max-time=3600`) so Docker can restart it with fresh code; a restart alone does not prove a crash.
+The scheduler runs `app:consultations-follow-up` at 08:00 Africa/Nairobi,
+Monday through Saturday. The queue and scheduler containers use `restart:
+unless-stopped` and process healthchecks. The database worker normally exits
+after one hour (`--max-time=3600`) so Docker can restart it with fresh code; a
+restart alone does not prove a crash.
 
 ```sh
 docker compose logs --tail=100 queue scheduler
@@ -133,6 +137,15 @@ running processes, matching image IDs, SSR health, storage links, and
 `http://127.0.0.1:8080/health`. Only dangling images are pruned after success.
 The backup directory is on the host and requires appropriate permissions and
 independent backup/retention management.
+
+**Deploy fails with 'local changes would be overwritten':** Treat the VPS
+checkout as read-only; never edit tracked files on the server. The deployment
+script saves tracked changes in a private `vps-local-changes-*.patch` file in
+`/home/deploy` (or the deployment user's home), then discards those tracked
+changes. Patches older than 30 days are removed. Untracked and ignored files,
+including backups, are preserved. Unmerged files or untracked directories
+blocking tracked paths require manual resolution; review the saved patch if a
+local change must be incorporated into the repository.
 
 **Workflow is green but containers did not change:** inspect the deploy job's
 phase markers and compare `docker compose ps` and container image IDs with the
