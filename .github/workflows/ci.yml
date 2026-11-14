@@ -72,6 +72,8 @@ jobs:
         run: npm ci
 
       - name: Build frontend assets for feature tests
+        env:
+          NODE_OPTIONS: --max-old-space-size=640
         run: npm run build
 
       - name: Run PHP tests
@@ -96,6 +98,8 @@ jobs:
         run: npm ci
 
       - name: Build frontend assets
+        env:
+          NODE_OPTIONS: --max-old-space-size=640
         run: npm run build
 
   migrations:
