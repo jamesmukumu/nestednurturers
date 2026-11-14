@@ -10,10 +10,8 @@
     --app-primary: #496882;
     --app-primary-hover: #39566f;
     --app-accent: #a94f9c;
-    --app-action-start: #994485;
-    --app-action-end: #90447f;
-    --app-action-hover-start: #854075;
-    --app-action-hover-end: #783665;
+    --app-action: #FF76DC;
+    --app-action-hover: #ed64c8;
     --app-danger-start: #c8445b;
     --app-danger-end: #a31e42;
     --app-danger-hover-start: #b4234a;
@@ -50,6 +48,12 @@
     --primary-color-text: #ffffff;
     --highlight-bg: #e2eaf1;
     --highlight-text-color: #1f2328;
+}
+
+:root:not(.dark):has(.admin-shell, .auth-page) {
+    --app-page: #ffffff;
+    --app-surface: #ffffff;
+    --app-surface-raised: #ffffff;
 }
 
 html.dark {

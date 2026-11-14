@@ -306,23 +306,11 @@ function Profile() {
     const [error, setError] = useState(null);
     const [attempt, setAttempt] = useState(0);
     const [activeTab, setActiveTab] = useState('overview');
-    const [online, setOnline] = useState(null);
     const [sendingVerification, setSendingVerification] = useState(false);
     const [verificationError, setVerificationError] = useState('');
     const [verificationToast, setVerificationToast] = useState('');
     const [resendCountdown, setResendCountdown] = useState(0);
     const tabRefs = useRef([]);
-
-    useEffect(() => {
-        const updateOnline = () => setOnline(navigator.onLine);
-        updateOnline();
-        window.addEventListener('online', updateOnline);
-        window.addEventListener('offline', updateOnline);
-        return () => {
-            window.removeEventListener('online', updateOnline);
-            window.removeEventListener('offline', updateOnline);
-        };
-    }, []);
 
     useEffect(() => {
         const controller = new AbortController();
@@ -446,12 +434,6 @@ function Profile() {
                         <h1 id="profile-page-heading">Profile</h1>
                         <p>Your admin account details.</p>
                     </div>
-                    <p className={`profile-connection${online === false ? ' is-offline' : ''}`} role="status">
-                        <i className={`pi ${online === false ? 'pi-wifi-slash' : 'pi-wifi'}`} aria-hidden="true" />
-                        <span>
-                            {online === null ? 'Checking connection' : online ? 'Connection online' : 'You’re offline'}
-                        </span>
-                    </p>
                 </header>
 
                 <section className="profile-page__data" aria-label="Profile details" aria-live="polite" aria-busy={loading}>

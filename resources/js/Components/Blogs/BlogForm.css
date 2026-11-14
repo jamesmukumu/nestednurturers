@@ -18,6 +18,15 @@
     padding: clamp(1rem, 3vw, 2rem);
 }
 
+.admin-page__card.p-card.blog-form__card--create {
+    border-radius: 0;
+}
+
+.blog-form__card--create .blog-form-page__actions {
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
+
 .blog-form__fields {
     display: grid;
     gap: 1.5rem;
