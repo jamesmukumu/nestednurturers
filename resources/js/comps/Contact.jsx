@@ -7,7 +7,6 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useState, useRef } from "react";
 import { Toast } from "primereact/toast";
-import { Calendar } from "primereact/calendar";
 import { CityAutocompleteField } from "./CityAutocompleteField";
 import Button from "@/Components/Button";
 
@@ -77,6 +76,21 @@ export function Contact({ cities }) {
             }
         } catch (error) {
             console.error(error);
+
+            const validationErrors = error.response?.data?.errors;
+            const validationMessage = validationErrors
+                ? Object.values(validationErrors).flat()[0]
+                : null;
+
+            toastRef.current?.show({
+                severity: "error",
+                detail:
+                    validationMessage ||
+                    error.response?.data?.message ||
+                    "We couldn't submit your consultation request. Please try again.",
+                sticky: true,
+            });
+
             return false;
         } finally {
             setSaving(false);
@@ -84,7 +98,6 @@ export function Contact({ cities }) {
     }
 
     const FormCalendar = () => {
-        const today = new Date();
         const validationSchema = Yup.object({
             name: Yup.string()
                 .min(2, "Name must be at least 2 characters")
@@ -102,22 +115,15 @@ export function Contact({ cities }) {
             day: Yup.date()
                 .required("Please select a consultation day")
                 .min(new Date(), "Cannot select a past date"),
-            expectedDueDate: Yup.date()
-                .nullable()
-                .required("Expected due date is required")
-                .max(today, "Expected due date cannot be later than today"),
-            preferredStartDate: Yup.date()
-                .nullable()
-                .required("Preferred start date is required")
-                .max(today, "Preferred start date cannot be later than today"),
             supportDuration: Yup.string().required(
                 "Duration of support is required",
             ),
-            desiredNights: Yup.array()
-                .min(1, "Select at least one night")
-                .required("Select at least one night"),
-                services:Yup.array().min(1,'Please Choose At least one service').required("Please Choose at least one service"),
-                howHeard:Yup.string().required("Please tell us how heard of us etc Youtube, Yelp"),
+            services: Yup.array()
+                .min(1, "Please choose at least one service")
+                .required("Please choose at least one service"),
+            howHeard: Yup.string().required(
+                "Please tell us how you heard about us",
+            ),
         });
 
         const initialValues = {
@@ -128,10 +134,7 @@ export function Contact({ cities }) {
             location: "",
             timezone: "America/Los_Angeles",
             services: [],
-            expectedDueDate: new Date(),
-            preferredStartDate: new Date(),
             supportDuration: "",
-            desiredNights: [],
             howHeard: "",
         };
 
@@ -148,10 +151,7 @@ export function Contact({ cities }) {
                 location: values.location,
                 timezone: values.timezone,
                 services_seeked: JSON.stringify(values.services),
-                expected_due_time: values.expectedDueDate,
-                preferred_doula_services_start: values.preferredStartDate,
                 duration_of_support: values.supportDuration,
-                no_nights_per_week: JSON.stringify(values.desiredNights),
                 howHeard: values.howHeard,
             };
 
