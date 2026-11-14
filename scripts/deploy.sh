@@ -23,6 +23,34 @@ on_failure() {
 }
 trap on_failure EXIT
 
+echo "==> Checking for local drift on VPS"
+find "$HOME" -maxdepth 1 -type f -name 'vps-local-changes-*.patch' -mtime +30 -delete
+tracked_status=$(git status --porcelain --untracked-files=no)
+if [[ -n "$tracked_status" ]]; then
+    echo "==> Local tracked changes found; saving patch and discarding"
+    git status --porcelain --untracked-files=no
+    unmerged=$(git diff --name-only --diff-filter=U)
+    if [[ -n "$unmerged" ]]; then
+        echo "Unmerged files require manual resolution; refusing to discard them" >&2
+        exit 1
+    fi
+    git ls-files -z | while IFS= read -r -d '' tracked_path; do
+        if [[ -d "$tracked_path" && ! -L "$tracked_path" ]]; then
+            echo "Tracked path is occupied by a directory; refusing to remove untracked files" >&2
+            exit 1
+        fi
+    done
+    umask 077
+    patch_file=$(mktemp "$HOME/vps-local-changes-$(date -u +%Y%m%dT%H%M%SZ)-XXXXXX.patch")
+    git diff --binary HEAD > "$patch_file"
+    if [[ ! -s "$patch_file" ]]; then
+        echo "Could not capture tracked changes in a patch; refusing to reset" >&2
+        exit 1
+    fi
+    echo "==> Saved tracked changes to $patch_file"
+    git reset --hard < /dev/null
+fi
+
 echo "==> Fetching and verifying master"
 git fetch --prune origin master < /dev/null
 test "$(git rev-parse FETCH_HEAD)" = "$deploy_sha"

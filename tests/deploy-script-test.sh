@@ -4,12 +4,17 @@ set -euo pipefail
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 tmp=$(mktemp -d)
 trap 'rm -rf -- "$tmp"' EXIT
-mkdir -p "$tmp/app"
+mkdir -p "$tmp/app" "$tmp/home"
 sha=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-export sha TEST_LOG="$tmp/commands"
+export sha TEST_LOG="$tmp/commands" HOME="$tmp/home"
 
 git() {
     echo "git $*" >> "$TEST_LOG"
+    if [[ ${TEST_REAL_GIT:-} == 1 ]]; then
+        case "$1" in
+            status|diff|ls-files|reset) command git "$@"; return ;;
+        esac
+    fi
     case "$1" in
         rev-parse)
             if [[ ${TEST_FAILURE:-} == stale ]]; then echo wrong; else echo "$sha"; fi
@@ -75,3 +80,44 @@ fi
 for case_name in "$@"; do
     run_case "$case_name"
 done
+
+if [[ $# -eq 7 && "$1" == success ]]; then
+    command git -C "$tmp/app" init -q
+    command git -C "$tmp/app" config user.name "Deployment test"
+    command git -C "$tmp/app" config user.email "deploy-test@example.invalid"
+    printf 'original\n' > "$tmp/app/tracked"
+    printf 'ignored\n' > "$tmp/app/.gitignore"
+    command git -C "$tmp/app" add tracked .gitignore
+    command git -C "$tmp/app" commit -qm initial
+    printf 'staged\n' > "$tmp/app/tracked"
+    command git -C "$tmp/app" add tracked
+    printf 'unstaged\n' >> "$tmp/app/tracked"
+    printf 'preserve\n' > "$tmp/app/untracked"
+    printf 'preserve\n' > "$tmp/app/ignored"
+    export TEST_REAL_GIT=1
+    run_case success
+    [[ $(cat "$tmp/app/tracked") == original ]]
+    [[ $(cat "$tmp/app/untracked") == preserve && $(cat "$tmp/app/ignored") == preserve ]]
+    patches=("$HOME"/vps-local-changes-*.patch)
+    [[ ${#patches[@]} -eq 1 && -s "${patches[0]}" ]]
+    command git -C "$tmp/app" apply --check "${patches[0]}"
+    grep -q '^+staged' "${patches[0]}"
+    grep -q '^+unstaged' "${patches[0]}"
+    : > "$TEST_LOG"
+    run_case success
+    if grep -q '^git reset --hard' "$TEST_LOG"; then
+        echo "Untracked files triggered a reset" >&2
+        exit 1
+    fi
+    echo "PASS: real tracked drift, patch and untracked preservation"
+    rm "$tmp/app/tracked"
+    mkdir "$tmp/app/tracked"
+    printf 'preserve\n' > "$tmp/app/tracked/keep"
+    run_case directory
+    [[ $(cat "$tmp/app/tracked/keep") == preserve ]]
+    if grep -q '^git reset --hard' "$TEST_LOG"; then
+        echo "Reset would remove an untracked blocking directory" >&2
+        exit 1
+    fi
+    echo "PASS: untracked blocking directory is preserved"
+fi
