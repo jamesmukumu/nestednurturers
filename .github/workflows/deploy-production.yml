@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment:
-      name: production
+      name: vps-production
     env:
       DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
       VPS_HOST: ${{ secrets.VPS_SSH_HOST }}
