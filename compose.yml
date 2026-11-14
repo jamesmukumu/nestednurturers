@@ -64,6 +64,35 @@ services:
       db:
         condition: service_healthy
 
+  scheduler:
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-client}
+      DB_USERNAME: ${DB_USERNAME:-nestednurturers}
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+      QUEUE_CONNECTION: database
+      DB_QUEUE_RETRY_AFTER: "90"
+    command:
+      - php
+      - artisan
+      - schedule:work
+    volumes:
+      - app_storage:/var/www/html/storage
+    depends_on:
+      db:
+        condition: service_healthy
+
   web:
     build:
       context: .

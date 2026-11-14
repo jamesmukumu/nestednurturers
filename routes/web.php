@@ -13,6 +13,7 @@ use App\Http\Controllers\PublicBlogController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/health', fn () => response()->json(['status' => 'ok']))->name('health');
 Route::get("/sitemap", [SitemapController::class, 'SiteMapGenerator']);
 Route::get('/', function () {
     return Inertia::render('Home');
