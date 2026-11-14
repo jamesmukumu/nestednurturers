@@ -1,0 +1,91 @@
+name: Deploy Vultr production
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-vultr-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy verified master commit
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: production
+    env:
+      DEPLOY_SHA: ${{ github.event.workflow_run.head_sha }}
+      VPS_HOST: ${{ secrets.VPS_SSH_HOST }}
+      VPS_PORT: ${{ secrets.VPS_SSH_PORT }}
+      VPS_USER: ${{ secrets.VPS_SSH_USER }}
+      VPS_APP_DIR: ${{ secrets.VPS_APP_DIR }}
+
+    steps:
+      - name: Configure verified SSH access
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.VPS_SSH_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Build, back up, migrate, and restart
+        run: |
+          ssh -i ~/.ssh/id_ed25519 \
+            -o StrictHostKeyChecking=yes \
+            -p "$VPS_PORT" \
+            "$VPS_USER@$VPS_HOST" \
+            "bash -s -- '$VPS_APP_DIR' '$DEPLOY_SHA'" <<'REMOTE'
+          set -euo pipefail
+
+          app_dir="$1"
+          deploy_sha="$2"
+          cd "$app_dir"
+
+          git fetch --prune origin master
+          test "$(git rev-parse origin/master)" = "$deploy_sha"
+          git checkout --detach "$deploy_sha"
+
+          docker compose build app queue scheduler web ssr
+
+          backup_dir="storage/backups/database"
+          mkdir -p "$backup_dir"
+          backup_file="$backup_dir/$(date -u +%Y%m%dT%H%M%SZ)-before-${deploy_sha}.sql.gz"
+          docker compose exec -T db sh -c \
+            'exec mysqldump --single-transaction --quick --routines --triggers -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"' \
+            | gzip > "$backup_file"
+          test -s "$backup_file"
+          find "$backup_dir" -type f -name '*.sql.gz' -mtime +7 -delete
+
+          docker compose run --rm --no-deps app \
+            php artisan migrate --force --no-interaction
+          docker compose up -d --remove-orphans
+          docker compose exec -T app php artisan optimize:clear
+
+          curl --fail --retry 12 --retry-delay 5 \
+            http://127.0.0.1:8080/health > /dev/null
+          REMOTE
+
+      - name: Write deployment summary
+        if: always()
+        run: |
+          {
+            echo "## Vultr production deployment"
+            echo "- Commit: \`${DEPLOY_SHA}\`"
+            echo "- Target: \`${VPS_HOST}\`"
+            echo "- Result: ${{ job.status }}"
+          } >> "$GITHUB_STEP_SUMMARY"
