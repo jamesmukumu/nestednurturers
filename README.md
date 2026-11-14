@@ -79,6 +79,7 @@ The production Compose stack includes these services:
 | `app` | Laravel PHP-FPM application |
 | `ssr` | Inertia React server-side rendering service |
 | `queue` | Persistent Laravel database queue worker |
+| `scheduler` | Runs Laravel's scheduled tasks |
 | `db` | MySQL 8.4 database |
 
 1. Copy `.env.example` to `.env`.
@@ -93,10 +94,10 @@ docker compose exec app php artisan migrate --force
 
 Open [http://localhost:8080](http://localhost:8080), or the port configured in `APP_PORT`.
 
-Application storage and MySQL data use named Docker volumes. Rebuild the `app`, `ssr`, and `queue` services after backend or frontend deployment changes:
+Application storage and MySQL data use named Docker volumes. Rebuild the application services after backend or frontend deployment changes:
 
 ```sh
-docker compose up --build -d app ssr queue
+docker compose up --build -d app queue scheduler web ssr
 ```
 
 Follow background processing with:
@@ -107,13 +108,40 @@ docker compose logs -f queue
 
 ### Scheduled follow-ups
 
-The application schedules `app:consultations-follow-up` every minute. Docker Compose does not currently define a scheduler service, so run one alongside the stack if those reminders are required:
+The scheduler runs `app:consultations-follow-up` every minute. The queue and scheduler containers use `restart: unless-stopped` and process healthchecks. The database worker normally exits after one hour (`--max-time=3600`) so Docker can restart it with fresh code; a restart alone does not prove a crash.
 
 ```sh
-docker compose exec app php artisan schedule:work
+docker compose logs --tail=100 queue scheduler
+docker compose exec -T queue pgrep -af 'queue:work'
+docker compose exec -T scheduler pgrep -af 'schedule:work'
 ```
 
-For a long-running production deployment, run that command under your process manager or add a dedicated scheduler service.
+### GitHub Actions to Vultr VPS
+
+The `Deploy Vultr production` workflow runs after a successful CI push on
+`master` using the `vps-production` GitHub environment. It checks out the
+verified CI SHA, connects with a pinned SSH host key, and streams
+`scripts/deploy.sh`. The server verifies that the SHA is still the tip of
+`origin/master` before checking it out.
+
+The script builds `app`, `queue`, `scheduler`, `web`, and `ssr`; saves a
+compressed database backup in `storage/backups/database`; applies migrations;
+and recreates those five application containers without removing database
+volumes. It runs `storage:link --force`, `optimize:clear`, `optimize`,
+`queue:restart`, and `migrate:status`, then checks for pending migrations,
+running processes, matching image IDs, SSR health, storage links, and
+`http://127.0.0.1:8080/health`. Only dangling images are pruned after success.
+The backup directory is on the host and requires appropriate permissions and
+independent backup/retention management.
+
+**Workflow is green but containers did not change:** inspect the deploy job's
+phase markers and compare `docker compose ps` and container image IDs with the
+built images. An SSH script streamed on stdin can be silently truncated when a
+Docker command reads that same stdin. Every noninteractive Docker command in
+the deploy script must use `< /dev/null`, including the `mysqldump` side of the
+backup pipeline. `run` and `exec` also require `-T`. On failure the script
+prints bounded container diagnostics and exits nonzero; review those logs
+carefully because application logs may contain sensitive information.
 
 ## Useful commands
 
