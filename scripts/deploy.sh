@@ -73,6 +73,7 @@ test "$(gzip -cd "$backup_file" | wc -c)" -gt 0
 find "$backup_dir" -type f -name '*-before-*.sql.gz' -mtime +7 -delete
 
 echo "==> Applying migrations"
+docker compose run --rm -T --no-deps app php artisan cities:check --no-interaction < /dev/null
 docker compose run --rm -T --no-deps app \
     php artisan migrate --force --no-interaction < /dev/null
 
