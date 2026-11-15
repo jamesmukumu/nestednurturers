@@ -14,7 +14,10 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/health', fn () => response()->json(['status' => 'ok']))->name('health');
-Route::get("/sitemap", [SitemapController::class, 'SiteMapGenerator']);
+Route::get('/sitemap', [SitemapController::class, 'index']);
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
+Route::get('/sitemap-{page}.xml', [SitemapController::class, 'page'])
+    ->whereNumber('page')->name('sitemap.page');
 Route::get('/', function () {
     return Inertia::render('Home');
 });
