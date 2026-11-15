@@ -9,6 +9,20 @@ test('public homepage remains available', function () {
         ->assertInertia(fn (Assert $page) => $page->component('Home'));
 });
 
+test('css layer order is declared before the theme and vite assets', function () {
+    $response = $this->get('/login')
+        ->assertOk()
+        ->assertSeeInOrder([
+            '<style>@layer tailwind-base, primereact, tailwind-utilities;</style>',
+            '<meta id="primereact-theme-insertion-point">',
+        ], false);
+
+    $this->assertMatchesRegularExpression(
+        '~id="primereact-theme-insertion-point".*?(?:/build/assets/|/resources/js/app\.jsx)~s',
+        $response->getContent(),
+    );
+});
+
 test('dashboard routes require authentication', function () {
     $this->get('/dashboard')->assertRedirect(route('login'));
     $this->get('/dashboard/editor')->assertRedirect('/dashboard/blogs');

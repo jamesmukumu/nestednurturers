@@ -23,6 +23,6 @@ class AcknowledgeInquiries implements ShouldQueue
      * Execute the job.
      */
     public function handle(): void {
-     Mail::to('jamesmukumu03@gmail.com')->send(new ReminderAlerts($this->consultations));
+     Mail::to('info@nestednurturers.com')->send(new ReminderAlerts($this->consultations));
     }
 }
