@@ -12,10 +12,12 @@ test('city files are valid and available to the contact form', function () {
         JSON_THROW_ON_ERROR,
     );
 
-    $this->get('/')
-        ->assertOk()
-        ->assertInertia(fn (Assert $page) => $page
-            ->where('uscities.0', $cities[0]['city'].' ('.$cities[0]['state'].')'));
+    foreach (['/', '/faq'] as $url) {
+        $this->get($url)
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('uscities.0', $cities[0]['city'].' ('.$cities[0]['state'].')'));
+    }
 });
 
 test('city check fails explicitly when files are missing', function () {

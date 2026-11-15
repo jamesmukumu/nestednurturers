@@ -5,7 +5,7 @@ import Button from "@/Components/Button";
 import { Seo } from "@/comps/SEO";
 import { Fq } from "@/comps/fq";
 
-export default function FAQ(){
+export default function FAQ({ uscities }){
 var TodaysDate = new Date()
 return (
 <div className="w-full overflow-y-hidden">
@@ -172,7 +172,7 @@ Frequently Asked Questions
 <Fq/>
 </section>
 <section>
-<Contact/>
+<Contact cities={uscities}/>
 </section>
 
 <Footer/>
