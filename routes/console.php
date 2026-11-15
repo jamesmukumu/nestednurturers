@@ -8,9 +8,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('app:consultations-follow-up')
-    ->dailyAt('08:00')
-    ->days([1, 2, 3, 4, 5, 6])   
-    ->timezone('Africa/Nairobi')
-    ->withoutOverlapping()
-    ->runInBackground();
+Schedule::command('app:consultations-follow-up')->everyMinute()->withoutOverlapping()->runInBackground();

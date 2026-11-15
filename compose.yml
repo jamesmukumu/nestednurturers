@@ -58,6 +58,12 @@ services:
       - --timeout=60
       - --max-time=3600
     stop_grace_period: 70s
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f '[a]rtisan queue:work' > /dev/null"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     volumes:
       - app_storage:/var/www/html/storage
     depends_on:
@@ -87,6 +93,12 @@ services:
       - php
       - artisan
       - schedule:work
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f '[a]rtisan schedule:work' > /dev/null"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     volumes:
       - app_storage:/var/www/html/storage
     depends_on:

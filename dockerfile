@@ -6,7 +6,8 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-RUN npm run build
+ARG NODE_BUILD_HEAP_MB=640
+RUN NODE_OPTIONS="--max-old-space-size=${NODE_BUILD_HEAP_MB}" npm run build
 
 FROM php:8.4-fpm-bookworm AS php-base
 
@@ -18,6 +19,7 @@ RUN apt-get update \
         libpng-dev \
         libxml2-dev \
         libzip-dev \
+        procps \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" \
         bcmath \
@@ -59,7 +61,7 @@ RUN mkdir -p \
         storage/framework/views \
         storage/logs \
         bootstrap/cache \
-    && ln -s ../storage/app/public public/storage \
+    && ln -sfn ../storage/app/public public/storage \
     && php artisan package:discover --ansi \
     && chown -R www-data:www-data storage bootstrap/cache
 
@@ -79,3 +81,4 @@ FROM nginx:1.28-alpine AS web
 
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=app /var/www/html/public /var/www/html/public
+RUN ln -sfn ../storage/app/public /var/www/html/public/storage
