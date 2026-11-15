@@ -16,7 +16,7 @@ export default function Home({uscities}) {
                 <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
                     <div className="md:w-1/2 md:pr-12">
                         <h1 className="text-3xl md:text-4xl font-bold text-gray-800 leading-snug">
-                            ooking for guidance as you prepare for birth and
+                            Looking for guidance as you prepare for birth and
                             the first weeks of parenthood?
                         </h1>
                         <p className="mt-4 text-lg text-gray-600">
