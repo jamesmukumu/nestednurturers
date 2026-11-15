@@ -318,7 +318,7 @@ export function Contact({ cities }) {
                                 onBlur={setFieldTouched}
                                 errors={errors.location}
                                 touched={touched.location}
-                                placeholder="Search or enter your location"
+                                placeholder="Select your location"
                                 citiesOptions={cities}
                             />
 {/*

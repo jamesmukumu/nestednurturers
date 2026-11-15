@@ -1,6 +1,4 @@
-import { AutoComplete } from "primereact/autocomplete";
 import { ErrorMessage } from "formik";
-import { useState } from "react";
 
 export const usCityOptions = [
     "New York, NY",
@@ -88,49 +86,45 @@ export function CityAutocompleteField({
     onBlur,
     errors,
     touched,
-    placeholder = "Search or enter your city",
+    placeholder = "Select your city",
     citiesOptions = usCityOptions,
 }) {
-    const [suggestions, setSuggestions] = useState(citiesOptions.slice(0, 20));
-
-    const completeMethod = (event) => {
-        const query = (event?.query ?? "").trim().toLowerCase();
-
-        if (!query) {
-            setSuggestions(citiesOptions.slice(0, 20));
-            return;
-        }
-
-        const filtered = citiesOptions.filter((city) =>
-            city.toLowerCase().includes(query),
-        );
-
-        setSuggestions(filtered.length ? filtered.slice(0, 20) : [query]);
-    };
-
     return (
         <div className="flex flex-col">
             <label htmlFor={name} className="mb-1 font-medium">
                 Location
             </label>
 
-            <AutoComplete
-                id={name}
-                value={value ?? ""}
-                suggestions={suggestions}
-                completeMethod={completeMethod}
-                onChange={(e) => onChange?.(name, e.value ?? "")}
-                onBlur={() => onBlur?.(name, true)}
-                dropdown
-                forceSelection={false}
-                placeholder={placeholder}
-                className={`w-full ${errors && touched ? "p-invalid" : ""}`}
-                inputClassName={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring ${
-                    errors && touched
-                        ? "border-warn focus:ring-warn"
-                        : "border-gray-300 focus:ring-blue-300"
-                }`}
-            />
+            <div className="relative">
+                <select
+                    id={name}
+                    name={name}
+                    value={value ?? ""}
+                    onChange={(event) =>
+                        onChange?.(name, event.target.value)
+                    }
+                    onBlur={() => onBlur?.(name, true)}
+                    aria-invalid={Boolean(errors && touched)}
+                    className={`w-full appearance-none rounded-md border bg-white px-4 py-2 pr-10 text-left text-gray-900 shadow-sm transition focus:outline-none focus:ring-2 ${
+                        errors && touched
+                            ? "border-warn focus:border-warn focus:ring-warn/30"
+                            : "border-gray-300 focus:border-green-600 focus:ring-green-600/20"
+                    }`}
+                >
+                    <option value="" disabled>
+                        {placeholder}
+                    </option>
+                    {citiesOptions.map((city) => (
+                        <option key={city} value={city}>
+                            {city}
+                        </option>
+                    ))}
+                </select>
+                <i
+                    aria-hidden="true"
+                    className="fa-solid fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500"
+                />
+            </div>
 
             <ErrorMessage
                 name={name}
