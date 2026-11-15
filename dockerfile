@@ -67,6 +67,7 @@ RUN mkdir -p \
     && chown -R www-data:www-data storage bootstrap/cache
 
 ENTRYPOINT ["/var/www/html/docker/app-entrypoint.sh"]
+CMD ["php-fpm"]
 
 FROM node:22-bookworm-slim AS ssr
 

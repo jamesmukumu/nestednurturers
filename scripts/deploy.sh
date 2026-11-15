@@ -19,6 +19,7 @@ on_failure() {
     echo "==> Deployment failed (exit $status); container diagnostics follow" >&2
     docker compose ps < /dev/null >&2 || true
     docker compose logs --tail=80 app web queue scheduler ssr < /dev/null >&2 || true
+    docker compose logs --tail=100 app < /dev/null >&2 || true
     exit "$status"
 }
 trap on_failure EXIT
