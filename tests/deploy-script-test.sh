@@ -66,6 +66,7 @@ run_case() {
         [[ "$failure" != success ]] || { cat "$tmp/output" >&2; exit 1; }
         grep -q 'Deployment failed' "$tmp/output"
         grep -q 'docker compose logs --tail=80' "$TEST_LOG"
+        grep -q '^docker compose logs --tail=100 app$' "$TEST_LOG"
         if grep -q 'docker image prune -f' "$TEST_LOG"; then
             echo "Pruned images after failure: $failure" >&2
             exit 1
