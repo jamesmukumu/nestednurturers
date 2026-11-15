@@ -53,6 +53,7 @@ COPY --from=dependencies /var/www/html/vendor ./vendor
 COPY --from=frontend /var/www/html/public/build ./public/build
 COPY --from=frontend /var/www/html/bootstrap/ssr ./bootstrap/ssr
 COPY . .
+COPY --chmod=755 docker/app-entrypoint.sh /var/www/html/docker/app-entrypoint.sh
 
 RUN mkdir -p \
         storage/app/public \
@@ -64,6 +65,8 @@ RUN mkdir -p \
     && ln -sfn ../storage/app/public public/storage \
     && php artisan package:discover --ansi \
     && chown -R www-data:www-data storage bootstrap/cache
+
+ENTRYPOINT ["/var/www/html/docker/app-entrypoint.sh"]
 
 FROM node:22-bookworm-slim AS ssr
 
@@ -81,4 +84,5 @@ FROM nginx:1.28-alpine AS web
 
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=app /var/www/html/public /var/www/html/public
+COPY --chmod=755 docker/nginx/20-storage-link.sh /docker-entrypoint.d/20-storage-link.sh
 RUN ln -sfn ../storage/app/public /var/www/html/public/storage
