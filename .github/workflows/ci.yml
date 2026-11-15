@@ -41,6 +41,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Prepare empty test environment file
+        run: touch .env
+
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
