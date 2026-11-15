@@ -5,10 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 class Blog extends Model
 {
     use HasFactory;
+
+    protected static function booted(): void
+    {
+        static::saved(function (): void {
+            Cache::forget('sitemap:version');
+        });
+        static::deleted(function (): void {
+            Cache::forget('sitemap:version');
+        });
+    }
 
     protected $table = 'blogs';
 

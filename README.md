@@ -100,6 +100,21 @@ Application storage and MySQL data use named Docker volumes. Rebuild the applica
 docker compose up --build -d app queue scheduler web ssr
 ```
 
+The contact form's city JSON and source spreadsheet are tracked under
+`database/data/cities`, outside the mounted storage volume. Run
+`docker compose exec -T app php artisan cities:check` to validate them. The
+deployment script also checks them before applying migrations.
+
+Blog uploads live on the shared `app_storage` volume. The app and web
+containers recreate their `public/storage` links on startup; keep the volume
+and its backups when redeploying. Recreating links cannot restore files that
+are already missing from the volume.
+
+The sitemap is served dynamically at `/sitemap.xml` and includes published
+blogs by default. Set `SITEMAP_INCLUDE_BLOGS=false` to exclude individual blog
+pages; the blogs index remains included. Sitemap responses are cached for one
+hour and invalidated when a blog is saved or deleted.
+
 Follow background processing with:
 
 ```sh

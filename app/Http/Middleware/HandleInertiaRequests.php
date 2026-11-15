@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Models\Consultation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -38,8 +37,10 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'uscities' => fn() => collect(
                 json_decode(
-                    Storage::disk('private')->get('us_cities_states.json'),
+                    file_get_contents(config('cities.path').'/us_cities_states.json'),
                     true,
+                    512,
+                    JSON_THROW_ON_ERROR,
                 ),
             )->map(
                     fn(array $city) => $city['city'] . ' (' . $city['state'] . ')',
