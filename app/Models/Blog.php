@@ -13,8 +13,12 @@ class Blog extends Model
 
     protected static function booted(): void
     {
-        static::saved(fn () => Cache::forget('sitemap:version'));
-        static::deleted(fn () => Cache::forget('sitemap:version'));
+        static::saved(function (): void {
+            Cache::forget('sitemap:version');
+        });
+        static::deleted(function (): void {
+            Cache::forget('sitemap:version');
+        });
     }
 
     protected $table = 'blogs';
