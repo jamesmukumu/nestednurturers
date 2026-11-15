@@ -21,7 +21,7 @@ class ConsultationsFollowUp extends Command
      * @var string
      */
     protected $description = 'This Command Will Be For Following Up On InActive Consultations';
-
+ 
     /**
      * Execute the console command.
      */
