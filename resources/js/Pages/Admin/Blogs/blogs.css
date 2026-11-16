@@ -33,9 +33,6 @@
 
 .blogs-list__table {
     overflow: hidden;
-    border: 1px solid var(--surface-border);
-    border-radius: var(--border-radius);
-    background: var(--surface-card);
 }
 
 .blogs-list__image,

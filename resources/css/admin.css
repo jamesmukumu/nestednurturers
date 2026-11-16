@@ -1,0 +1,492 @@
+/* Admin tokens live on the document so body-mounted overlays inherit them.
+   :has() also removes the theme immediately when the admin layout unmounts. */
+:root:has(.admin-shell) {
+    --admin-font-body: "Figtree", ui-sans-serif, system-ui, sans-serif;
+    --admin-font-heading: Georgia, "Times New Roman", serif;
+    --admin-text-body: 0.875rem;
+    --admin-text-table: 0.8125rem;
+    --admin-text-label: 0.75rem;
+    --admin-text-small: 0.6875rem;
+    --admin-heading-page: clamp(1.75rem, 2.7vw, 2.25rem);
+    --admin-heading-hero: clamp(2rem, 3vw, 2.65rem);
+    --admin-heading-section: 1.0625rem;
+    --admin-action-ink: #37162e;
+    --admin-pink-text: #96246e;
+    --admin-pink-soft: #fff2fa;
+    --admin-pink-border: #f2cce5;
+    --admin-focus: #ad277f;
+    --admin-warm: #faf7f3;
+    --app-page: #ffffff;
+    --app-surface: #ffffff;
+    --app-surface-raised: #ffffff;
+    --app-text: #29252b;
+    --app-text-secondary: #6c626d;
+    --app-text-muted: #786c76;
+    --app-border: #eee6eb;
+    --app-primary: var(--admin-pink-text);
+    --app-primary-hover: #762054;
+    --app-action: #ff76dc;
+    --app-action-hover: #f45fcb;
+    --app-focus: rgb(173 39 127 / 18%);
+    --app-nav-active-bg: var(--admin-pink-soft);
+    --app-nav-active-hover: #fce8f5;
+    --app-nav-active-pressed: #f9d8ed;
+    --app-radius-card: 1rem;
+    --app-radius-control: 0.625rem;
+    --app-shadow: 0 4px 22px rgb(76 40 63 / 3%);
+    --surface-ground: var(--app-page);
+    --surface-card: var(--app-surface);
+    --surface-overlay: var(--app-surface-raised);
+    --surface-border: var(--app-border);
+    --surface-hover: var(--admin-warm);
+    --text-color: var(--app-text);
+    --text-color-secondary: var(--app-text-secondary);
+    --primary-color: var(--admin-pink-text);
+    --primary-color-text: var(--admin-action-ink);
+    --highlight-bg: var(--admin-pink-soft);
+    --highlight-text-color: var(--admin-pink-text);
+    --border-radius: var(--app-radius-control);
+}
+:root.dark:has(.admin-shell) {
+    --admin-pink-text: #ff9ee7;
+    --admin-pink-soft: #32222e;
+    --admin-pink-border: #59374d;
+    --admin-focus: #ff9ee7;
+    --admin-warm: #231e23;
+    --app-page: #151216;
+    --app-surface: #1c181d;
+    --app-surface-raised: #252026;
+    --app-text: #f4edf3;
+    --app-text-secondary: #c7b9c4;
+    --app-text-muted: #ae9eaa;
+    --app-border: #3a2d37;
+    --app-primary-hover: #ffc5f0;
+    --app-focus: rgb(255 158 231 / 20%);
+    --app-nav-active-hover: #422a39;
+    --app-nav-active-pressed: #4e3044;
+    --app-shadow: 0 4px 22px rgb(0 0 0 / 10%);
+}
+:root:has(.admin-shell) .p-component {
+    font-family: var(--admin-font-body);
+    font-size: var(--admin-text-body);
+}
+.admin-page,
+.profile-page,
+.enquiries-page {
+    min-width: 0;
+    width: 100%;
+    color: var(--app-text);
+    font: 400 var(--admin-text-body)/1.6 var(--admin-font-body);
+}
+.admin-page__header,
+.profile-page__page-heading,
+.enquiries-page__header {
+    margin-bottom: 1.75rem;
+}
+:is(.admin-page__header, .profile-page__page-heading, .enquiries-page__header)
+    h1,
+.dashboard-welcome h1 {
+    margin: 0;
+    color: var(--app-text);
+    font-family: var(--admin-font-heading);
+    font-size: var(--admin-heading-page);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    overflow-wrap: anywhere;
+}
+.dashboard-welcome h1 {
+    font-size: var(--admin-heading-hero);
+}
+:is(.admin-page__header, .profile-page__page-heading, .enquiries-page__header)
+    p {
+    margin: 0.625rem 0 0;
+    color: var(--app-text-secondary);
+    font-size: var(--admin-text-body);
+    line-height: 1.6;
+}
+.admin-page__card.p-card,
+.profile-card,
+.enquiries-panel,
+.enquiry-detail__card,
+.admin-state-card {
+    min-width: 0;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-card);
+    background: var(--app-surface);
+    box-shadow: var(--app-shadow);
+}
+.admin-page__card .p-card-body {
+    padding: 1.75rem;
+}
+.admin-page__card .p-card-content {
+    padding: 0;
+}
+:is(.profile-card, .enquiry-detail__card) > h2,
+.admin-section-title {
+    margin: 0 0 1rem;
+    color: var(--app-text);
+    font: 500 var(--admin-heading-section)/1.5 var(--admin-font-body);
+    letter-spacing: -0.025em;
+}
+.admin-eyebrow {
+    display: block;
+    margin: 0 0 0.625rem;
+    color: var(--app-text-muted);
+    font: 500 0.625rem/1.5 var(--admin-font-body);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+/* One action system for shared buttons, older page controls and portal buttons. */
+:root:has(.admin-shell)
+    :where(
+        .app-button,
+        .profile-button,
+        .profile-tabs__tab,
+        .enquiries-button,
+        .enquiries-filter,
+        .enquiries-pagination__button,
+        .enquiries-sort-button,
+        .enquiries-toast button,
+        .dashboard-segmented button,
+        .p-paginator .p-paginator-element
+    ) {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1rem;
+    border: 1px solid transparent;
+    border-radius: var(--app-radius-control);
+    background: transparent;
+    color: var(--admin-pink-text);
+    font: 500 var(--admin-text-label)/1.4 var(--admin-font-body);
+    letter-spacing: 0;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+:root:has(.admin-shell)
+    :is(.app-button--primary, .app-button--danger, .profile-button--primary) {
+    background: var(--app-action);
+    color: var(--admin-action-ink);
+    box-shadow: none;
+}
+:root:has(.admin-shell)
+    :is(
+        .app-button--primary,
+        .app-button--danger,
+        .profile-button--primary
+    ):hover:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--app-action-hover);
+    color: var(--admin-action-ink);
+    box-shadow: 0 3px 12px rgb(173 39 127 / 12%);
+    transform: none;
+}
+:root:has(.admin-shell)
+    :is(
+        .app-button--secondary,
+        .profile-button--secondary,
+        .enquiries-button--secondary
+    ) {
+    border-color: var(--admin-pink-border);
+    background: var(--app-surface);
+    color: var(--admin-pink-text);
+    box-shadow: none;
+}
+:root:has(.admin-shell)
+    :is(
+        .app-button--secondary,
+        .profile-button--secondary,
+        .enquiries-button--secondary
+    ):hover:not(:disabled):not([aria-disabled="true"]),
+:root:has(.admin-shell)
+    :is(
+        .app-button--ghost,
+        .profile-tabs__tab,
+        .enquiries-filter,
+        .enquiries-pagination__button,
+        .enquiries-sort-button,
+        .enquiries-toast button,
+        .p-paginator-element
+    ):hover:not(:disabled) {
+    background: var(--admin-pink-soft);
+    color: var(--admin-pink-text);
+    box-shadow: none;
+    transform: none;
+}
+:root:has(.admin-shell)
+    :is(
+        .profile-tabs__tab[aria-selected="true"],
+        .enquiries-filter.is-selected,
+        .enquiries-pagination__button.is-current,
+        .p-paginator-page.p-highlight,
+        .theme-toggle__option[aria-pressed="true"],
+        .dashboard-segmented button[aria-pressed="true"]
+    ) {
+    background: var(--admin-pink-soft);
+    border-color: var(--admin-pink-border);
+    color: var(--admin-pink-text);
+    box-shadow: none;
+}
+:root:has(.admin-shell)
+    :is(.app-button--icon-only, .p-paginator .p-paginator-element) {
+    min-width: 2.75rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0.5rem;
+}
+:root:has(.admin-shell) :is(.app-button--sm, .enquiries-pagination__button) {
+    padding: 0.5rem 0.75rem;
+}
+:root:has(.admin-shell)
+    :is(
+        .app-button,
+        .profile-button,
+        .enquiries-button,
+        .enquiries-pagination__button,
+        .p-button
+    ):is(:disabled, [aria-disabled="true"]) {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+}
+:root:has(.admin-shell)
+    :is(button, a, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--admin-focus);
+    outline-offset: 3px;
+}
+:root:has(.admin-shell) .theme-toggle {
+    flex-wrap: nowrap;
+    gap: 0.125rem;
+    padding: 0.1875rem;
+    border: 1px solid var(--app-border);
+    border-radius: 0.75rem;
+    background: var(--app-surface);
+}
+:root:has(.admin-shell) .theme-toggle__option.app-button {
+    min-width: 2.5rem;
+    min-height: 2.25rem;
+    padding: 0.4375rem 0.625rem;
+    font-size: var(--admin-text-small);
+    border-radius: 0.5rem;
+}
+:root:has(.admin-shell) .theme-toggle__option .app-button__content {
+    gap: 0.375rem;
+}
+
+/* PrimeReact overlays are mounted under body, outside the shell. */
+:root:has(.admin-shell)
+    :is(.p-dialog, .p-menu, .p-dropdown-panel, .p-sidebar, .p-toast-message) {
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-card);
+    color: var(--app-text);
+    background: var(--app-surface);
+    box-shadow: 0 16px 60px rgb(47 22 40 / 12%);
+    font-family: var(--admin-font-body);
+}
+:root:has(.admin-shell)
+    :is(
+        .p-dialog-header,
+        .p-dialog-content,
+        .p-dialog-footer,
+        .p-dropdown-header,
+        .p-menu-list,
+        .p-sidebar-content
+    ) {
+    color: var(--app-text);
+    background: var(--app-surface);
+}
+:root:has(.admin-shell) .p-dialog-header {
+    padding: 1.5rem 1.5rem 1rem;
+    border-radius: 1rem 1rem 0 0;
+}
+:root:has(.admin-shell) .p-dialog-title {
+    font: 400 1.75rem/1.2 var(--admin-font-heading);
+    letter-spacing: -0.035em;
+}
+:root:has(.admin-shell) .p-confirm-dialog-icon {
+    color: var(--app-warning);
+}
+:root:has(.admin-shell) .p-dialog-content {
+    padding: 0.5rem 1.5rem 1.5rem;
+    font-size: var(--admin-text-body);
+    line-height: 1.7;
+}
+:root:has(.admin-shell) .p-dialog-footer {
+    padding: 1rem 1.5rem 1.5rem;
+    border-top: 1px solid var(--app-border);
+    border-radius: 0 0 1rem 1rem;
+}
+:root:has(.admin-shell)
+    :is(.p-dialog-header-icon, .p-dropdown-trigger, .p-toast-icon-close) {
+    color: var(--admin-pink-text);
+}
+:root:has(.admin-shell) .p-dropdown-panel .p-dropdown-item {
+    font: 400 var(--admin-text-table)/1.6 var(--admin-font-body);
+    color: var(--app-text);
+    border-radius: 0.5rem;
+    margin: 0.1875rem 0.375rem;
+    padding: 0.625rem 0.75rem;
+}
+:root:has(.admin-shell)
+    :is(
+        .p-dropdown-item.p-highlight,
+        .p-dropdown-item:not(.p-highlight):hover,
+        .p-menuitem-content:hover
+    ) {
+    color: var(--admin-pink-text);
+    background: var(--admin-pink-soft);
+}
+:root:has(.admin-shell) .p-menuitem-content {
+    border-radius: 0.5rem;
+}
+:root:has(.admin-shell) .p-tooltip-text {
+    background: var(--app-text);
+    color: var(--app-surface);
+    border-radius: 0.5rem;
+    font: 400 var(--admin-text-label)/1.5 var(--admin-font-body);
+}
+
+/* Inputs and tables use the same white surface, quiet borders and type scale. */
+:root:has(.admin-shell) :is(.p-inputtext, .p-inputtextarea, .p-dropdown) {
+    font-family: var(--admin-font-body);
+    font-size: var(--admin-text-body);
+    font-weight: 400;
+    background: var(--app-surface);
+    color: var(--app-text);
+    border-color: var(--app-border);
+    border-radius: var(--app-radius-control);
+    box-shadow: none;
+}
+:root:has(.admin-shell)
+    :is(.p-inputtext, .p-inputtextarea, .p-dropdown):enabled:hover {
+    border-color: var(--admin-pink-border);
+}
+:root:has(.admin-shell)
+    :is(
+        .p-inputtext:enabled:focus,
+        .p-inputtextarea:enabled:focus,
+        .p-dropdown.p-focus
+    ) {
+    border-color: var(--admin-focus);
+    box-shadow: 0 0 0 3px var(--app-focus);
+}
+:root:has(.admin-shell) :is(.p-inputtext.p-invalid, .p-dropdown.p-invalid) {
+    border-color: var(--app-danger);
+}
+.blog-form__field > label {
+    color: var(--app-text);
+    font: 500 var(--admin-text-label)/1.5 var(--admin-font-body);
+}
+:root:has(.admin-shell) .p-datatable .p-datatable-thead > tr > th {
+    background: var(--admin-warm);
+    color: var(--app-text-secondary);
+    border-color: var(--app-border);
+    padding: 1rem;
+    font: 500 var(--admin-text-label)/1.5 var(--admin-font-body);
+    letter-spacing: 0;
+}
+:root:has(.admin-shell) .p-datatable .p-datatable-tbody > tr {
+    background: var(--app-surface);
+    color: var(--app-text);
+}
+:root:has(.admin-shell) .p-datatable .p-datatable-tbody > tr > td {
+    padding: 1rem;
+    border-color: var(--app-border);
+    font: 400 var(--admin-text-table)/1.6 var(--admin-font-body);
+}
+:root:has(.admin-shell) .p-datatable .p-datatable-tbody > tr:hover {
+    background: var(--admin-warm);
+}
+:root:has(.admin-shell) .p-paginator {
+    padding: 1rem;
+    border-color: var(--app-border);
+    background: var(--app-surface);
+    font: 400 var(--admin-text-label)/1.5 var(--admin-font-body);
+}
+:root:has(.admin-shell) .p-tag {
+    border-radius: 1rem;
+    font: 500 var(--admin-text-small)/1.5 var(--admin-font-body);
+    padding: 0.25rem 0.625rem;
+}
+:root:has(.admin-shell) input[type="checkbox"] {
+    accent-color: var(--admin-pink-text);
+}
+.blogs-list__table {
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-card);
+    background: var(--app-surface);
+}
+.admin-state-card {
+    display: grid;
+    justify-items: start;
+    gap: 1rem;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    background: linear-gradient(
+        115deg,
+        var(--admin-warm),
+        var(--app-surface) 70%
+    );
+}
+.admin-state-card > .pi {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.875rem;
+    background: var(--admin-pink-soft);
+    color: var(--admin-pink-text);
+    font-size: 1.25rem;
+}
+.admin-state-card h2 {
+    margin: 0;
+    font: 400 1.75rem/1.25 var(--admin-font-heading);
+    letter-spacing: -0.035em;
+}
+.admin-state-card p {
+    margin: 0;
+    max-width: 34rem;
+    color: var(--app-text-secondary);
+    font-size: var(--admin-text-body);
+    line-height: 1.8;
+}
+.rich-text-editor__loading {
+    display: grid;
+    place-items: center;
+    min-height: 15rem;
+    color: var(--app-text-muted);
+    font-size: var(--admin-text-label);
+}
+@media (max-width: 639px) {
+    .admin-page__card .p-card-body {
+        padding: 1.25rem;
+    }
+    .admin-shell__mobile-theme-toggle .theme-toggle__option.app-button {
+        min-height: 2.75rem;
+    }
+    :root:has(.admin-shell) .p-dialog {
+        max-width: calc(100vw - 2rem);
+    }
+    :root:has(.admin-shell) .p-dialog-content {
+        padding-inline: 1.25rem;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    :root:has(.admin-shell)
+        :is(
+            .app-button,
+            .profile-button,
+            .profile-tabs__tab,
+            .enquiries-button,
+            .enquiries-filter,
+            .enquiries-pagination__button
+        ) {
+        transition: none;
+    }
+}

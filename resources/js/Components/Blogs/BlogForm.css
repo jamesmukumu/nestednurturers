@@ -14,14 +14,6 @@
     gap: 0.75rem;
 }
 
-.blog-form__card .p-card-body {
-    padding: clamp(1rem, 3vw, 2rem);
-}
-
-.admin-page__card.p-card.blog-form__card--create {
-    border-radius: 0;
-}
-
 .blog-form__card--create .blog-form-page__actions {
     justify-content: flex-end;
     margin-top: 1.5rem;
@@ -40,12 +32,6 @@
 
 .blog-form__reading-time > .p-inputtext {
     width: 100%;
-}
-
-.blog-form__field > label {
-    color: var(--text-color);
-    font-size: 0.9375rem;
-    font-weight: 600;
 }
 
 .blog-form__field > label span {
@@ -77,7 +63,7 @@
 
 .blog-form__hint {
     color: var(--text-color-secondary);
-    font-size: 0.8125rem;
+    font-size: var(--admin-text-table);
 }
 
 .blog-form__image-preview {

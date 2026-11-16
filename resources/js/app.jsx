@@ -10,6 +10,7 @@ import 'primeflex/primeflex.css';
 import '../css/buttons.css';
 // Keep layout overrides after shared buttons, including dynamically loaded CSS.
 import './Layouts/AdminLayout.css';
+import '../css/admin.css';
 
 
 import { createInertiaApp } from '@inertiajs/react';

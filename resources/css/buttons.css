@@ -185,26 +185,6 @@
     transition: color 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 
-.admin-shell__account-menu .p-menuitem-link.app-button {
-    justify-content: flex-start;
-    text-align: left;
-}
-
-.admin-shell__account-menu .p-menuitem-link.app-button--ghost {
-    background: transparent;
-    color: var(--app-primary);
-}
-
-.admin-shell__account-menu .p-menuitem-link.app-button--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
-    background: color-mix(in srgb, var(--app-primary) 12%, transparent);
-}
-
-.admin-shell__account-menu .p-menuitem-link.app-button:focus-visible {
-    outline: 2px solid var(--app-primary);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px var(--app-focus);
-}
-
 .p-dialog .p-dialog-header .p-dialog-header-icon,
 .p-paginator .p-paginator-element,
 .p-datepicker .p-datepicker-prev,
