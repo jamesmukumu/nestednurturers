@@ -3,6 +3,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const { chromium } = require("playwright");
+const { assertAdminPalette, assertAdminControlStates, withoutPinkActions } = require('./admin-palette.cjs');
 
 function contrast(first, second) {
     const luminance = (color) => {
@@ -66,6 +67,8 @@ async function authStyles(page) {
         const page = await browser.newPage({
             viewport: { width: 1440, height: 1000 },
         });
+        page.setDefaultTimeout(Number(process.env.PORTAL_TEST_TIMEOUT || 30000));
+        page.setDefaultNavigationTimeout(Number(process.env.PORTAL_TEST_TIMEOUT || 30000));
         const errors = [];
         page.on("pageerror", (error) => errors.push(error.message));
         await page.route("**/*", (route) =>
@@ -75,13 +78,24 @@ async function authStyles(page) {
         );
         if (artifacts) fs.mkdirSync(artifacts, { recursive: true });
         const shot = async (name) => {
+            await assertAdminPalette(page);
             if (artifacts)
                 await page.screenshot({
                     path: path.join(artifacts, `${name}.png`),
                 });
+            if (artifacts && await page.locator('.admin-shell').count())
+                await withoutPinkActions(page, () => page.screenshot({
+                    path: path.join(artifacts, `${name}-without-actions.png`),
+                }));
         };
         const goto = async (route) => {
-            await page.goto(url + route);
+            const link = page.locator(`a[href="${route}"]`).filter({ visible: true }).first();
+            if (new URL(page.url()).pathname !== route && await link.count()) {
+                await link.click();
+                await page.waitForURL(url + route);
+            } else {
+                await page.goto(url + route);
+            }
             await page.locator("h1").first().waitFor();
             await page.waitForFunction(() =>
                 Boolean(document.getElementById("primereact-theme")?.sheet),
@@ -90,6 +104,7 @@ async function authStyles(page) {
                 await page.locator(".jodit-wysiwyg").first().waitFor();
             if (route === "/dashboard/profile")
                 await page.locator(".profile-card").first().waitFor();
+            await assertAdminPalette(page);
         };
         await goto("/login");
         const loginBefore = await authStyles(page);
@@ -157,56 +172,62 @@ async function authStyles(page) {
             "/dashboard/settings",
             "/dashboard/no-such-page",
         ];
-        for (const mode of ["Light", "Dark", "System"]) {
+        for (const mode of (process.env.PORTAL_TEST_INTERACTIONS_ONLY === '1' ? [] : ["Light", "Dark", "System"])) {
+            await page.setViewportSize({ width: 1440, height: 1000 });
             await goto("/dashboard");
             await page
                 .getByRole("button", { name: `${mode} theme`, exact: true })
                 .first()
                 .click();
             await page.waitForTimeout(250);
-            for (const route of routes) {
-                await goto(route);
-                const metrics = await page.evaluate(() => {
-                    const h = getComputedStyle(document.querySelector("h1"));
-                    const shell = getComputedStyle(
-                        document.querySelector(".admin-shell"),
+            for (const width of [1440, 390, 768]) {
+                await page.setViewportSize({ width, height: 1000 });
+                for (const route of routes) {
+                    await goto(route);
+                    if (width === 1440) await assertAdminControlStates(page);
+                    const metrics = await page.evaluate(() => {
+                        const h = getComputedStyle(document.querySelector("h1"));
+                        const shell = getComputedStyle(
+                            document.querySelector(".admin-shell"),
+                        );
+                        const link = getComputedStyle(
+                            document.querySelector(".admin-shell__nav-link"),
+                        );
+                        return {
+                            heading: h.fontFamily,
+                            weight: h.fontWeight,
+                            body: shell.fontFamily,
+                            size: shell.fontSize,
+                            nav: link.fontSize,
+                            background: shell.backgroundColor,
+                            overflow:
+                                document.documentElement.scrollWidth > innerWidth,
+                            top: document
+                                .querySelector(".admin-shell__topbar")
+                                .getBoundingClientRect().top,
+                        };
+                    });
+                    assert.ok(
+                        metrics.heading.startsWith("Georgia"),
+                        `${mode} ${route}: headline font`,
                     );
-                    const link = getComputedStyle(
-                        document.querySelector(".admin-shell__nav-link"),
-                    );
-                    return {
-                        heading: h.fontFamily,
-                        weight: h.fontWeight,
-                        body: shell.fontFamily,
-                        size: shell.fontSize,
-                        nav: link.fontSize,
-                        background: shell.backgroundColor,
-                        overflow:
-                            document.documentElement.scrollWidth > innerWidth,
-                        top: document
-                            .querySelector(".admin-shell__topbar")
-                            .getBoundingClientRect().top,
-                    };
-                });
-                assert.ok(
-                    metrics.heading.startsWith("Georgia"),
-                    `${mode} ${route}: headline font`,
-                );
-                assert.equal(metrics.weight, "400");
-                assert.ok(metrics.body.includes("Figtree"));
-                assert.equal(metrics.size, "14px");
-                assert.equal(metrics.nav, "13px");
-                assert.equal(metrics.overflow, false);
-                assert.equal(metrics.top, 0);
-                if (mode === "Light")
-                    assert.equal(metrics.background, "rgb(255, 255, 255)");
-                if (mode === "Dark")
-                    await shot(`dark-${route.replace(/[^a-z0-9]/gi, "-")}`);
+                    assert.equal(metrics.weight, "400");
+                    assert.ok(metrics.body.includes("Figtree"));
+                    assert.equal(metrics.size, "14px");
+                    assert.equal(metrics.nav, "13px");
+                    assert.equal(metrics.overflow, false);
+                    assert.equal(metrics.top, 0);
+                    if (mode === "Light")
+                        assert.equal(metrics.background, "rgb(255, 255, 255)");
+                    await shot(`${mode.toLowerCase()}-${width}-${route.replace(/[^a-z0-9]/gi, "-")}`);
+                }
+                console.log(`PASS ${mode} ${width}px: all ten pages have no non-button pink`);
             }
             console.log(
                 `PASS ${mode}: all admin pages share typography, surfaces and stable layout`,
             );
         }
+        await page.setViewportSize({ width: 1440, height: 1000 });
         await goto("/dashboard");
         await page
             .getByRole("button", { name: "Light theme", exact: true })
@@ -223,6 +244,16 @@ async function authStyles(page) {
             contrast(colors.text, colors.background) >= 4.5,
             "Primary pink action text contrast",
         );
+        const primaryAction = page.locator('.dashboard-primary-action');
+        await primaryAction.hover();
+        await page.waitForTimeout(200);
+        assert.equal(await primaryAction.evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(244, 95, 203)');
+        await page.keyboard.press('Tab');
+        await primaryAction.focus();
+        assert.equal(await primaryAction.evaluate(el => getComputedStyle(el).outlineColor), 'rgb(173, 39, 127)');
+        await primaryAction.evaluate(el => el.setAttribute('aria-disabled', 'true'));
+        assert.equal(await primaryAction.evaluate(el => getComputedStyle(el).opacity), '0.5');
+        await primaryAction.evaluate(el => el.removeAttribute('aria-disabled'));
         await page
             .locator(".admin-shell__sidebar .admin-shell__user-copy strong")
             .evaluate((element) => {
@@ -275,6 +306,7 @@ async function authStyles(page) {
             await page.setViewportSize({ width, height: 900 });
             for (const route of routes) {
                 await goto(route);
+                await shot(`${width}-${route.replace(/[^a-z0-9]/gi, "-")}`);
                 assert.equal(
                     await page.evaluate(
                         () =>
@@ -381,6 +413,15 @@ async function authStyles(page) {
 
         // Both rich-text instances and native source mode remain isolated.
         await goto("/dashboard/blogs/create");
+        const secondaryAction = page.getByRole('link', { name: 'Cancel', exact: true });
+        assert.equal(await secondaryAction.evaluate(el => getComputedStyle(el).color), 'rgb(150, 36, 110)');
+        assert.equal(await secondaryAction.evaluate(el => getComputedStyle(el).borderTopColor), 'rgb(242, 204, 229)');
+        await secondaryAction.hover();
+        await page.waitForTimeout(200);
+        assert.equal(await secondaryAction.evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(255, 242, 250)');
+        await secondaryAction.evaluate(el => el.setAttribute('aria-disabled', 'true'));
+        assert.equal(await secondaryAction.evaluate(el => getComputedStyle(el).opacity), '0.5');
+        await secondaryAction.evaluate(el => el.removeAttribute('aria-disabled'));
         for (let index = 0; index < 2; index++)
             await page
                 .locator(".rich-text-editor")
@@ -408,14 +449,21 @@ async function authStyles(page) {
         await shot("editor-dialog");
         await page.keyboard.press("Escape");
         await editor.locator(".jodit-toolbar-button_fullsize button").click();
+        await shot("editor-fullscreen");
         await editor.locator(".jodit-toolbar-button_fullsize button").click();
         await editor
             .getByRole("button", { name: "Change mode", exact: true })
             .click();
         assert.ok(await editor.locator(".jodit-source__mirror").isVisible());
+        await shot("editor-source");
         await editor
             .getByRole("button", { name: "Change mode", exact: true })
             .click();
+        await page.locator('.p-dropdown-trigger').click();
+        await page.locator('.p-dropdown-panel').waitFor();
+        await page.locator('.p-dropdown-item').first().hover();
+        await shot('category-dropdown');
+        await page.keyboard.press('Escape');
         await page
             .getByRole("button", { name: "Create Category", exact: true })
             .click();
