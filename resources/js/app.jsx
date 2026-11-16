@@ -8,6 +8,8 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import 'primeflex/primeflex.css';
 import '../css/buttons.css';
+// Keep layout overrides after shared buttons, including dynamically loaded CSS.
+import './Layouts/AdminLayout.css';
 
 
 import { createInertiaApp } from '@inertiajs/react';
