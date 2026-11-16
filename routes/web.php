@@ -4,6 +4,7 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AdminProfileController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Auth\AdminEmailVerificationController;
 use App\Http\Controllers\Auth\AdminEmailVerificationNotificationController;
 use App\Http\Controllers\Auth\AdminEmailVerificationPromptController;
@@ -54,9 +55,7 @@ Route::prefix('admin/email')->name('admin.verification.')->group(function () {
 });
 
 Route::middleware(['auth:admin', 'admin.verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Admin/Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', AdminDashboardController::class)->name('dashboard');
 
     Route::get('/dashboard/profile', [AdminProfileController::class, 'show'])
         ->name('dashboard.profile');
