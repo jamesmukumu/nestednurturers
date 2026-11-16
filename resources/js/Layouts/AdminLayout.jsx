@@ -12,7 +12,6 @@ import ThemeToggle from '@/Components/ThemeToggle';
 import { setMobileSidebarOpen, toggleSidebarCollapsed } from '../store/uiSlice';
 import { navigation } from './navigation';
 import { useMediaQuery } from '../hooks/useMediaQuery';
-import './AdminLayout.css';
 
 function matchesNavigationPath(path, href, exact = false) {
     return exact ? path === href : path === href || path.startsWith(`${href}/`);
