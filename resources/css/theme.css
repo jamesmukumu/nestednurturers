@@ -50,7 +50,7 @@
     --highlight-text-color: #1f2328;
 }
 
-:root:not(.dark):has(.admin-shell, .auth-page) {
+:root:not(.dark):has(.auth-page) {
     --app-page: #ffffff;
     --app-surface: #ffffff;
     --app-surface-raised: #ffffff;
@@ -148,16 +148,6 @@ input[type="checkbox"]:disabled {
     padding: 0.625rem 0.75rem;
 }
 
-.admin-shell .theme-toggle__option.app-button {
-    color: var(--text-color-secondary);
-}
-
-.admin-shell .theme-toggle__option.app-button[aria-pressed="true"] {
-    color: var(--text-color);
-    background: var(--surface-hover);
-    box-shadow: inset 0 0 0 1px var(--surface-border);
-}
-
 .auth-page__theme-toggle {
     display: flex;
     justify-content: flex-end;
@@ -204,27 +194,9 @@ input[type="checkbox"]:disabled {
     padding: 0.5rem 1rem;
 }
 
-.admin-page__card.p-card,
 .auth-page__card.p-card {
     color: var(--text-color);
     background: var(--surface-card);
-}
-
-.admin-page__header h1,
-.admin-page__card,
-.admin-page__card p {
-    color: var(--text-color);
-}
-
-.admin-page__header p,
-.admin-shell__search kbd {
-    color: var(--text-color-secondary);
-}
-
-.admin-shell__brand:focus-visible,
-.admin-shell__nav-link:focus-visible {
-    outline: 2px solid var(--app-primary);
-    outline-offset: 2px;
 }
 
 .p-component,

@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { useSelector } from 'react-redux';
-import joditStyles from 'jodit/es2021/jodit.min.css?inline';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { useSelector } from "react-redux";
+import joditStyles from "jodit/es2021/jodit.min.css?inline";
 
 function IsolatedEditor({ Jodit, id, label, config, value, onChange, onBlur }) {
     const textareaRef = useRef(null);
@@ -16,26 +16,33 @@ function IsolatedEditor({ Jodit, id, label, config, value, onChange, onBlur }) {
         const editor = Jodit.make(textareaRef.current, config);
         editorRef.current = editor;
         editor.events
-            .on('change', (content) => {
+            .on("change", (content) => {
                 emittedValuesRef.current.push(content);
-                if (emittedValuesRef.current.length > 20) emittedValuesRef.current.shift();
+                if (emittedValuesRef.current.length > 20)
+                    emittedValuesRef.current.shift();
                 callbacksRef.current.onChange(content);
             })
-            .on('blur', () => callbacksRef.current.onBlur?.(editor.value));
+            .on("blur", () => callbacksRef.current.onBlur?.(editor.value));
 
         const labelEditor = () => {
             if (editorRef.current === editor) {
-                editor.editor.setAttribute('aria-label', label);
-                editor.editor.setAttribute('role', 'textbox');
-                editor.editor.setAttribute('aria-multiline', 'true');
+                editor.editor.setAttribute("aria-label", label);
+                editor.editor.setAttribute("role", "textbox");
+                editor.editor.setAttribute("aria-multiline", "true");
             }
         };
         if (editor.isReady) {
             labelEditor();
         } else {
-            editor.waitForReady()
+            editor
+                .waitForReady()
                 .then(labelEditor)
-                .catch((error) => console.error('Unable to initialize the rich-text editor.', error));
+                .catch((error) =>
+                    console.error(
+                        "Unable to initialize the rich-text editor.",
+                        error,
+                    ),
+                );
         }
 
         return () => {
@@ -43,9 +50,15 @@ function IsolatedEditor({ Jodit, id, label, config, value, onChange, onBlur }) {
             if (editor.isReady) {
                 editor.destruct();
             } else {
-                editor.waitForReady()
+                editor
+                    .waitForReady()
                     .then((readyEditor) => readyEditor.destruct())
-                    .catch((error) => console.error('Unable to dispose of the rich-text editor.', error));
+                    .catch((error) =>
+                        console.error(
+                            "Unable to dispose of the rich-text editor.",
+                            error,
+                        ),
+                    );
             }
         };
     }, [Jodit, config, label]);
@@ -56,7 +69,9 @@ function IsolatedEditor({ Jodit, id, label, config, value, onChange, onBlur }) {
 
         const updateValue = () => {
             if (editorRef.current !== editor) return;
-            const echoIndex = emittedValuesRef.current.indexOf(valueRef.current);
+            const echoIndex = emittedValuesRef.current.indexOf(
+                valueRef.current,
+            );
             if (echoIndex !== -1) {
                 emittedValuesRef.current.splice(0, echoIndex + 1);
             } else if (editor.value !== valueRef.current) {
@@ -68,9 +83,15 @@ function IsolatedEditor({ Jodit, id, label, config, value, onChange, onBlur }) {
         if (editor.isReady) {
             updateValue();
         } else {
-            editor.waitForReady()
+            editor
+                .waitForReady()
                 .then(updateValue)
-                .catch((error) => console.error('Unable to initialize the rich-text editor value.', error));
+                .catch((error) =>
+                    console.error(
+                        "Unable to initialize the rich-text editor value.",
+                        error,
+                    ),
+                );
         }
     }, [value, Jodit, config]);
 
@@ -83,7 +104,7 @@ export default function RichTextEditor({
     value,
     onChange,
     onBlur,
-    placeholder = 'Write something...',
+    placeholder = "Write something...",
     height = 360,
     readOnly = false,
 }) {
@@ -91,55 +112,86 @@ export default function RichTextEditor({
     const [loadError, setLoadError] = useState(false);
     const [shadowRoot, setShadowRoot] = useState(null);
     const hostRef = useRef(null);
-    const isDark = useSelector((state) => state.theme.resolved === 'dark');
+    const isDark = useSelector((state) => state.theme.resolved === "dark");
     const config = useMemo(
         () => ({
             height,
             minHeight: 240,
-            width: '100%',
+            width: "100%",
             readonly: readOnly,
-            theme: isDark ? 'dark' : 'default',
+            theme: isDark ? "dark" : "default",
             placeholder,
             toolbarAdaptive: true,
             toolbarSticky: false,
-            toolbarButtonSize: 'middle',
+            toolbarButtonSize: "middle",
             shadowRoot,
             globalFullSize: false,
             buttonsMD: [
-                'bold',
-                'italic',
-                'underline',
-                '|',
-                'ul',
-                'ol',
-                '|',
-                'font',
-                'fontsize',
-                '|',
-                'align',
-                'link',
-                'image',
-                '|',
-                'undo',
-                'redo',
+                "bold",
+                "italic",
+                "underline",
+                "|",
+                "ul",
+                "ol",
+                "|",
+                "font",
+                "fontsize",
+                "|",
+                "align",
+                "link",
+                "image",
+                "|",
+                "undo",
+                "redo",
             ],
-            buttonsSM: ['bold', 'italic', '|', 'ul', 'ol', '|', 'link', 'undo', 'redo'],
-            buttonsXS: ['bold', 'italic', '|', 'ul', 'ol', '|', 'undo', 'redo'],
+            buttonsSM: [
+                "bold",
+                "italic",
+                "|",
+                "ul",
+                "ol",
+                "|",
+                "link",
+                "undo",
+                "redo",
+            ],
+            buttonsXS: ["bold", "italic", "|", "ul", "ol", "|", "undo", "redo"],
         }),
         [height, isDark, placeholder, readOnly, shadowRoot],
     );
 
     useEffect(() => {
         const host = hostRef.current;
-        const root = host.shadowRoot || host.attachShadow({ mode: 'open' });
-        if (!root.querySelector('style[data-jodit-styles]')) {
-            const style = document.createElement('style');
-            style.dataset.joditStyles = '';
-            style.textContent = `${joditStyles.replace(/:root\b/g, ':host')}
+        const root = host.shadowRoot || host.attachShadow({ mode: "open" });
+        if (!root.querySelector("style[data-jodit-styles]")) {
+            const style = document.createElement("style");
+            style.dataset.joditStyles = "";
+            style.textContent = `${joditStyles.replace(/:root\b/g, ":host")}
                 :host { display: block; min-width: 0; }
                 .jodit-container { max-width: 100%; border-color: var(--surface-border); border-radius: var(--border-radius); }
                 .jodit-toolbar__box { max-width: 100%; }
                 .jodit-workplace { min-width: 0; }`;
+            style.textContent += `
+                .jodit-container, .jodit-dialog, .jodit-popup {
+                    --jd-color-border: var(--app-border);
+                    --jd-color-background-default: var(--app-surface);
+                    --jd-color-background-light-gray: var(--admin-warm);
+                    --jd-dark-background-color: var(--app-surface);
+                    --jd-dark-toolbar-color: var(--admin-warm);
+                    --jd-color-icon: var(--admin-pink-text);
+                    --jd-dark-icon-color: var(--admin-pink-text);
+                }
+                .jodit-toolbar__box, .jodit-status-bar, .jodit-dialog, .jodit-popup {
+                    font-family: var(--admin-font-body);
+                    font-size: var(--admin-text-label);
+                }
+                .jodit-toolbar-button__button:hover, .jodit-toolbar-button__trigger:hover {
+                    background: var(--admin-pink-soft);
+                }
+                .jodit-toolbar-button__button:focus-visible, .jodit-toolbar-button__trigger:focus-visible {
+                    outline: 2px solid var(--admin-focus);
+                    outline-offset: -2px;
+                }`;
             root.appendChild(style);
         }
         setShadowRoot(root);
@@ -149,15 +201,18 @@ export default function RichTextEditor({
         let active = true;
 
         Promise.all([
-            import('jodit/esm/index.js'),
-            import('jodit/esm/plugins/all.js'),
+            import("jodit/esm/index.js"),
+            import("jodit/esm/plugins/all.js"),
         ])
             .then(([module]) => {
                 if (active) setJodit(() => module.Jodit);
             })
             .catch((error) => {
                 if (active) {
-                    console.error('Unable to load the rich-text editor.', error);
+                    console.error(
+                        "Unable to load the rich-text editor.",
+                        error,
+                    );
                     setLoadError(true);
                 }
             });
@@ -172,26 +227,29 @@ export default function RichTextEditor({
             <div className="rich-text-editor" ref={hostRef} />
             {loadError ? (
                 <div className="rich-text-editor__loading p-error" role="alert">
-                    The rich-text editor could not be loaded. Refresh the page to try again.
+                    The rich-text editor could not be loaded. Refresh the page
+                    to try again.
                 </div>
             ) : !Jodit || !shadowRoot ? (
                 <div className="rich-text-editor__loading" aria-live="polite">
                     Loading editor...
                 </div>
-            ) : createPortal(
-                <IsolatedEditor
-                    Jodit={Jodit}
-                    id={id}
-                    label={label}
-                    config={config}
-                    value={value}
-                    onChange={(content) => onChange(content)}
-                    onBlur={(content) => {
-                        if (typeof content === 'string') onChange(content);
-                        onBlur?.();
-                    }}
-                />,
-                shadowRoot,
+            ) : (
+                createPortal(
+                    <IsolatedEditor
+                        Jodit={Jodit}
+                        id={id}
+                        label={label}
+                        config={config}
+                        value={value}
+                        onChange={(content) => onChange(content)}
+                        onBlur={(content) => {
+                            if (typeof content === "string") onChange(content);
+                            onBlur?.();
+                        }}
+                    />,
+                    shadowRoot,
+                )
             )}
         </>
     );

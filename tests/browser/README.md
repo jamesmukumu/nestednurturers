@@ -1,4 +1,47 @@
-# Admin sidebar regression
+# Admin browser regressions
+
+## Admin portal design system
+
+The admin foundation in `resources/css/admin.css` is loaded after shared button
+styles and shell styles in the application entry. Its document tokens and
+PrimeReact overlay rules depend on `.admin-shell` being present. They stop
+applying when navigating to authentication or public pages. Jodit keeps its
+stylesheet inside each editor's shadow root.
+
+The sidebar regression now expects 272px expanded and 72px collapsed widths,
+13px navigation text, and the real pending-consultation shortcut. The old
+notification badge and unwired header search are absent.
+
+With the disposable account and browser settings below, run:
+
+```powershell
+node tests/browser/admin-sidebar.cjs
+$env:PORTAL_TEST_ALLOW_WRITES = '1'
+$env:PORTAL_TEST_ARTIFACTS = Join-Path $env:TEMP 'admin-portal-previews'
+node tests/browser/admin-portal.cjs
+```
+
+The portal check requires a disposable database with an owned article, at least
+one pending consultation, and enough consultations to fill two pages. It creates
+categories and creates, updates and
+deletes a temporary article; it also changes a consultation status and undoes
+that change. Never point it at production. The explicit write flag is required.
+
+Coverage includes every admin page in Light, Dark and System modes, 390px and
+768px layouts, drawer dismissal/focus, real counts, typography, white surfaces,
+pink action contrast, Profile tabs/error recovery, consultation pagination/filters/status
+undo, category/delete dialogs, image preview, both isolated editors and their
+source/fullscreen modes. It checks that settled auth/public styles match before
+and after admin navigation. Theme loading is awaited before comparing styles.
+
+The overhaul was verified against production assets on a local Laravel server
+with disposable SQLite data: 59 PHP tests (610 assertions), two JavaScript tests,
+all three browser scripts, client/SSR builds, formatting and whitespace checks.
+Desktop and phone screenshots cover all ten admin routes, with additional dark
+screenshots and dialog, drawer, empty-state and error-state previews. External
+fonts/widgets are excluded from browser runs for repeatability; no uncaught
+browser exceptions occurred. Existing Browserslist-data and Inertia SSR
+sourcemap warnings remain in the build.
 
 ## Dashboard and public mobile menu checks
 
@@ -18,7 +61,13 @@ management permissions. Consultation statistics cover the shared inbox. New
 consultations means the last seven days; six-month activity uses the application's
 reporting timezone. Greeting and date display use the browser's local time.
 
-## Root cause
+## Historical Create Article investigation
+
+The following records the earlier sidebar repair. Its original dimensions,
+button-based navigation and fabricated notification badge have since been
+replaced by the portal design system described above.
+
+### Root cause
 
 The Create Article page could overwrite the persistent sidebar's appearance when
 its dynamic editor dependencies loaded. This reproduced both with the old local
@@ -52,7 +101,7 @@ The reported top offset did not reproduce: `html` and `body` had zero margin,
 padding, and top border; the sidebar and topbar both began at y=0. No offset reset
 was added.
 
-## Elimination evidence
+### Elimination evidence
 
 Checks were performed in Chrome against a local Laravel instance using an
 isolated SQLite database and a verified test admin. Sidebar styles were measured
@@ -73,7 +122,7 @@ The old build used `jodit-react` and a global Jodit stylesheet. The current sour
 already injects Jodit CSS only into each editor's shadow root. Rebuilding corrected
 that stale-asset mismatch but still reproduced the shared-button override.
 
-## Fix
+### Fix
 
 Load `AdminLayout.css` from the application entry immediately after `buttons.css`,
 instead of importing it from the lazy layout component. Vite emits the shared
@@ -84,7 +133,7 @@ No CSS declarations, editor configuration, package versions, backend behavior, o
 theme configuration were changed. Screenshots before and after confirmed the
 Create Article form and toolbar retained their appearance.
 
-## Verification performed
+### Verification performed
 
 - Fresh Dashboard, Create Article, and populated Edit Article pages.
 - Forward and reverse Inertia navigation through Dashboard, Create Article,

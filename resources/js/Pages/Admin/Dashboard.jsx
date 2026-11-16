@@ -1,6 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { Head, Link, usePage } from "@inertiajs/react";
 import AdminLayout from "../../Layouts/AdminLayout";
+import Button from "@/Components/Button";
 import { dashboardGreeting } from "./dashboardGreeting";
 import "./dashboard.css";
 
@@ -319,16 +320,18 @@ function Dashboard({ dashboard }) {
                         </span>
                         <h1>{greeting.title}</h1>
                         <p>{greeting.message}</p>
-                        <Link
+                        <Button
                             href="/dashboard/blogs/create"
                             className="dashboard-primary-action"
+                            rightIcon={
+                                <i
+                                    className="pi pi-arrow-up-right"
+                                    aria-hidden="true"
+                                />
+                            }
                         >
-                            Create Article{" "}
-                            <i
-                                className="pi pi-arrow-up-right"
-                                aria-hidden="true"
-                            />
-                        </Link>
+                            Create Article
+                        </Button>
                     </div>
                     <div className="dashboard-welcome__aside">
                         <span

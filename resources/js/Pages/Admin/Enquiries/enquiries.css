@@ -1,6 +1,5 @@
 .enquiries-page {
     width: 100%;
-    max-width: 90rem;
     min-width: 0;
     margin-inline: auto;
     color: var(--app-text);
@@ -20,26 +19,9 @@
     margin-bottom: 1.5rem;
 }
 
-.enquiries-page__header h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 650;
-    line-height: 1.35;
-    overflow-wrap: anywhere;
-}
-
 .enquiries-page__header p {
     margin: 0.5rem 0 0;
     color: var(--app-text-secondary);
-}
-
-.enquiries-panel,
-.enquiry-detail__card {
-    min-width: 0;
-    border: 1px solid var(--app-border);
-    border-radius: var(--app-radius-card, 0.75rem);
-    background: var(--app-surface);
-    box-shadow: var(--app-shadow);
 }
 
 .enquiries-panel {
@@ -56,43 +38,6 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.375rem;
-}
-
-.enquiries-filter,
-.enquiries-button,
-.enquiries-pagination__button,
-.enquiries-sort-button {
-    display: inline-flex;
-    min-height: 2.75rem;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    border: 1px solid transparent;
-    border-radius: var(--app-radius-control, 0.625rem);
-    padding: 0.5rem 0.875rem;
-    color: var(--app-text-secondary);
-    background: transparent;
-    cursor: pointer;
-    font: inherit;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1.4;
-    text-decoration: none;
-    transition: color var(--app-transition, 180ms ease), background-color var(--app-transition, 180ms ease), border-color var(--app-transition, 180ms ease);
-}
-
-.enquiries-filter:hover,
-.enquiries-button--secondary:hover,
-.enquiries-pagination__button:hover:not(:disabled) {
-    color: var(--app-text);
-    background: var(--surface-hover);
-}
-
-.enquiries-filter.is-selected,
-.enquiries-pagination__button.is-current {
-    border-color: color-mix(in srgb, var(--app-primary) 30%, var(--app-border));
-    color: var(--app-primary);
-    background: var(--app-nav-active-bg);
 }
 
 .enquiries-search {
@@ -129,7 +74,7 @@
     align-items: center;
     gap: 0.5rem;
     color: var(--app-text-secondary);
-    font-size: 0.875rem;
+    font-size: var(--admin-text-body);
 }
 
 .enquiries-select select {
@@ -174,8 +119,8 @@
 .enquiries-datatable .p-datatable-thead > tr > th {
     color: var(--app-text-secondary);
     background: var(--app-page);
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: var(--admin-text-label);
+    font-weight: 500;
     letter-spacing: 0.025em;
     white-space: nowrap;
 }
@@ -196,7 +141,7 @@
 .enquiries-datatable .p-datatable-tbody > tr > td {
     max-width: 18rem;
     color: var(--app-text);
-    font-size: 0.875rem;
+    font-size: var(--admin-text-table);
     overflow-wrap: anywhere;
 }
 
@@ -228,13 +173,13 @@
     display: grid;
     min-height: 2.75rem;
     align-content: center;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .enquiries-table__name small {
     margin-top: 0.25rem;
     color: var(--app-text-secondary);
-    font-size: 0.75rem;
+    font-size: var(--admin-text-label);
     font-weight: 450;
 }
 
@@ -246,8 +191,8 @@
     border: 1px solid transparent;
     border-radius: 999px;
     padding: 0.25rem 0.625rem;
-    font-size: 0.8125rem;
-    font-weight: 650;
+    font-size: var(--admin-text-table);
+    font-weight: 500;
     white-space: nowrap;
 }
 
@@ -263,29 +208,17 @@
     background: color-mix(in srgb, var(--app-success) 10%, var(--app-surface));
 }
 
-.enquiries-button--secondary {
-    border-color: var(--app-border);
-    color: var(--app-primary);
-    background: var(--app-surface);
-}
-
-.enquiries-button:disabled,
-.enquiries-pagination__button:disabled {
-    cursor: not-allowed;
-    opacity: 0.55;
-}
-
 .enquiries-datatable .enquiries-button {
     min-height: 2.75rem;
     padding-inline: 0.625rem;
-    font-size: 0.8125rem;
+    font-size: var(--admin-text-table);
     white-space: nowrap;
 }
 
 .enquiries-datatable .p-datatable-tbody > tr > td > .p-column-title {
     color: var(--app-text-secondary);
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: var(--admin-text-label);
+    font-weight: 500;
 }
 
 .enquiries-datatable .p-datatable-emptymessage > td {
@@ -332,7 +265,7 @@
     margin: 0;
     padding: 0.5rem 1rem;
     color: var(--app-text-secondary);
-    font-size: 0.8125rem;
+    font-size: var(--admin-text-table);
 }
 
 .enquiries-pagination {
@@ -344,7 +277,7 @@
 .enquiries-pagination > p {
     margin: 0;
     color: var(--app-text-secondary);
-    font-size: 0.875rem;
+    font-size: var(--admin-text-body);
 }
 
 .enquiries-pagination nav {
@@ -384,19 +317,6 @@
     box-shadow: var(--app-shadow);
 }
 
-.enquiries-toast button {
-    min-width: 2.75rem;
-    min-height: 2.75rem;
-    border: 0;
-    border-radius: var(--app-radius-control, 0.625rem);
-    padding: 0.5rem;
-    color: var(--app-primary);
-    background: transparent;
-    cursor: pointer;
-    font: inherit;
-    font-weight: 700;
-}
-
 .enquiries-back-link {
     display: inline-flex;
     min-height: 2.75rem;
@@ -427,8 +347,6 @@
 
 .enquiry-detail__card h2 {
     margin: 0 0 1rem;
-    font-size: 1.125rem;
-    font-weight: 650;
 }
 
 .enquiry-detail__list {
@@ -452,7 +370,7 @@
 
 .enquiry-detail__row dt {
     color: var(--app-text-secondary);
-    font-weight: 550;
+    font-weight: 500;
 }
 
 .enquiry-detail__row dd {
@@ -476,25 +394,10 @@
     animation: enquiries-pulse 1.3s ease-in-out infinite;
 }
 
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    clip-path: inset(50%);
-}
-
-.enquiries-page :focus-visible,
-.enquiry-detail :focus-visible {
-    outline: 2px solid var(--app-primary);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px var(--app-focus);
-}
-
 @keyframes enquiries-pulse {
-    50% { opacity: 0.55; }
+    50% {
+        opacity: 0.55;
+    }
 }
 
 @media (max-width: 800px) {
@@ -561,7 +464,11 @@
         text-align: left;
     }
 
-    .enquiries-datatable .p-datatable-tbody > tr > td > .enquiries-table__contact,
+    .enquiries-datatable
+        .p-datatable-tbody
+        > tr
+        > td
+        > .enquiries-table__contact,
     .enquiries-datatable .p-datatable-tbody > tr > td > .enquiries-table__name {
         text-align: left;
     }
