@@ -1,5 +1,23 @@
 # Admin sidebar regression
 
+## Dashboard and public mobile menu checks
+
+`node --test tests/browser/dashboard-greeting.test.mjs` checks time-of-day
+greetings, first-name fallback, and varied encouragement messages without a browser.
+
+With the disposable local account and `SIDEBAR_TEST_*` / `NODE_PATH` settings
+described below, run `node tests/browser/dashboard-overview.cjs` to verify real
+dashboard counts, chart metric switching and keyboard access, theme modes, quick
+links, phone/tablet layouts, and the public mobile Blogs link. Set
+`DASHBOARD_TEST_ARTIFACTS` to a local directory to capture preview screenshots.
+Run `php artisan test` with the project's test database settings for the backend
+statistics, empty-state, ownership, status-change and date-boundary coverage.
+
+Articles on the dashboard belong to the signed-in admin, matching article
+management permissions. Consultation statistics cover the shared inbox. New
+consultations means the last seven days; six-month activity uses the application's
+reporting timezone. Greeting and date display use the browser's local time.
+
 ## Root cause
 
 The Create Article page could overwrite the persistent sidebar's appearance when

@@ -3,6 +3,7 @@ import { usePage } from "@inertiajs/react";
 
 import { Sidebar } from 'primereact/sidebar';
 import Button from '@/Components/Button';
+import './Header.css';
 
 export function Header() {
   const { url } = usePage();
@@ -205,63 +206,20 @@ export function Header() {
 
 
       </div>
-      <Sidebar visible={showSideMenu} onHide={()=>setShowSideMenu(false)}>
+      <Sidebar visible={showSideMenu} onHide={()=>setShowSideMenu(false)} className="public-mobile-menu">
     <a aria-label="logo" href="/">
       <img className="w-auto h-13" src="/images/updates-logo.jpeg" alt="Logo"/>
     </a>
 
-    <div class="flex flex-col justify-between flex-1 mt-6">
-      <nav class="-mx-3 space-y-6">
-        <div class="space-y-3">
-          <label class="px-3 text-xs text-gray-500 uppercase"></label>
-
-          <a aria-label="Home page"  class={`px-3 py-2 rounded-lg ${isActive("/") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
-            </svg>
-            <span  class="ml-2 text-sm">Home</span>
-          </a>
-
-          <a aria-label="See what services we do offer"   class={`px-3 py-2 rounded-lg ${isActive("/services") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/services">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
-            </svg>
-            <span class="ml-2 text-sm">Services</span>
-          </a>
-          <a aria-label="Who are nested nurturers check more about us"   class={`px-3 py-2 rounded-lg ${isActive("/about") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/about">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
-            </svg>
-            <span class="ml-2 text-sm">About</span>
-          </a>
-          <a aria-label="Check our frequently asked question"  class={`px-3 py-2 rounded-lg ${isActive("/faq") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/faq">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
-            </svg>
-            <span class="ml-2 text-sm">FAQ</span>
-          </a>
-          <a aria-label="Read our latest articles" class={`px-3 py-2 rounded-lg ${isActive("/blogs") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} href="/blogs">
-            <i class="pi pi-book w-5" aria-hidden="true"></i>
-            <span class="ml-2 text-sm">Blog</span>
-          </a>
-
-          <a aria-label="Check our affordable pricing"  class={`px-3 py-2 rounded-lg ${isActive("/pricing") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} target="_blank" href="/pricing">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
-            </svg>
-            <span class="ml-2 text-sm">Pricing</span>
-          </a>
-
-          <a aria-label="Contact Us to get a free consultation" class={`px-3 py-2 rounded-lg ${isActive("/contact") ? "text-pr" : "text-gray-600 hover:bg-gray-100"}`} target="_blank" href="/contact">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="..." />
-            </svg>
-            <span class="ml-2 text-sm">Contact Us</span>
-          </a>
-
-        </div>
-      </nav>
-    </div>
+    <nav className="public-mobile-menu__links" aria-label="Mobile navigation">
+      {[
+        ['/', 'Home'], ['/services', 'Services'], ['/about', 'About'],
+        ['/faq', 'FAQ'], ['/blogs', 'Blogs'], ['/pricing', 'Pricing'], ['/contact', 'Contact Us'],
+      ].map(([href, label]) => (
+        <a key={href} href={href} aria-current={isActive(href) ? 'page' : undefined}
+          onClick={() => setShowSideMenu(false)}>{label}</a>
+      ))}
+    </nav>
 
 
 
