@@ -1,17 +1,17 @@
 .dashboard-page {
-    --dashboard-chart-top: #91aaa5;
-    --dashboard-chart-bottom: #c8d8d3;
-    --dashboard-published: #798f89;
-    --dashboard-draft: #e8dfef;
+    --dashboard-chart-top: var(--app-text-secondary);
+    --dashboard-chart-bottom: var(--app-border);
+    --dashboard-published: var(--app-text-secondary);
+    --dashboard-draft: var(--app-border);
     display: grid;
     gap: 1.5rem;
     color: var(--app-text);
 }
 .dark .dashboard-page {
-    --dashboard-chart-top: #7fa69b;
-    --dashboard-chart-bottom: #37574f;
-    --dashboard-published: #8cb6a8;
-    --dashboard-draft: #4b3f58;
+    --dashboard-chart-top: var(--app-text-secondary);
+    --dashboard-chart-bottom: var(--app-border);
+    --dashboard-published: var(--app-text-secondary);
+    --dashboard-draft: var(--app-border);
 }
 .dashboard-welcome {
     display: flex;
@@ -20,16 +20,16 @@
     gap: 2rem;
     overflow: hidden;
     padding: 2.25rem 2.5rem;
-    border: 1px solid color-mix(in srgb, #c3ab9d 28%, var(--app-border));
+    border: 1px solid var(--app-border);
     border-radius: 1.125rem;
     background:
-        radial-gradient(ellipse at 95% 100%, #eadfeb88, transparent 60%),
-        #f7f3ed;
+        radial-gradient(ellipse at 95% 100%, var(--app-border), transparent 60%),
+        var(--admin-warm);
 }
 .dark .dashboard-welcome {
     background:
-        radial-gradient(ellipse at 95% 100%, #45374f88, transparent 60%),
-        #232521;
+        radial-gradient(ellipse at 95% 100%, var(--app-border), transparent 60%),
+        var(--admin-warm);
 }
 .dashboard-eyebrow {
     display: inline-flex;
@@ -66,7 +66,7 @@
     font-family: var(--admin-font-heading);
     font-size: 5rem;
     line-height: 1;
-    color: #a694b5;
+    color: var(--app-text-muted);
 }
 .dashboard-welcome__aside time {
     font-size: var(--admin-text-table);
@@ -126,16 +126,16 @@ a.dashboard-stat:hover {
         color-mix(in srgb, var(--app-primary) 8%, transparent);
 }
 .dashboard-tone--purple {
-    --dashboard-tone: #9579aa;
+    --dashboard-tone: var(--app-text-secondary);
 }
 .dashboard-tone--blue {
-    --dashboard-tone: #6f91b1;
+    --dashboard-tone: var(--app-text-secondary);
 }
 .dashboard-tone--green {
-    --dashboard-tone: #75988a;
+    --dashboard-tone: var(--app-text-secondary);
 }
 .dashboard-tone--rose {
-    --dashboard-tone: #bd8d9d;
+    --dashboard-tone: var(--app-text-secondary);
 }
 .dashboard-tone--amber {
     --dashboard-tone: #b39765;
@@ -384,7 +384,7 @@ a.dashboard-stat:hover {
     height: 2.25rem;
     flex-shrink: 0;
     border-radius: 50%;
-    background: color-mix(in srgb, #b7a98b 14%, var(--app-surface));
+    background: color-mix(in srgb, var(--app-text-secondary) 14%, var(--app-surface));
     color: var(--app-text-secondary);
     font-size: var(--admin-text-small);
 }

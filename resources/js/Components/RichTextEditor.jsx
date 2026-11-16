@@ -174,24 +174,53 @@ export default function RichTextEditor({
             style.textContent += `
                 .jodit-container, .jodit-dialog, .jodit-popup {
                     --jd-color-border: var(--app-border);
+                    --jd-color-text: var(--app-text);
+                    --jd-color-label: var(--app-text-secondary);
+                    --jd-color-placeholder: var(--app-text-muted);
+                    --jd-color-border-selected: var(--app-text-secondary);
+                    --jd-color-background-active: var(--surface-hover);
+                    --jd-color-background-selection: var(--surface-hover);
+                    --jd-color-text-selection: var(--app-text);
+                    --jd-color-background-selection-opacity50: var(--surface-hover);
+                    --jd-color-panel: var(--app-surface);
+                    --jd-color-text-icons: var(--app-text-secondary);
                     --jd-color-background-default: var(--app-surface);
                     --jd-color-background-light-gray: var(--admin-warm);
                     --jd-dark-background-color: var(--app-surface);
                     --jd-dark-toolbar-color: var(--admin-warm);
-                    --jd-color-icon: var(--admin-pink-text);
-                    --jd-dark-icon-color: var(--admin-pink-text);
+                    --jd-color-icon: var(--app-text-secondary);
+                    --jd-dark-icon-color: var(--app-text-secondary);
+                    --jd-dark-text-color: var(--app-text);
+                    --jd-dark-border-color: var(--app-border);
+                    --jd-dark-color-border-selected: var(--app-text-secondary);
                 }
                 .jodit-toolbar__box, .jodit-status-bar, .jodit-dialog, .jodit-popup {
                     font-family: var(--admin-font-body);
                     font-size: var(--admin-text-label);
                 }
                 .jodit-toolbar-button__button:hover, .jodit-toolbar-button__trigger:hover {
-                    background: var(--admin-pink-soft);
+                    background: var(--surface-hover);
                 }
                 .jodit-toolbar-button__button:focus-visible, .jodit-toolbar-button__trigger:focus-visible {
                     outline: 2px solid var(--admin-focus);
                     outline-offset: -2px;
-                }`;
+                }
+                .jodit-ui-button-variants_variant_primary,
+                .jodit-ui-button-variants_variant_primary:hover:not([disabled]),
+                .jodit-ui-button-variants_variant_primary:active:not([disabled]) {
+                    background-color: var(--surface-hover);
+                    color: var(--app-text);
+                }
+                .jodit-ui-button-variants_variant_primary svg {
+                    fill: currentColor;
+                    stroke: currentColor;
+                }
+                .jodit-ui-button-variants_variant_primary:focus:not([disabled]) {
+                    outline-color: var(--admin-focus);
+                }
+                .jodit-dialog a, .jodit-popup a { color: var(--app-text-secondary); }
+                .jodit-ui-ai-assistant__spinner:before { border-top-color: var(--app-text-secondary); }
+                input[type="checkbox"], input[type="radio"] { accent-color: var(--app-text-secondary); }`;
             root.appendChild(style);
         }
         setShadowRoot(root);

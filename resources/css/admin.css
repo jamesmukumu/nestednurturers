@@ -10,30 +10,36 @@
     --admin-heading-page: clamp(1.75rem, 2.7vw, 2.25rem);
     --admin-heading-hero: clamp(2rem, 3vw, 2.65rem);
     --admin-heading-section: 1.0625rem;
-    --admin-action-ink: #37162e;
-    --admin-pink-text: #96246e;
-    --admin-pink-soft: #fff2fa;
-    --admin-pink-border: #f2cce5;
-    --admin-focus: #ad277f;
-    --admin-warm: #faf7f3;
+    /* Pink belongs exclusively to action buttons, never general UI tokens. */
+    --admin-button-ink: #37162e;
+    --admin-button-text: #96246e;
+    --admin-button-soft: #fff2fa;
+    --admin-button-border: #f2cce5;
+    --admin-button-focus: #ad277f;
+    --admin-button-focus-ring: rgb(173 39 127 / 18%);
+    --admin-button-background: #ff76dc;
+    --admin-button-hover: #f45fcb;
+    --admin-focus: var(--app-text-secondary);
+    --admin-warm: #f2f4f7;
     --app-page: #ffffff;
     --app-surface: #ffffff;
     --app-surface-raised: #ffffff;
-    --app-text: #29252b;
-    --app-text-secondary: #6c626d;
-    --app-text-muted: #786c76;
-    --app-border: #eee6eb;
-    --app-primary: var(--admin-pink-text);
-    --app-primary-hover: #762054;
-    --app-action: #ff76dc;
-    --app-action-hover: #f45fcb;
-    --app-focus: rgb(173 39 127 / 18%);
-    --app-nav-active-bg: var(--admin-pink-soft);
-    --app-nav-active-hover: #fce8f5;
-    --app-nav-active-pressed: #f9d8ed;
+    --app-text: #1f2328;
+    --app-text-secondary: #52606d;
+    --app-text-muted: #65727f;
+    --app-border: #d8dee6;
+    --app-primary: var(--app-text-secondary);
+    --app-primary-hover: var(--app-text);
+    --app-accent: var(--app-text-secondary);
+    --app-action: var(--admin-button-background);
+    --app-action-hover: var(--admin-button-hover);
+    --app-focus: color-mix(in srgb, var(--app-text-secondary) 18%, transparent);
+    --app-nav-active-bg: var(--admin-warm);
+    --app-nav-active-hover: #eceff3;
+    --app-nav-active-pressed: #d8dee6;
     --app-radius-card: 1rem;
     --app-radius-control: 0.625rem;
-    --app-shadow: 0 4px 22px rgb(76 40 63 / 3%);
+    --app-shadow: 0 4px 22px color-mix(in srgb, var(--app-text) 3%, transparent);
     --surface-ground: var(--app-page);
     --surface-card: var(--app-surface);
     --surface-overlay: var(--app-surface-raised);
@@ -41,29 +47,29 @@
     --surface-hover: var(--admin-warm);
     --text-color: var(--app-text);
     --text-color-secondary: var(--app-text-secondary);
-    --primary-color: var(--admin-pink-text);
-    --primary-color-text: var(--admin-action-ink);
-    --highlight-bg: var(--admin-pink-soft);
-    --highlight-text-color: var(--admin-pink-text);
+    --primary-color: var(--app-text-secondary);
+    --primary-color-text: var(--app-surface);
+    --highlight-bg: var(--admin-warm);
+    --highlight-text-color: var(--app-text);
     --border-radius: var(--app-radius-control);
 }
 :root.dark:has(.admin-shell) {
-    --admin-pink-text: #ff9ee7;
-    --admin-pink-soft: #32222e;
-    --admin-pink-border: #59374d;
-    --admin-focus: #ff9ee7;
-    --admin-warm: #231e23;
-    --app-page: #151216;
-    --app-surface: #1c181d;
-    --app-surface-raised: #252026;
-    --app-text: #f4edf3;
-    --app-text-secondary: #c7b9c4;
-    --app-text-muted: #ae9eaa;
-    --app-border: #3a2d37;
-    --app-primary-hover: #ffc5f0;
-    --app-focus: rgb(255 158 231 / 20%);
-    --app-nav-active-hover: #422a39;
-    --app-nav-active-pressed: #4e3044;
+    --admin-button-text: #ff9ee7;
+    --admin-button-soft: #32222e;
+    --admin-button-border: #59374d;
+    --admin-button-focus: #ff9ee7;
+    --admin-button-focus-ring: rgb(255 158 231 / 20%);
+    --admin-warm: #262b34;
+    --app-page: #0f1115;
+    --app-surface: #16181d;
+    --app-surface-raised: #1c2028;
+    --app-text: #e6e8eb;
+    --app-text-secondary: #c1c7d0;
+    --app-text-muted: #a8b0bb;
+    --app-border: #343942;
+    --app-focus: color-mix(in srgb, var(--app-text-secondary) 20%, transparent);
+    --app-nav-active-hover: #1c2028;
+    --app-nav-active-pressed: #343942;
     --app-shadow: 0 4px 22px rgb(0 0 0 / 10%);
 }
 :root:has(.admin-shell) .p-component {
@@ -161,7 +167,7 @@
     border: 1px solid transparent;
     border-radius: var(--app-radius-control);
     background: transparent;
-    color: var(--admin-pink-text);
+    color: var(--app-text-secondary);
     font: 500 var(--admin-text-label)/1.4 var(--admin-font-body);
     letter-spacing: 0;
     text-decoration: none;
@@ -172,19 +178,18 @@
         box-shadow 180ms ease;
 }
 :root:has(.admin-shell)
-    :is(.app-button--primary, .app-button--danger, .profile-button--primary) {
-    background: var(--app-action);
-    color: var(--admin-action-ink);
+    :is(.app-button--primary, .profile-button--primary):not(.app-button--icon-only, .theme-toggle__option) {
+    background: var(--admin-button-background);
+    color: var(--admin-button-ink);
     box-shadow: none;
 }
 :root:has(.admin-shell)
     :is(
         .app-button--primary,
-        .app-button--danger,
         .profile-button--primary
-    ):hover:not(:disabled):not([aria-disabled="true"]) {
-    background: var(--app-action-hover);
-    color: var(--admin-action-ink);
+    ):not(.app-button--icon-only, .theme-toggle__option):hover:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--admin-button-hover);
+    color: var(--admin-button-ink);
     box-shadow: 0 3px 12px rgb(173 39 127 / 12%);
     transform: none;
 }
@@ -193,10 +198,10 @@
         .app-button--secondary,
         .profile-button--secondary,
         .enquiries-button--secondary
-    ) {
-    border-color: var(--admin-pink-border);
+    ):not(.app-button--icon-only, .theme-toggle__option) {
+    border-color: var(--admin-button-border);
     background: var(--app-surface);
-    color: var(--admin-pink-text);
+    color: var(--admin-button-text);
     box-shadow: none;
 }
 :root:has(.admin-shell)
@@ -204,7 +209,12 @@
         .app-button--secondary,
         .profile-button--secondary,
         .enquiries-button--secondary
-    ):hover:not(:disabled):not([aria-disabled="true"]),
+    ):not(.app-button--icon-only, .theme-toggle__option):hover:not(:disabled):not([aria-disabled="true"]) {
+    background: var(--admin-button-soft);
+    color: var(--admin-button-text);
+    box-shadow: none;
+    transform: none;
+}
 :root:has(.admin-shell)
     :is(
         .app-button--ghost,
@@ -215,8 +225,8 @@
         .enquiries-toast button,
         .p-paginator-element
     ):hover:not(:disabled) {
-    background: var(--admin-pink-soft);
-    color: var(--admin-pink-text);
+    background: var(--surface-hover);
+    color: var(--app-text-secondary);
     box-shadow: none;
     transform: none;
 }
@@ -229,9 +239,9 @@
         .theme-toggle__option[aria-pressed="true"],
         .dashboard-segmented button[aria-pressed="true"]
     ) {
-    background: var(--admin-pink-soft);
-    border-color: var(--admin-pink-border);
-    color: var(--admin-pink-text);
+    background: var(--surface-hover);
+    border-color: var(--app-border);
+    color: var(--app-text);
     box-shadow: none;
 }
 :root:has(.admin-shell)
@@ -261,6 +271,43 @@
     outline: 2px solid var(--admin-focus);
     outline-offset: 3px;
 }
+/* Action links count as buttons; icon tools and selection controls do not. */
+:root:has(.admin-shell)
+    :is(.app-button--primary, .app-button--secondary, .profile-button--primary,
+        .profile-button--secondary, .enquiries-button--secondary):not(.app-button--icon-only, .theme-toggle__option):focus-visible {
+    outline-color: var(--admin-button-focus);
+    box-shadow: 0 0 0 4px var(--admin-button-focus-ring);
+}
+:root:has(.admin-shell) .app-button--icon-only:not(.app-button--danger) {
+    background: transparent;
+    color: var(--app-text-secondary);
+    border-color: transparent;
+    box-shadow: none;
+}
+:root:has(.admin-shell) .app-button--icon-only:not(.app-button--danger):hover:not(:disabled) {
+    background: var(--surface-hover);
+}
+:root:has(.admin-shell) .app-button--danger {
+    background: linear-gradient(to right, var(--app-danger-start), var(--app-danger-end));
+    color: #fff;
+    box-shadow: none;
+}
+:root:has(.admin-shell) .app-button--danger:hover:not(:disabled):not([aria-disabled="true"]) {
+    background: linear-gradient(to right, var(--app-danger-hover-start), var(--app-danger-hover-end));
+    box-shadow: none;
+    transform: none;
+}
+/* Inertia injects a global pink loader. Override only while admin is mounted. */
+:root:has(.admin-shell) #nprogress .bar {
+    background: var(--app-text-secondary);
+}
+:root:has(.admin-shell) #nprogress .peg {
+    box-shadow: 0 0 10px var(--app-text-secondary), 0 0 5px var(--app-text-secondary);
+}
+:root:has(.admin-shell) #nprogress .spinner-icon {
+    border-top-color: var(--app-text-secondary);
+    border-left-color: var(--app-text-secondary);
+}
 :root:has(.admin-shell) .theme-toggle {
     flex-wrap: nowrap;
     gap: 0.125rem;
@@ -287,7 +334,7 @@
     border-radius: var(--app-radius-card);
     color: var(--app-text);
     background: var(--app-surface);
-    box-shadow: 0 16px 60px rgb(47 22 40 / 12%);
+    box-shadow: 0 16px 60px color-mix(in srgb, var(--app-text) 12%, transparent);
     font-family: var(--admin-font-body);
 }
 :root:has(.admin-shell)
@@ -325,7 +372,7 @@
 }
 :root:has(.admin-shell)
     :is(.p-dialog-header-icon, .p-dropdown-trigger, .p-toast-icon-close) {
-    color: var(--admin-pink-text);
+    color: var(--app-text-secondary);
 }
 :root:has(.admin-shell) .p-dropdown-panel .p-dropdown-item {
     font: 400 var(--admin-text-table)/1.6 var(--admin-font-body);
@@ -340,8 +387,8 @@
         .p-dropdown-item:not(.p-highlight):hover,
         .p-menuitem-content:hover
     ) {
-    color: var(--admin-pink-text);
-    background: var(--admin-pink-soft);
+    color: var(--app-text);
+    background: var(--surface-hover);
 }
 :root:has(.admin-shell) .p-menuitem-content {
     border-radius: 0.5rem;
@@ -366,7 +413,7 @@
 }
 :root:has(.admin-shell)
     :is(.p-inputtext, .p-inputtextarea, .p-dropdown):enabled:hover {
-    border-color: var(--admin-pink-border);
+    border-color: var(--app-text-secondary);
 }
 :root:has(.admin-shell)
     :is(
@@ -404,6 +451,12 @@
 :root:has(.admin-shell) .p-datatable .p-datatable-tbody > tr:hover {
     background: var(--admin-warm);
 }
+:root:has(.admin-shell) .p-datatable .p-sortable-column .p-sortable-column-icon {
+    color: var(--app-text-secondary);
+}
+:root:has(.admin-shell) .p-datatable .p-sortable-column:focus-visible {
+    box-shadow: inset 0 0 0 0.15rem var(--app-focus);
+}
 :root:has(.admin-shell) .p-paginator {
     padding: 1rem;
     border-color: var(--app-border);
@@ -415,8 +468,31 @@
     font: 500 var(--admin-text-small)/1.5 var(--admin-font-body);
     padding: 0.25rem 0.625rem;
 }
-:root:has(.admin-shell) input[type="checkbox"] {
-    accent-color: var(--admin-pink-text);
+:root:has(.admin-shell) :is(input[type="checkbox"], input[type="radio"]) {
+    accent-color: var(--app-text-secondary);
+    color: var(--app-text-secondary);
+    --tw-ring-color: var(--app-focus);
+}
+:root:has(.admin-shell) :is(input, select, textarea) {
+    --tw-ring-color: var(--app-focus);
+}
+:root:has(.admin-shell) :is(input, select, textarea):focus:not(.p-invalid):not([aria-invalid="true"]) {
+    border-color: var(--admin-focus);
+}
+/* Vendor selection controls use hard-coded indigo rather than theme tokens. */
+:root:has(.admin-shell) :is(
+    .p-checkbox.p-highlight .p-checkbox-box,
+    .p-radiobutton.p-highlight .p-radiobutton-box,
+    .p-selectbutton .p-button.p-highlight,
+    .p-togglebutton.p-highlight .p-button
+) {
+    background: var(--app-text-secondary);
+    border-color: var(--app-text-secondary);
+    color: var(--app-surface);
+}
+:root:has(.admin-shell) .p-inputswitch.p-highlight .p-inputswitch-slider,
+:root:has(.admin-shell) .p-progressbar .p-progressbar-value {
+    background: var(--app-text-secondary);
 }
 .blogs-list__table {
     border: 1px solid var(--app-border);
@@ -440,8 +516,8 @@
     width: 3rem;
     height: 3rem;
     border-radius: 0.875rem;
-    background: var(--admin-pink-soft);
-    color: var(--admin-pink-text);
+    background: var(--surface-hover);
+    color: var(--app-text-secondary);
     font-size: 1.25rem;
 }
 .admin-state-card h2 {
