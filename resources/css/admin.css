@@ -297,16 +297,16 @@
     box-shadow: none;
     transform: none;
 }
-/* Inertia injects a global pink loader. Override only while admin is mounted. */
+/* Keep the global navigation progress indicator on the brand pink. */
 :root:has(.admin-shell) #nprogress .bar {
-    background: var(--app-text-secondary);
+    background: #FF76DC;
 }
 :root:has(.admin-shell) #nprogress .peg {
-    box-shadow: 0 0 10px var(--app-text-secondary), 0 0 5px var(--app-text-secondary);
+    box-shadow: 0 0 10px #FF76DC, 0 0 5px #FF76DC;
 }
 :root:has(.admin-shell) #nprogress .spinner-icon {
-    border-top-color: var(--app-text-secondary);
-    border-left-color: var(--app-text-secondary);
+    border-top-color: #FF76DC;
+    border-left-color: #FF76DC;
 }
 :root:has(.admin-shell) .theme-toggle {
     flex-wrap: nowrap;
