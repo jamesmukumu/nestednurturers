@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\AdminEmailVerificationPromptController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\EnquiryStatusController;
 use App\Http\Controllers\PublicBlogController;
+use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -61,6 +62,8 @@ Route::middleware(['auth:admin', 'admin.verified'])->group(function () {
         ->name('dashboard.profile');
     Route::get('/dashboard/profile/data', [AdminProfileController::class, 'data'])
         ->name('dashboard.profile.data');
+    Route::patch('/dashboard/profile', [AdminProfileController::class, 'update'])
+        ->name('dashboard.profile.update');
 
     Route::prefix('dashboard/blogs')->name('admin.blogs.')->controller(BlogController::class)->group(function () {
         Route::get('/', 'index')->name('index');
@@ -70,6 +73,15 @@ Route::middleware(['auth:admin', 'admin.verified'])->group(function () {
         Route::get('/{blog}', 'show')->name('show');
         Route::match(['put', 'patch'], '/{blog}', 'update')->name('update');
         Route::delete('/{blog}', 'destroy')->name('destroy');
+    });
+    Route::prefix('dashboard/services')->name('admin.services.')->controller(ServicesController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/', 'store')->name('store');
+        Route::get('/{service}/edit', 'edit')->name('edit');
+        Route::get('/{service}', 'show')->name('show');
+        Route::match(['put', 'patch'], '/{service}', 'update')->name('update');
+        Route::delete('/{service}', 'destroy')->name('destroy');
     });
     Route::get('/blog-categories', [BlogCategoryController::class, 'index'])->name('blog-categories.index');
     Route::post('/blog-categories', [BlogCategoryController::class, 'store'])->name('blog-categories.store');

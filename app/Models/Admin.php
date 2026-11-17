@@ -84,4 +84,9 @@ class Admin extends Authenticatable implements MustVerifyEmailContract
     {
         return $this->hasMany(BlogCategory::class, 'admins_id');
     }
+
+    public function services(): HasMany
+    {
+        return $this->hasMany(Services::class, 'admins_id');
+    }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateAdminProfileRequest;
 use App\Models\Admin;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -32,5 +34,27 @@ class AdminProfileController extends Controller
                 'updated_at' => $admin->updated_at?->toIso8601String(),
             ],
         ]);
+    }
+
+    public function update(UpdateAdminProfileRequest $request): RedirectResponse
+    {
+        /** @var Admin $admin */
+        $admin = $request->user('admin');
+        $admin->fill($request->validated());
+
+        $emailChanged = $admin->isDirty('email');
+
+        if ($emailChanged) {
+            $admin->email_verified_at = null;
+            $admin->isEmailVerified = false;
+        }
+
+        $admin->save();
+
+        if ($emailChanged) {
+            $admin->sendEmailVerificationNotification();
+        }
+
+        return to_route('dashboard.profile');
     }
 }

@@ -29,6 +29,10 @@ function pageTitle(path) {
     if (path === "/dashboard/blogs/create") return "Create Article";
     if (/^\/dashboard\/blogs\/[^/]+\/edit$/.test(path)) return "Edit Article";
     if (/^\/dashboard\/blogs\/[^/]+$/.test(path)) return "Article";
+    if (path === "/dashboard/services") return "Services";
+    if (path === "/dashboard/services/create") return "Create Service";
+    if (/^\/dashboard\/services\/[^/]+\/edit$/.test(path)) return "Edit Service";
+    if (/^\/dashboard\/services\/[^/]+$/.test(path)) return "Service";
     if (path === "/dashboard/profile") return "Your profile";
     if (path === "/dashboard/settings") return "Settings";
     if (path === "/enquiries") return "Consultations";
@@ -151,12 +155,11 @@ function SidebarContents({
                     className="admin-shell__brand"
                     aria-label="Nested Nurturers dashboard"
                 >
-                    <span
-                        className="admin-shell__brand-icon"
-                        aria-hidden="true"
-                    >
-                        NN
-                    </span>
+                    <img
+                        className="admin-shell__logo"
+                        src="/images/updates-logo.jpeg"
+                        alt=""
+                    />
                     {!collapsed && (
                         <span className="admin-shell__brand-copy">
                             <strong>Nested Nurturers</strong>

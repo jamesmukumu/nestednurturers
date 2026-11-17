@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const storageKey = 'app-theme';
+const storageKey = 'admin-theme';
 const validModes = ['light', 'dark', 'system'];
 
 function prefersDark() {

@@ -348,6 +348,30 @@ a.dashboard-stat:hover {
     line-height: 1.6;
     color: var(--app-text-muted);
 }
+.dashboard-publishing__service-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--app-border);
+    text-align: left;
+}
+.dashboard-publishing__service-summary > div {
+    display: grid;
+    gap: 0.125rem;
+}
+.dashboard-publishing__service-summary span,
+.dashboard-publishing__service-summary small {
+    color: var(--app-text-muted);
+    font-size: var(--admin-text-small);
+}
+.dashboard-publishing__service-summary strong {
+    color: var(--app-text);
+    font-size: 1.25rem;
+    font-weight: 500;
+}
 .dashboard-text-link {
     display: inline-flex;
     align-items: center;

@@ -38,6 +38,12 @@ async function sidebarState(page) {
             headerTop: document
                 .querySelector(".admin-shell__topbar")
                 .getBoundingClientRect().top,
+            navigationOverflows:
+                document.querySelector(".admin-shell__navigation").scrollHeight >
+                document.querySelector(".admin-shell__navigation").clientHeight,
+            navigationOverflowY: getComputedStyle(
+                document.querySelector(".admin-shell__navigation"),
+            ).overflowY,
         };
     });
 }
@@ -113,6 +119,13 @@ async function navigate(page, pathname) {
             assert.equal(expected.link.fontWeight, "400");
             assert.equal(expected.sidebarTop, 0);
             assert.equal(expected.headerTop, 0);
+            assert.equal(expected.navigationOverflows, false);
+            assert.equal(expected.navigationOverflowY, "hidden");
+            await page.setViewportSize({ width: 1440, height: 700 });
+            const compactSidebar = await sidebarState(page);
+            assert.equal(compactSidebar.navigationOverflows, false);
+            assert.equal(compactSidebar.navigationOverflowY, "hidden");
+            await page.setViewportSize({ width: 1440, height: 1000 });
             for (const route of [
                 "/dashboard/blogs/create",
                 "/dashboard",

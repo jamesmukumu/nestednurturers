@@ -1,5 +1,23 @@
 # Admin browser regressions
 
+## Admin palette checks
+
+The portal check audits rendered colors on all ten admin page types in Light,
+Dark, and System modes at 1440px, 390px, and 768px. It includes pseudo-elements,
+SVGs, gradients/shadows, body-mounted overlays, and both editor shadow roots.
+When `PORTAL_TEST_ARTIFACTS` is set, each screenshot has a `-without-actions`
+companion with approved pink primary/secondary action buttons hidden.
+Authentication and public styles are compared before/after admin navigation.
+Use `PORTAL_TEST_TIMEOUT=120000` on slow local servers.
+After the full page matrix passes, `PORTAL_TEST_INTERACTIONS_ONLY=1` reruns the
+button, form, dialog, editor, error-recovery, and isolation checks alone.
+
+Pink is preserved only for text primary/secondary action buttons and button-style
+links. Navigation, icon tools, tabs, sorting, pagination, theme switches, badges,
+avatars, form focus, charts, and loaders use neutral colors. Danger actions and
+semantic statuses retain their semantic colors. Saved article HTML, uploaded
+images, and editor color choices are outside the palette audit.
+
 ## Admin portal design system
 
 The admin foundation in `resources/css/admin.css` is loaded after shared button

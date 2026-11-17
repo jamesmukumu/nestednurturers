@@ -29,6 +29,20 @@ const actions = [
         tone: "rose",
     },
     {
+        href: "/dashboard/services",
+        icon: "pi-briefcase",
+        title: "Manage services",
+        detail: "Keep your offerings current",
+        tone: "blue",
+    },
+    {
+        href: "/dashboard/services/create",
+        icon: "pi-plus",
+        title: "Create a service",
+        detail: "Add a new way to support families",
+        tone: "purple",
+    },
+    {
         href: "/dashboard/profile",
         icon: "pi-user",
         title: "Your profile",
@@ -65,7 +79,7 @@ function ActivityChart({ activity, timezone }) {
                     role="group"
                     aria-label="Activity metric"
                 >
-                    {["consultations", "articles"].map((value) => (
+                    {["consultations", "articles", "services"].map((value) => (
                         <button
                             key={value}
                             type="button"
@@ -77,7 +91,9 @@ function ActivityChart({ activity, timezone }) {
                         >
                             {value === "consultations"
                                 ? "Consultations"
-                                : "Your articles"}
+                                : value === "articles"
+                                  ? "Your articles"
+                                  : "Your services"}
                         </button>
                     ))}
                 </div>
@@ -87,12 +103,18 @@ function ActivityChart({ activity, timezone }) {
                 <span>
                     {metric === "consultations"
                         ? "consultations received"
-                        : "articles created"}
+                        : metric === "articles"
+                          ? "articles created"
+                          : "services created"}
                     <small>Last six months · {timezone}</small>
                 </span>
                 <span className="dashboard-activity__legend">
                     <i />{" "}
-                    {metric === "consultations" ? "Consultations" : "Articles"}
+                    {metric === "consultations"
+                        ? "Consultations"
+                        : metric === "articles"
+                          ? "Articles"
+                          : "Services"}
                 </span>
             </div>
             <svg
@@ -195,6 +217,7 @@ function ActivityChart({ activity, timezone }) {
                         <th>Month</th>
                         <th>Consultations</th>
                         <th>Your articles</th>
+                        <th>Your services</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -203,6 +226,7 @@ function ActivityChart({ activity, timezone }) {
                             <th>{month.fullLabel}</th>
                             <td>{month.consultations}</td>
                             <td>{month.articles}</td>
+                            <td>{month.services}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -211,7 +235,7 @@ function ActivityChart({ activity, timezone }) {
     );
 }
 
-function PublishingStatus({ articles }) {
+function PublishingStatus({ articles, services }) {
     const percent = articles.total
         ? Math.round((articles.published / articles.total) * 100)
         : 0;
@@ -220,8 +244,8 @@ function PublishingStatus({ articles }) {
             className="dashboard-panel dashboard-publishing"
             aria-labelledby="publishing-heading"
         >
-            <span className="dashboard-eyebrow">WORDS THAT CONNECT</span>
-            <h2 id="publishing-heading">Your publishing space.</h2>
+            <span className="dashboard-eyebrow">CONTENT THAT CONNECTS</span>
+            <h2 id="publishing-heading">Your content space.</h2>
             <div
                 className={`dashboard-donut${articles.total === 0 ? " is-empty" : ""}`}
                 style={{ "--published": `${percent}%` }}
@@ -253,6 +277,16 @@ function PublishingStatus({ articles }) {
                 Manage your articles{" "}
                 <i className="pi pi-arrow-up-right" aria-hidden="true" />
             </Link>
+            <div className="dashboard-publishing__service-summary">
+                <div>
+                    <span>Services</span>
+                    <strong>{number(services.total)}</strong>
+                    <small>{number(services.published)} published · {number(services.drafts)} drafts</small>
+                </div>
+                <Link href="/dashboard/services" className="dashboard-text-link">
+                    Manage services <i className="pi pi-arrow-up-right" aria-hidden="true" />
+                </Link>
+            </div>
         </section>
     );
 }
@@ -265,7 +299,7 @@ function Dashboard({ dashboard }) {
         return () => window.clearInterval(timer);
     }, []);
     const greeting = dashboardGreeting(date, auth?.user?.name);
-    const { articles, consultations, pendingConsultations } = dashboard;
+    const { articles, services, consultations, pendingConsultations } = dashboard;
     const stats = [
         {
             label: "Team admins",
@@ -281,6 +315,14 @@ function Dashboard({ dashboard }) {
             note: `${number(articles.published)} published`,
             tone: "blue",
             href: "/dashboard/blogs",
+        },
+        {
+            label: "Your services",
+            value: services.total,
+            icon: "pi-briefcase",
+            note: `${number(services.published)} published`,
+            tone: "purple",
+            href: "/dashboard/services",
         },
         {
             label: "Consultations",
@@ -394,7 +436,7 @@ function Dashboard({ dashboard }) {
                         activity={dashboard.activity}
                         timezone={dashboard.timezone}
                     />
-                    <PublishingStatus articles={articles} />
+                    <PublishingStatus articles={articles} services={services} />
                 </div>
 
                 <div className="dashboard-bottom">
