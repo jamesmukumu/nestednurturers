@@ -5,7 +5,6 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import Button from '@/Components/Button';
-import ThemeToggle from '@/Components/ThemeToggle';
 
 export default function AuthenticatedLayout({ header, children }) {
     const user = usePage().props.auth.user;
@@ -36,7 +35,6 @@ export default function AuthenticatedLayout({ header, children }) {
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
-                            <ThemeToggle className="authenticated-shell__theme-toggle" />
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -143,8 +141,6 @@ export default function AuthenticatedLayout({ header, children }) {
                             Dashboard
                         </ResponsiveNavLink>
                     </div>
-
-                    <ThemeToggle className="authenticated-shell__mobile-theme-toggle" />
 
                     <div className="border-t border-[var(--app-border)] pb-1 pt-4">
                         <div className="px-4">

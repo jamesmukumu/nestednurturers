@@ -29,6 +29,10 @@ function pageTitle(path) {
     if (path === "/dashboard/blogs/create") return "Create Article";
     if (/^\/dashboard\/blogs\/[^/]+\/edit$/.test(path)) return "Edit Article";
     if (/^\/dashboard\/blogs\/[^/]+$/.test(path)) return "Article";
+    if (path === "/dashboard/services") return "Services";
+    if (path === "/dashboard/services/create") return "Create Service";
+    if (/^\/dashboard\/services\/[^/]+\/edit$/.test(path)) return "Edit Service";
+    if (/^\/dashboard\/services\/[^/]+$/.test(path)) return "Service";
     if (path === "/dashboard/profile") return "Your profile";
     if (path === "/dashboard/settings") return "Settings";
     if (path === "/enquiries") return "Consultations";

@@ -165,7 +165,7 @@ export function Contact({ cities }) {
         };
 
         return (
-            <div className="bg-white rounded-2xl shadow-lg p-6 h-full max-w-md mx-auto">
+            <div className="h-full w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] rounded-2xl bg-white p-6 shadow-lg md:w-full md:max-w-md md:mx-auto">
                 <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
                     Schedule Free Consultation
                 </h1>
@@ -641,7 +641,7 @@ export function Contact({ cities }) {
 
     const NextSteps = () => {
         return (
-            <section className="bg-white rounded-2xl shadow-lg p-8 h-full">
+            <section className="h-full w-[calc(100vw-1.5rem)] max-w-[calc(100vw-1.5rem)] rounded-2xl bg-white p-8 shadow-lg md:w-full md:max-w-none">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-8 text-center">
                     Reach Us
                 </h2>
@@ -696,11 +696,11 @@ export function Contact({ cities }) {
                 </p>
             </div>
 
-            <div className="container mx-auto px-6 flex flex-col md:flex-row gap-10 items-stretch justify-center">
-                <div className="flex-1">
+            <div className="container mx-auto flex w-full flex-col items-center justify-center gap-10 px-3 md:items-stretch md:px-6 md:flex-row">
+                <div className="w-full md:flex-1">
                     <FormCalendar />
                 </div>
-                <div className="flex-1">
+                <div className="w-full md:flex-1">
                     <NextSteps />
                 </div>
             </div>

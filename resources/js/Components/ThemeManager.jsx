@@ -9,15 +9,27 @@ export default function ThemeManager({ themeUrls }) {
 
     useEffect(() => {
         const root = document.documentElement;
-        root.classList.toggle('dark', resolved === 'dark');
-        root.dataset.theme = resolved;
-        root.style.colorScheme = resolved;
-
         const stylesheet = document.getElementById('primereact-theme');
-        const nextHref = themeUrls[resolved];
-        if (stylesheet && stylesheet.getAttribute('href') !== nextHref) {
-            stylesheet.setAttribute('href', nextHref);
-        }
+        const applyTheme = () => {
+            const isAdmin = document.querySelector('.admin-shell') !== null;
+            const nextTheme = isAdmin ? resolved : 'light';
+
+            root.classList.toggle('dark', nextTheme === 'dark');
+            root.dataset.theme = nextTheme;
+            root.style.colorScheme = nextTheme;
+
+            const nextHref = themeUrls[nextTheme];
+            if (stylesheet && stylesheet.getAttribute('href') !== nextHref) {
+                stylesheet.setAttribute('href', nextHref);
+            }
+        };
+
+        applyTheme();
+
+        const observer = new MutationObserver(applyTheme);
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        return () => observer.disconnect();
     }, [resolved, themeUrls]);
 
     useEffect(() => {

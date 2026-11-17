@@ -27,6 +27,8 @@ class AdminDashboardController extends Controller
         $articles = $admin->blogs()->selectRaw(
             'COUNT(*) AS total, COUNT(CASE WHEN is_published = ? THEN 1 END) AS published', [true],
         )->first();
+        $serviceTotal = $admin->services()->count();
+        $publishedServices = $admin->services()->where('published', true)->count();
 
         $months = collect(range(0, 5))->map(fn (int $offset) => $firstMonth->addMonths($offset));
         // Conditional aggregates keep monthly buckets portable across MySQL and SQLite.
@@ -44,6 +46,7 @@ class AdminDashboardController extends Controller
         };
         $consultationSeries = $series(Consultation::query());
         $articleSeries = $series($admin->blogs()->getQuery());
+        $serviceSeries = $series($admin->services()->getQuery());
 
         return Inertia::render('Admin/Dashboard', [
             'dashboard' => [
@@ -54,6 +57,11 @@ class AdminDashboardController extends Controller
                     'total' => (int) $articles->total,
                     'published' => (int) $articles->published,
                     'drafts' => (int) $articles->total - (int) $articles->published,
+                ],
+                'services' => [
+                    'total' => $serviceTotal,
+                    'published' => $publishedServices,
+                    'drafts' => $serviceTotal - $publishedServices,
                 ],
                 'consultations' => [
                     'total' => (int) $consultations->total,
@@ -67,6 +75,7 @@ class AdminDashboardController extends Controller
                     'fullLabel' => $month->format('F Y'),
                     'consultations' => $consultationSeries[$index],
                     'articles' => $articleSeries[$index],
+                    'services' => $serviceSeries[$index],
                 ])->all(),
                 'pendingConsultations' => Consultation::query()->pending()->latest('created_at')->latest('id')
                     ->limit(4)->get(['id', 'name', 'location', 'created_at'])

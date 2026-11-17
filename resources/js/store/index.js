@@ -37,7 +37,7 @@ store.subscribe(() => {
     lastThemeMode = themeMode;
 
     try {
-        window.localStorage.setItem('app-theme', themeMode);
+        window.localStorage.setItem('admin-theme', themeMode);
     } catch (error) {
         console.error('Unable to save the theme preference to local storage.', error);
     }
