@@ -49,29 +49,35 @@
     min-width: 0;
     width: 100%;
     align-items: center;
+    gap: 0.75rem;
     color: var(--app-text);
     text-decoration: none;
 }
 .admin-shell__logo {
     display: block;
-    width: min(100%, 13rem);
-    height: auto;
-    max-height: 7rem;
-    object-fit: contain;
-    object-position: left center;
-}
-.admin-shell__brand-icon {
-    display: grid;
-    place-items: center;
     flex: 0 0 2.5rem;
     width: 2.5rem;
     height: 2.5rem;
     border: 1px solid var(--app-border);
-    border-radius: 0.875rem;
-    color: var(--app-text-secondary);
+    border-radius: 50%;
     background: var(--surface-hover);
-    font: 400 1rem/1 var(--admin-font-heading);
-    letter-spacing: -0.08em;
+    object-fit: cover;
+    object-position: 20% center;
+}
+.admin-shell__brand-copy {
+    display: grid;
+    min-width: 0;
+    gap: 0.25rem;
+}
+.admin-shell__brand-copy strong {
+    font: 400 1.125rem/1.2 var(--admin-font-heading);
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+}
+.admin-shell__brand-copy small {
+    color: var(--app-text-muted);
+    font: 500 0.625rem/1.4 var(--admin-font-body);
+    letter-spacing: 0.15em;
 }
 .admin-shell__navigation {
     flex: 1;

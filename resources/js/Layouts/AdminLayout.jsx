@@ -151,19 +151,16 @@ function SidebarContents({
                     className="admin-shell__brand"
                     aria-label="Nested Nurturers dashboard"
                 >
-                    {collapsed ? (
-                        <span
-                            className="admin-shell__brand-icon"
-                            aria-hidden="true"
-                        >
-                            NN
+                    <img
+                        className="admin-shell__logo"
+                        src="/images/updates-logo.jpeg"
+                        alt=""
+                    />
+                    {!collapsed && (
+                        <span className="admin-shell__brand-copy">
+                            <strong>Nested Nurturers</strong>
+                            <small>THE ADMIN SPACE</small>
                         </span>
-                    ) : (
-                        <img
-                            className="admin-shell__logo"
-                            src="/images/updates-logo.jpeg"
-                            alt="Nested Nurturers Doulas"
-                        />
                     )}
                 </Link>
                 {mobile && (
