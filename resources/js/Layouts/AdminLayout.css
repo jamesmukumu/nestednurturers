@@ -82,12 +82,11 @@
 .admin-shell__navigation {
     flex: 1;
     min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    margin-top: 2.75rem;
+    overflow: hidden;
+    margin-top: clamp(1.25rem, 4vh, 2.75rem);
 }
 .admin-shell__nav-section + .admin-shell__nav-section {
-    margin-top: 2rem;
+    margin-top: clamp(1rem, 3vh, 2rem);
 }
 .admin-shell__nav-heading {
     margin: 0 0 0.75rem;
@@ -179,8 +178,8 @@
     justify-content: center;
 }
 .admin-shell__sidebar-footer {
-    padding-top: 1rem;
-    margin-top: 1.5rem;
+    padding-top: clamp(0.625rem, 1.5vh, 1rem);
+    margin-top: clamp(0.75rem, 2vh, 1.5rem);
     border-top: 1px solid var(--app-border);
 }
 .admin-shell__account-trigger {
@@ -406,6 +405,16 @@
     }
     .admin-shell__topbar-actions {
         gap: 0.5rem;
+    }
+}
+@media (max-height: 44rem) and (min-width: 992px) {
+    .admin-shell__sidebar-inner {
+        padding-top: calc(0.875rem + env(safe-area-inset-top));
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    }
+    .admin-shell__nav-link {
+        min-height: 2.5rem;
+        padding-block: 0.5rem;
     }
 }
 @media (max-width: 991.98px) {
