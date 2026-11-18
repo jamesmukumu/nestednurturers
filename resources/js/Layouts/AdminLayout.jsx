@@ -35,6 +35,7 @@ function pageTitle(path) {
     if (/^\/dashboard\/services\/[^/]+$/.test(path)) return "Service";
     if (path === "/dashboard/profile") return "Your profile";
     if (path === "/dashboard/settings") return "Settings";
+    if (path === "/dashboard/admins") return "Admins";
     if (path === "/enquiries") return "Consultations";
     if (/^\/enquiries\/[^/]+$/.test(path)) return "Consultation details";
     return "Page not found";
@@ -62,11 +63,17 @@ function accountAction(item, options) {
     );
 }
 
-function Navigation({ collapsed, path, onNavigate, pending, emailVerified }) {
+function Navigation({ collapsed, path, onNavigate, pending, emailVerified, canViewAdmins }) {
     return (
         <nav className="admin-shell__navigation" aria-label="Admin navigation">
-            {navigation.map((section) => (
-                <section
+            {navigation.map((section) => {
+                const items = section.items.filter(
+                    (item) => !item.requiresAdmin || canViewAdmins,
+                );
+
+                if (items.length === 0) return null;
+
+                return <section
                     className="admin-shell__nav-section"
                     key={section.heading}
                 >
@@ -75,7 +82,7 @@ function Navigation({ collapsed, path, onNavigate, pending, emailVerified }) {
                             {section.heading}
                         </h2>
                     )}
-                    {section.items.map((item) => {
+                    {items.map((item) => {
                         const active = item.exact
                             ? path === item.href
                             : path === item.href ||
@@ -130,7 +137,7 @@ function Navigation({ collapsed, path, onNavigate, pending, emailVerified }) {
                         );
                     })}
                 </section>
-            ))}
+            })}
         </nav>
     );
 }
@@ -145,6 +152,7 @@ function SidebarContents({
     path,
     pending,
     emailVerified,
+    canViewAdmins,
 }) {
     return (
         <div className="admin-shell__sidebar-inner">
@@ -185,6 +193,7 @@ function SidebarContents({
                 onNavigate={onNavigate}
                 pending={pending}
                 emailVerified={emailVerified}
+                canViewAdmins={canViewAdmins}
             />
             <div className="admin-shell__sidebar-footer">
                 {mobile && (
@@ -276,6 +285,7 @@ export default function AdminLayout({ children }) {
         path,
         pending,
         emailVerified: Boolean(props.auth?.emailVerified),
+        canViewAdmins: Boolean(props.auth?.canViewAdmins),
     };
 
     return (
