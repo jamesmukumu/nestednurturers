@@ -66,6 +66,7 @@ export default function Login({ status }) {
                         <small className="auth-form__error" id="login-password-error">
                             {errors.password || '\u00a0'}
                         </small>
+                        <Link href={route('password.request')}>Forgot your password?</Link>
                     </div>
                     <div className="auth-form__remember">
                         <Checkbox

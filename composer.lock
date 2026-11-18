@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "714dc0d1dd448432fc81a8fa7b75d1c3",
+    "content-hash": "01cb2557efc4f5bb8915ef02e0924cc8",
     "packages": [
         {
             "name": "brick/math",
@@ -4002,6 +4002,63 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.12.20"
             },
             "time": "2026-02-11T15:05:28+00:00"
+        },
+        {
+            "name": "qh-8/laravel-snowflake",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/qh-8/laravel-snowflake.git",
+                "reference": "ed63a8bba409336365c19c8e58d635b0bd472ae4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/qh-8/laravel-snowflake/zipball/ed63a8bba409336365c19c8e58d635b0bd472ae4",
+                "reference": "ed63a8bba409336365c19c8e58d635b0bd472ae4",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^10.0|^11.0",
+                "illuminate/support": "^10.0|^11.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "laravel/framework": "^10.0|^11.0",
+                "laravel/pint": "^1.17",
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Snowflake": "Qh\\LaravelSnowflake\\Facades\\Snowflake"
+                    },
+                    "providers": [
+                        "Qh\\LaravelSnowflake\\SnowflakeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Qh\\LaravelSnowflake\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dinh Quoc Han",
+                    "email": "dqh@dinhquochan.com"
+                }
+            ],
+            "description": "Generate Snowflake Identifier for Laravel",
+            "support": {
+                "issues": "https://github.com/qh-8/laravel-snowflake/issues",
+                "source": "https://github.com/qh-8/laravel-snowflake/tree/v1.1.2"
+            },
+            "time": "2024-09-23T11:58:45+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

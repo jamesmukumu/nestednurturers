@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'admin.verified' => \App\Http\Middleware\EnsureAdminEmailIsVerified::class,
+            'admin.directory' => \App\Http\Middleware\EnsureAdminCanViewDirectory::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -27,6 +28,11 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->routeIs('admin.verification.verify')) {
                 return redirect()->route('admin.verification.notice')
                     ->with('error', 'This link has expired. Request a new one.');
+            }
+
+            if ($request->routeIs('password.reset', 'password.store')) {
+                return redirect()->route('password.request')
+                    ->with('status', 'This password reset link is invalid or has expired. Request a new one.');
             }
 
             return null;

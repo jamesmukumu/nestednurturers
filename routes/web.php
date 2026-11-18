@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\SitemapController;
-use App\Http\Controllers\BlogCategoryController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminDirectoryController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\Auth\AdminEmailVerificationController;
 use App\Http\Controllers\Auth\AdminEmailVerificationNotificationController;
 use App\Http\Controllers\Auth\AdminEmailVerificationPromptController;
+use App\Http\Controllers\BlogCategoryController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\EnquiryStatusController;
 use App\Http\Controllers\PublicBlogController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -26,8 +27,8 @@ Route::get('/', function () {
 Route::get('/contact', function () {
     return Inertia::render('Contacts');
 });
-Route::get("/faq", function () {
-    return Inertia::render("Faq");
+Route::get('/faq', function () {
+    return Inertia::render('Faq');
 });
 Route::get('/pricing', function () {
     return Inertia::render('Pricing');
@@ -99,6 +100,10 @@ Route::middleware(['auth:admin', 'admin.verified'])->group(function () {
         return Inertia::render('Admin/Settings');
     })->name('dashboard.settings');
 
+    Route::get('/dashboard/admins', [AdminDirectoryController::class, 'index'])
+        ->middleware('admin.directory')
+        ->name('dashboard.admins.index');
+
     Route::get('/dashboard/{path?}', function () {
         return Inertia::render('Admin/NotFound')
             ->toResponse(request())
@@ -106,5 +111,4 @@ Route::middleware(['auth:admin', 'admin.verified'])->group(function () {
     })->where('path', '.*')->name('dashboard.not-found');
 });
 
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

@@ -111,6 +111,10 @@ return [
         'expire' => (int) env('AUTH_VERIFICATION_EXPIRE', 5),
     ],
 
+    'admin_password_reset' => [
+        'expire' => (int) env('ADMIN_PASSWORD_RESET_EXPIRE', 5),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout

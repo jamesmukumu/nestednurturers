@@ -15,6 +15,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "maatwebsite/excel": "^3.1",
+        "qh-8/laravel-snowflake": "^1.1",
         "spatie/laravel-sitemap": "^7.3",
         "symfony/css-selector": "^7.0",
         "symfony/dom-crawler": "^7.0",

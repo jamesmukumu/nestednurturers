@@ -49,6 +49,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $admin,
                 'emailVerified' => $admin?->hasVerifiedEmail() ?? false,
                 'canViewEnquiries' => $admin?->can('viewAny', Consultation::class) ?? false,
+                'canViewAdmins' => $admin?->isAdmin ?? false,
             ],
             'pendingEnquiriesCount' => fn () => $admin?->can('viewAny', Consultation::class)
                 ? Cache::remember(

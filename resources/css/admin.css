@@ -499,6 +499,31 @@
     border-radius: var(--app-radius-card);
     background: var(--app-surface);
 }
+.admins-directory {
+    overflow-x: auto;
+    border: 1px solid var(--app-border);
+    border-radius: var(--app-radius-card);
+    background: var(--app-surface);
+}
+.admins-directory table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 44rem;
+}
+.admins-directory th,
+.admins-directory td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--app-border);
+    text-align: left;
+}
+.admins-directory th {
+    color: var(--app-text-secondary);
+    font-size: var(--admin-text-label);
+    font-weight: 700;
+}
+.admins-directory tbody tr:last-child td {
+    border-bottom: 0;
+}
 .admin-state-card {
     display: grid;
     justify-items: start;

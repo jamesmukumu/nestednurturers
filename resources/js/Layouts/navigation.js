@@ -45,6 +45,12 @@ export const navigation = [
                 href: '/dashboard/settings',
                 icon: 'pi pi-cog',
             },
+            {
+                label: 'See admins',
+                href: '/dashboard/admins',
+                icon: 'pi pi-users',
+                requiresAdmin: true,
+            },
         ],
     },
 ];

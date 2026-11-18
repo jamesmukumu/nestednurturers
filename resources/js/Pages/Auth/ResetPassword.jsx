@@ -1,20 +1,17 @@
 import { Head, Link, useForm } from '@inertiajs/react';
-import { InputText } from 'primereact/inputtext';
 import AuthPasswordInput from '@/Components/AuthPasswordInput';
 import AuthSubmitButton from '@/Components/AuthSubmitButton';
 import GuestLayout from '@/Layouts/GuestLayout';
 
-export default function ResetPassword({ token, email }) {
+export default function ResetPassword({ reference, resetUrl }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        token,
-        email,
         password: '',
         password_confirmation: '',
     });
 
     const submit = (event) => {
         event.preventDefault();
-        post(route('password.store'), {
+        post(resetUrl, {
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
@@ -27,22 +24,7 @@ export default function ResetPassword({ token, email }) {
         >
             <Head title="Reset Password" />
             <form className="auth-form" onSubmit={submit}>
-                <input type="hidden" name="token" value={data.token} />
-                <div className="auth-form__field">
-                    <label htmlFor="reset-email">Email</label>
-                    <InputText
-                        id="reset-email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        autoComplete="email"
-                        invalid={Boolean(errors.email)}
-                        aria-invalid={Boolean(errors.email)}
-                        aria-describedby={errors.email ? 'reset-email-error' : undefined}
-                        onChange={(event) => setData('email', event.target.value)}
-                    />
-                    {errors.email && <small className="p-error" id="reset-email-error">{errors.email}</small>}
-                </div>
+                <input type="hidden" name="reference" value={reference} />
                 <div className="auth-form__field">
                     <label htmlFor="reset-password">New password</label>
                     <AuthPasswordInput
