@@ -105,6 +105,7 @@
 
 .enquiries-datatable .p-datatable-table {
     width: 100%;
+    min-width: 96rem;
     border-collapse: collapse;
     text-align: left;
 }
@@ -145,6 +146,38 @@
     overflow-wrap: anywhere;
 }
 
+.enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(1) {
+    min-width: 11rem;
+}
+
+.enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(2) {
+    min-width: 16rem;
+}
+
+.enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(3) {
+    min-width: 12rem;
+}
+
+.enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(4) {
+    min-width: 17rem;
+}
+
+.enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(5) {
+    min-width: 11rem;
+}
+
+.enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(6) {
+    min-width: 9rem;
+}
+
+.enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(7) {
+    min-width: 10rem;
+}
+
+.enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(8) {
+    min-width: 13rem;
+}
+
 .enquiries-datatable .p-datatable-tbody > tr > td a,
 .enquiry-detail a {
     color: var(--app-primary);
@@ -157,18 +190,22 @@
     min-height: 1.75rem;
     align-items: center;
     gap: 0.375rem;
-    max-width: 100%;
+    width: 100%;
+    white-space: nowrap;
 }
 
 .enquiries-table__contact-item a {
     display: inline-flex;
     min-width: 0;
+    flex: 1;
     align-items: center;
     gap: 0.375rem;
 }
 
 .enquiries-table__contact-item a span {
-    overflow-wrap: anywhere;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .enquiries-table__contact-item .pi {
@@ -199,6 +236,8 @@
     min-height: 2.75rem;
     align-content: center;
     font-weight: 500;
+    overflow-wrap: normal;
+    word-break: normal;
 }
 
 .enquiries-table__name small {
@@ -436,7 +475,7 @@
     }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 767px) {
     .enquiries-page__header,
     .enquiries-pagination {
         align-items: flex-start;
@@ -470,6 +509,14 @@
         border: 1px solid var(--app-border);
         border-radius: var(--app-radius-card, 0.75rem);
         background: var(--app-page);
+    }
+
+    .enquiries-datatable .p-datatable-table {
+        min-width: 0;
+    }
+
+    .enquiries-datatable :is(.p-datatable-thead > tr > th, .p-datatable-tbody > tr > td):nth-child(n) {
+        min-width: 0;
     }
 
     .enquiries-datatable .p-datatable-tbody > tr > td {

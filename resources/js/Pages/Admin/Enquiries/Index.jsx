@@ -38,6 +38,34 @@ function buildQuery(filters, page = 1) {
     return Object.fromEntries(Object.entries(query).filter(([, value]) => value !== undefined));
 }
 
+async function copyText(value) {
+    if (navigator.clipboard?.writeText) {
+        try {
+            await navigator.clipboard.writeText(value);
+
+            return true;
+        } catch {
+            // Shared hosting may serve HTTP, where the modern Clipboard API is unavailable.
+        }
+    }
+
+    const textarea = document.createElement('textarea');
+    textarea.value = value;
+    textarea.setAttribute('readonly', '');
+    textarea.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+    document.body.append(textarea);
+    textarea.select();
+    textarea.setSelectionRange(0, textarea.value.length);
+
+    try {
+        return document.execCommand('copy');
+    } catch {
+        return false;
+    } finally {
+        textarea.remove();
+    }
+}
+
 export default function EnquiriesIndex({ enquiries, pagination, filters }) {
     const [search, setSearch] = useState(filters.q || '');
     const [refreshing, setRefreshing] = useState(false);
@@ -150,16 +178,9 @@ export default function EnquiriesIndex({ enquiries, pagination, filters }) {
         event.preventDefault();
         event.stopPropagation();
 
-        if (!navigator.clipboard?.writeText) {
-            showToast(`Your browser cannot copy the ${label.toLowerCase()}.`);
-
-            return;
-        }
-
-        try {
-            await navigator.clipboard.writeText(value);
+        if (await copyText(value)) {
             showToast(`${label} copied.`);
-        } catch {
+        } else {
             showToast(`We couldn't copy the ${label.toLowerCase()}.`);
         }
     };
@@ -174,7 +195,7 @@ export default function EnquiriesIndex({ enquiries, pagination, filters }) {
 
         return (
             <div className="enquiries-table__contact-item">
-                <a href={href} onClick={(event) => event.stopPropagation()}>
+                <a href={href} title={value} onClick={(event) => event.stopPropagation()}>
                     <i className={`pi ${isEmail ? 'pi-envelope' : 'pi-phone'}`} aria-hidden="true" />
                     <span>{value}</span>
                 </a>
@@ -298,7 +319,7 @@ export default function EnquiriesIndex({ enquiries, pagination, filters }) {
                                 rowHover
                                 stripedRows
                                 responsiveLayout="stack"
-                                breakpoint="640px"
+                                breakpoint="768px"
                                 onRowClick={openEnquiry}
                                 sortField="created_at"
                                 sortOrder={filters.sort === 'created_at' ? 1 : -1}
