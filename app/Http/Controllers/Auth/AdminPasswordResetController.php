@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\SendAdminPasswordResetLink;
+use App\Mail\AdminPasswordResetMailer;
 use App\Models\Admin;
 use App\Models\AdminPasswordResetRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
@@ -54,10 +56,16 @@ class AdminPasswordResetController extends Controller
             ]);
         });
 
-        SendAdminPasswordResetLink::dispatch($resetRequest->getKey())->afterCommit();
+        $resetUrl = URL::temporarySignedRoute(
+            'password.reset',
+            $resetRequest->expires_at,
+            ['reference' => $resetRequest->reference],
+        );
+
+        Mail::to($admin->email)->send(new AdminPasswordResetMailer($admin, $resetUrl));
 
         return to_route('password.request')
-            ->with('status', 'A password reset link has been queued for delivery. It expires in 5 minutes.');
+            ->with('status', 'A password reset link has been sent. It expires in 5 minutes.');
     }
 
     public function createReset(Request $request, string $reference): Response|RedirectResponse

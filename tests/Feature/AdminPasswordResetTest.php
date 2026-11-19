@@ -1,12 +1,10 @@
 <?php
 
-use App\Jobs\SendAdminPasswordResetLink;
 use App\Mail\AdminPasswordResetMailer;
 use App\Models\Admin;
 use App\Models\AdminPasswordResetRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\URL;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -19,19 +17,15 @@ test('forgot password page renders and login links to it', function () {
 });
 
 test('unknown admin email cannot request a password reset', function () {
-    Queue::fake();
-
     $this->from('/forgot-password')->post('/forgot-password', [
         'email' => 'missing@example.test',
     ])->assertRedirect('/forgot-password')
         ->assertSessionHasErrors('email');
 
     expect(AdminPasswordResetRequest::count())->toBe(0);
-    Queue::assertNothingPushed();
 });
 
-test('known admin receives a queued signed reset link with a snowflake reference', function () {
-    Queue::fake();
+test('known admin receives a signed reset link immediately with a snowflake reference', function () {
     Mail::fake();
     $admin = Admin::factory()->create(['email' => 'reset@example.test']);
 
@@ -45,14 +39,6 @@ test('known admin receives a queued signed reset link with a snowflake reference
         ->and($request->expires_at->getTimestamp() - now()->getTimestamp())->toBeGreaterThan(299)
         ->toBeLessThanOrEqual(300);
 
-    $job = null;
-    Queue::assertPushed(SendAdminPasswordResetLink::class, function (SendAdminPasswordResetLink $pushedJob) use (&$job) {
-        $job = $pushedJob;
-
-        return true;
-    });
-    $job->handle();
-
     Mail::assertSent(AdminPasswordResetMailer::class, function (AdminPasswordResetMailer $mail) use ($admin, &$resetUrl) {
         $resetUrl = $mail->resetUrl;
 
@@ -64,18 +50,10 @@ test('known admin receives a queued signed reset link with a snowflake reference
 });
 
 test('a valid reset link changes the password once', function () {
-    Queue::fake();
     Mail::fake();
     $admin = Admin::factory()->create(['password' => Hash::make('old-password')]);
 
     $this->post('/forgot-password', ['email' => $admin->email]);
-    $job = null;
-    Queue::assertPushed(SendAdminPasswordResetLink::class, function (SendAdminPasswordResetLink $pushedJob) use (&$job) {
-        $job = $pushedJob;
-
-        return true;
-    });
-    $job->handle();
     $mail = null;
     Mail::assertSent(AdminPasswordResetMailer::class, function (AdminPasswordResetMailer $sentMail) use (&$mail) {
         $mail = $sentMail;
@@ -102,18 +80,10 @@ test('a valid reset link changes the password once', function () {
 });
 
 test('expired, altered, and superseded reset links are rejected', function () {
-    Queue::fake();
     Mail::fake();
     $admin = Admin::factory()->create();
 
     $this->post('/forgot-password', ['email' => $admin->email]);
-    $firstJob = null;
-    Queue::assertPushed(SendAdminPasswordResetLink::class, function (SendAdminPasswordResetLink $job) use (&$firstJob) {
-        $firstJob = $job;
-
-        return true;
-    });
-    $firstJob->handle();
     $firstMail = null;
     Mail::assertSent(AdminPasswordResetMailer::class, function (AdminPasswordResetMailer $mail) use (&$firstMail) {
         $firstMail = $mail;

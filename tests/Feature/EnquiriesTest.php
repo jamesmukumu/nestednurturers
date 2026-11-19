@@ -1,8 +1,8 @@
 <?php
 
+use App\Mail\EmailVerifierMailer;
 use App\Models\Admin;
 use App\Models\Consultation;
-use App\Mail\EmailVerifierMailer;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Testing\AssertableInertia as Assert;
 
@@ -82,6 +82,22 @@ test('enquiry index paginates filters and clamps out of range pages', function (
 
     $this->get('/enquiries?page=20')
         ->assertRedirect(route('enquiries.index', ['page' => 2]));
+});
+
+test('enquiry index exposes email and phone number for separate contact actions', function () {
+    $admin = verifiedAdmin();
+    $consultation = createConsultation([
+        'email' => 'contact@example.test',
+        'phonenumber' => '+14155550199',
+    ]);
+
+    $this->actingAs($admin, 'admin')
+        ->get('/enquiries')
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('enquiries.0.id', $consultation->id)
+            ->where('enquiries.0.email', 'contact@example.test')
+            ->where('enquiries.0.phonenumber', '+14155550199'));
 });
 
 test('marking addressed is idempotent and reopening clears tracking', function () {
