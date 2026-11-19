@@ -146,18 +146,49 @@ export default function EnquiriesIndex({ enquiries, pagination, filters }) {
         router.visit(detailHref(event.data.id));
     };
 
-    const contactBody = (enquiry) => (
-        <div className="enquiries-table__contact">
-            <a href={`mailto:${encodeURIComponent(enquiry.email).replace(/%40/gi, '@')}`}>
-                <i className="pi pi-envelope" aria-hidden="true" />
-                {enquiry.email}
-            </a>
-            <a href={`tel:${enquiry.phonenumber.replace(/[^\d+]/g, '')}`}>
-                <i className="pi pi-phone" aria-hidden="true" />
-                {enquiry.phonenumber}
-            </a>
-        </div>
-    );
+    const copyContact = async (event, value, label) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (!navigator.clipboard?.writeText) {
+            showToast(`Your browser cannot copy the ${label.toLowerCase()}.`);
+
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(value);
+            showToast(`${label} copied.`);
+        } catch {
+            showToast(`We couldn't copy the ${label.toLowerCase()}.`);
+        }
+    };
+
+    const contactBody = (enquiry, type) => {
+        const isEmail = type === 'email';
+        const value = isEmail ? enquiry.email : enquiry.phonenumber;
+        const label = isEmail ? 'Email address' : 'Phone number';
+        const href = isEmail
+            ? `mailto:${encodeURIComponent(value).replace(/%40/gi, '@')}`
+            : `tel:${value.replace(/[^\d+]/g, '')}`;
+
+        return (
+            <div className="enquiries-table__contact-item">
+                <a href={href} onClick={(event) => event.stopPropagation()}>
+                    <i className={`pi ${isEmail ? 'pi-envelope' : 'pi-phone'}`} aria-hidden="true" />
+                    <span>{value}</span>
+                </a>
+                <button
+                    type="button"
+                    className="enquiries-copy-button"
+                    aria-label={`Copy ${label}: ${value}`}
+                    onClick={(event) => copyContact(event, value, label)}
+                >
+                    <i className="pi pi-copy" aria-hidden="true" />
+                </button>
+            </div>
+        );
+    };
 
     const nameBody = (enquiry) => (
         <Link className="enquiries-table__name" href={detailHref(enquiry.id)}>
@@ -280,7 +311,8 @@ export default function EnquiriesIndex({ enquiries, pagination, filters }) {
                                 className={`enquiries-datatable${refreshing ? ' is-refreshing' : ''}`}
                             >
                                 <Column header="Name" body={nameBody} />
-                                <Column header="Contact" body={contactBody} />
+                                <Column header="Email" body={(enquiry) => contactBody(enquiry, 'email')} />
+                                <Column header="Phone" body={(enquiry) => contactBody(enquiry, 'phone')} />
                                 <Column
                                     field="servicesSeeked"
                                     header="Services requested"
