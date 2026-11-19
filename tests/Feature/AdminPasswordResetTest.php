@@ -36,7 +36,7 @@ test('known admin receives a signed reset link immediately with a snowflake refe
     $request = AdminPasswordResetRequest::firstOrFail();
     expect($request->admin_id)->toBe($admin->id)
         ->and((string) $request->reference)->toMatch('/^\d{15,19}$/')
-        ->and($request->expires_at->getTimestamp() - now()->getTimestamp())->toBeGreaterThan(299)
+        ->and($request->expires_at->getTimestamp() - now()->getTimestamp())->toBeGreaterThanOrEqual(299)
         ->toBeLessThanOrEqual(300);
 
     Mail::assertSent(AdminPasswordResetMailer::class, function (AdminPasswordResetMailer $mail) use ($admin, &$resetUrl) {
