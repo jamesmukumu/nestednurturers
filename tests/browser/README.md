@@ -93,7 +93,7 @@ that change. Never point it at production. The explicit write flag is required.
 
 Coverage includes every admin page in Light, Dark and System modes, 390px and
 768px layouts, drawer dismissal/focus, real counts, typography, white surfaces,
-pink action contrast, Profile tabs/error recovery, consultation pagination/filters/status
+pink action contrast, Profile contact details/error recovery, consultation pagination/filters/status
 undo, category/delete dialogs, image preview, both isolated editors and their
 source/fullscreen modes. It checks that settled auth/public styles match before
 and after admin navigation. Theme loading is awaited before comparing styles.

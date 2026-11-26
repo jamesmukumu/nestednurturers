@@ -345,20 +345,10 @@ async function authStyles(page) {
         }
         await page.setViewportSize({ width: 1440, height: 1000 });
         await goto("/dashboard/profile");
-        await page.getByRole("tab", { name: "Activity", exact: true }).click();
-        assert.equal(
-            await page
-                .getByRole("tab", { name: "Activity", exact: true })
-                .getAttribute("aria-selected"),
-            "true",
-        );
-        await page.keyboard.press("ArrowLeft");
-        assert.equal(
-            await page
-                .getByRole("tab", { name: "Overview", exact: true })
-                .getAttribute("aria-selected"),
-            "true",
-        );
+        // Verify that the current account's editable contact details have loaded.
+        await page.locator('#admin-profile-email').waitFor();
+        assert.equal(await page.locator('#admin-profile-email').inputValue(), email);
+        assert.ok(await page.locator('#admin-profile-name').inputValue());
         await page.route("**/dashboard/profile/data", (route) =>
             route.fulfill({
                 status: 503,
