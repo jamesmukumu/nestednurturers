@@ -1,0 +1,39 @@
+.management-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+.management-toast.p-toast {
+    width: min(25rem, calc(100vw - 2.5rem));
+}
+.management-dialog {
+    width: min(32rem, calc(100vw - 2rem));
+}
+.management-description {
+    display: block;
+    max-width: 30rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+.management-form {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 42rem;
+}
+.management-field {
+    display: grid;
+    gap: 0.5rem;
+}
+.management-field input {
+    width: 100%;
+}
+.management-field label {
+    font-weight: 600;
+}
+.management-notice {
+    color: var(--app-text-secondary);
+}
+.management-form-error {
+    margin: 0;
+}

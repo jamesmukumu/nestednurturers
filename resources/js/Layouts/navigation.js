@@ -25,6 +25,11 @@ export const navigation = [
                 icon: 'pi pi-file-edit',
             },
             {
+                label: 'Article categories',
+                href: '/dashboard/blog-categories',
+                icon: 'pi pi-tags',
+            },
+            {
                 label: 'Services',
                 href: '/dashboard/services',
                 icon: 'pi pi-briefcase',

@@ -210,27 +210,29 @@ function ActivityChart({ activity, timezone }) {
                     here as it comes in.
                 </p>
             )}
-            <table className="sr-only">
-                <caption>Monthly activity</caption>
-                <thead>
-                    <tr>
-                        <th>Month</th>
-                        <th>Consultations</th>
-                        <th>Your articles</th>
-                        <th>Your services</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {activity.map((month) => (
-                        <tr key={month.month}>
-                            <th>{month.fullLabel}</th>
-                            <td>{month.consultations}</td>
-                            <td>{month.articles}</td>
-                            <td>{month.services}</td>
+            <div className="sr-only">
+                <table>
+                    <caption>Monthly activity</caption>
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Consultations</th>
+                            <th>Your articles</th>
+                            <th>Your services</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {activity.map((month) => (
+                            <tr key={month.month}>
+                                <th>{month.fullLabel}</th>
+                                <td>{month.consultations}</td>
+                                <td>{month.articles}</td>
+                                <td>{month.services}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </section>
     );
 }
@@ -281,10 +283,17 @@ function PublishingStatus({ articles, services }) {
                 <div>
                     <span>Services</span>
                     <strong>{number(services.total)}</strong>
-                    <small>{number(services.published)} published · {number(services.drafts)} drafts</small>
+                    <small>
+                        {number(services.published)} published ·{" "}
+                        {number(services.drafts)} drafts
+                    </small>
                 </div>
-                <Link href="/dashboard/services" className="dashboard-text-link">
-                    Manage services <i className="pi pi-arrow-up-right" aria-hidden="true" />
+                <Link
+                    href="/dashboard/services"
+                    className="dashboard-text-link"
+                >
+                    Manage services{" "}
+                    <i className="pi pi-arrow-up-right" aria-hidden="true" />
                 </Link>
             </div>
         </section>
@@ -299,7 +308,8 @@ function Dashboard({ dashboard }) {
         return () => window.clearInterval(timer);
     }, []);
     const greeting = dashboardGreeting(date, auth?.user?.name);
-    const { articles, services, consultations, pendingConsultations } = dashboard;
+    const { articles, services, consultations, pendingConsultations } =
+        dashboard;
     const stats = [
         {
             label: "Team admins",

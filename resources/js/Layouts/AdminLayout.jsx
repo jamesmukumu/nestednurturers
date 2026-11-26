@@ -36,6 +36,8 @@ function pageTitle(path) {
     if (path === "/dashboard/profile") return "Your profile";
     if (path === "/dashboard/settings") return "Settings";
     if (path === "/dashboard/admins") return "Admins";
+    if (/^\/dashboard\/admins\/[^/]+\/edit$/.test(path)) return "Edit admin";
+    if (path === "/dashboard/blog-categories") return "Article categories";
     if (path === "/enquiries") return "Consultations";
     if (/^\/enquiries\/[^/]+$/.test(path)) return "Consultation details";
     return "Page not found";

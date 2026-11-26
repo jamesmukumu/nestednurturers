@@ -84,6 +84,9 @@ Route::middleware(['auth:admin', 'admin.verified'])->group(function () {
         Route::match(['put', 'patch'], '/{service}', 'update')->name('update');
         Route::delete('/{service}', 'destroy')->name('destroy');
     });
+    Route::get('/dashboard/blog-categories', [BlogCategoryController::class, 'manage'])->name('admin.categories.index');
+    Route::patch('/dashboard/blog-categories/{category}', [BlogCategoryController::class, 'update'])->whereNumber('category')->name('admin.categories.update');
+    Route::delete('/dashboard/blog-categories/{category}', [BlogCategoryController::class, 'destroy'])->whereNumber('category')->name('admin.categories.destroy');
     Route::get('/blog-categories', [BlogCategoryController::class, 'index'])->name('blog-categories.index');
     Route::post('/blog-categories', [BlogCategoryController::class, 'store'])->name('blog-categories.store');
 
@@ -99,6 +102,12 @@ Route::middleware(['auth:admin', 'admin.verified'])->group(function () {
     Route::get('/dashboard/settings', function () {
         return Inertia::render('Admin/Settings');
     })->name('dashboard.settings');
+
+    Route::middleware('admin.directory')->group(function () {
+        Route::get('/dashboard/admins/{admin}/edit', [AdminDirectoryController::class, 'edit'])->whereNumber('admin')->name('dashboard.admins.edit');
+        Route::patch('/dashboard/admins/{admin}', [AdminDirectoryController::class, 'update'])->whereNumber('admin')->name('dashboard.admins.update');
+        Route::delete('/dashboard/admins/{admin}', [AdminDirectoryController::class, 'destroy'])->whereNumber('admin')->name('dashboard.admins.destroy');
+    });
 
     Route::get('/dashboard/admins', [AdminDirectoryController::class, 'index'])
         ->middleware('admin.directory')
