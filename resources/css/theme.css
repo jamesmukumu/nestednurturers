@@ -50,7 +50,7 @@
     --highlight-text-color: #1f2328;
 }
 
-:root:not(.dark):has(.auth-page) {
+:root:not(.dark):has(.auth-page, .public-blogs, .public-blog-article) {
     --app-page: #ffffff;
     --app-surface: #ffffff;
     --app-surface-raised: #ffffff;
