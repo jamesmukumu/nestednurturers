@@ -78,6 +78,8 @@ async function authStyles(page) {
         );
         if (artifacts) fs.mkdirSync(artifacts, { recursive: true });
         const shot = async (name) => {
+            // Focus and theme transitions can briefly produce interpolated colors.
+            await page.waitForTimeout(250);
             await assertAdminPalette(page);
             if (artifacts)
                 await page.screenshot({

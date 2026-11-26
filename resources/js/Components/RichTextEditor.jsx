@@ -13,7 +13,64 @@ function IsolatedEditor({ Jodit, id, label, config, value, onChange, onBlur }) {
     valueRef.current = value;
 
     useEffect(() => {
+        const host = textareaRef.current.getRootNode().host;
         const editor = Jodit.make(textareaRef.current, config);
+        let restoreFullscreen = null;
+        let toolbarObserver = null;
+        let fullscreenSnapshot = null;
+        const captureFullscreen = (enable) => {
+            if (
+                enable ??
+                !editor.container.classList.contains("jodit_fullsize")
+            ) {
+                const scrollArea = host.closest(".admin-shell__content-scroll");
+                fullscreenSnapshot = {
+                    previous: [
+                        document.documentElement,
+                        document.body,
+                        scrollArea,
+                    ]
+                        .filter(Boolean)
+                        .map((element) => ({
+                            element,
+                            overflow: element.style.overflow,
+                            left: element.scrollLeft,
+                            top: element.scrollTop,
+                        })),
+                    windowScroll: [window.scrollX, window.scrollY],
+                    focused: host.shadowRoot.activeElement,
+                };
+            }
+        };
+        // Capture before Jodit removes its container from the normal document flow.
+        editor.events.on("toggleFullSize", captureFullscreen, { top: true });
+        const syncFullscreen = () => {
+            const enabled =
+                editor.container.classList.contains("jodit_fullsize");
+            if (enabled && !restoreFullscreen) {
+                const { previous, windowScroll, focused } = fullscreenSnapshot;
+                host.classList.add("rich-text-editor--fullscreen");
+                previous.forEach(({ element }) => {
+                    element.style.overflow = "hidden";
+                });
+                restoreFullscreen = () => {
+                    host.classList.remove("rich-text-editor--fullscreen");
+                    previous.forEach(({ element, overflow, left, top }) => {
+                        element.style.overflow = overflow;
+                        element.scrollLeft = left;
+                        element.scrollTop = top;
+                    });
+                    window.scrollTo(...windowScroll);
+                    if (focused?.isConnected)
+                        focused.focus({ preventScroll: true });
+                };
+            } else if (!enabled && restoreFullscreen) {
+                restoreFullscreen();
+                restoreFullscreen = null;
+                fullscreenSnapshot = null;
+            }
+        };
+        editor.events.on("toggleFullSize", syncFullscreen);
         editorRef.current = editor;
         editor.events
             .on("change", (content) => {
@@ -29,6 +86,24 @@ function IsolatedEditor({ Jodit, id, label, config, value, onChange, onBlur }) {
                 editor.editor.setAttribute("aria-label", label);
                 editor.editor.setAttribute("role", "textbox");
                 editor.editor.setAttribute("aria-multiline", "true");
+                // A wrapped full toolbar must leave a usable writing area below it.
+                const fitToolbar = () => {
+                    if (editorRef.current !== editor) return;
+                    const minimum = Math.max(
+                        config.minHeight,
+                        (editor.toolbarContainer?.offsetHeight || 0) +
+                            (editor.statusbar?.getHeight() || 0) +
+                            162,
+                    );
+                    if (editor.container.style.minHeight !== `${minimum}px`) {
+                        editor.container.style.minHeight = `${minimum}px`;
+                        editor.events.fire("afterResize");
+                    }
+                };
+                toolbarObserver = new ResizeObserver(fitToolbar);
+                if (editor.toolbarContainer)
+                    toolbarObserver.observe(editor.toolbarContainer);
+                fitToolbar();
             }
         };
         if (editor.isReady) {
@@ -46,6 +121,11 @@ function IsolatedEditor({ Jodit, id, label, config, value, onChange, onBlur }) {
         }
 
         return () => {
+            toolbarObserver?.disconnect();
+            editor.events.off("toggleFullSize", captureFullscreen);
+            editor.events.off("toggleFullSize", syncFullscreen);
+            restoreFullscreen?.();
+            restoreFullscreen = null;
             editorRef.current = null;
             if (editor.isReady) {
                 editor.destruct();
@@ -121,41 +201,11 @@ export default function RichTextEditor({
             readonly: readOnly,
             theme: isDark ? "dark" : "default",
             placeholder,
-            toolbarAdaptive: true,
+            toolbarAdaptive: false,
             toolbarSticky: false,
             toolbarButtonSize: "middle",
             shadowRoot,
-            globalFullSize: false,
-            buttonsMD: [
-                "bold",
-                "italic",
-                "underline",
-                "|",
-                "ul",
-                "ol",
-                "|",
-                "font",
-                "fontsize",
-                "|",
-                "align",
-                "link",
-                "image",
-                "|",
-                "undo",
-                "redo",
-            ],
-            buttonsSM: [
-                "bold",
-                "italic",
-                "|",
-                "ul",
-                "ol",
-                "|",
-                "link",
-                "undo",
-                "redo",
-            ],
-            buttonsXS: ["bold", "italic", "|", "ul", "ol", "|", "undo", "redo"],
+            globalFullSize: true,
         }),
         [height, isDark, placeholder, readOnly, shadowRoot],
     );
@@ -168,6 +218,11 @@ export default function RichTextEditor({
             style.dataset.joditStyles = "";
             style.textContent = `${joditStyles.replace(/:root\b/g, ":host")}
                 :host { display: block; min-width: 0; }
+                :host(.rich-text-editor--fullscreen) { position: fixed; inset: 0; width: 100vw; height: 100dvh; z-index: 2000; background: var(--app-surface); }
+                :host(.rich-text-editor--fullscreen) .jodit-container.jodit_fullsize { position: absolute; inset: 0; width: 100% !important; height: 100% !important; min-height: 0 !important; border-radius: 0; }
+                :host(.rich-text-editor--fullscreen) .jodit-workplace { min-height: 0 !important; }
+                .jodit-toolbar-editor-collection { flex-wrap: wrap; }
+                .jodit-toolbar-editor-collection .jodit-toolbar-editor-collection_mode_horizontal { flex-wrap: wrap; }
                 .jodit-container { max-width: 100%; border-color: var(--surface-border); border-radius: var(--border-radius); }
                 .jodit-toolbar__box { max-width: 100%; }
                 .jodit-workplace { min-width: 0; }`;

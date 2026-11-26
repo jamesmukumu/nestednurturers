@@ -6,7 +6,8 @@ const actions = ':is(.app-button--primary,.app-button--secondary,.profile-button
 async function assertAdminPalette(page) {
     if (!await page.locator('.admin-shell').count()) return;
     const violations = await page.evaluate((actions) => {
-        const excluded = `${actions},.app-button--danger,.p-tag-danger,.p-tag-success,.p-tag-warning,.p-tag-info,.profile-message--error,.profile-verification-alert,.profile-status,.enquiries-status,.jodit-wysiwyg,.jodit-color-picker,.jodit-color-picker__color-item,.blogs-show__card .p-card-content > div`;
+        // The shared progress indicator intentionally uses the site brand color.
+        const excluded = `${actions},#nprogress,.app-button--danger,.p-tag-danger,.p-tag-success,.p-tag-warning,.p-tag-info,.profile-message--error,.profile-verification-alert,.profile-status,.enquiries-status,.jodit-wysiwyg,.jodit-color-picker,.jodit-color-picker__color-item,.blogs-show__card .p-card-content > div`;
         const properties = ['color','backgroundColor','backgroundImage','borderTopColor','borderRightColor','borderBottomColor','borderLeftColor','outlineColor','boxShadow','textShadow','fill','stroke','accentColor'];
         const canvas = document.createElement('canvas');
         canvas.width = canvas.height = 1;
@@ -73,6 +74,7 @@ async function assertAdminControlStates(page) {
         await page.waitForTimeout(200);
         await assertAdminPalette(page);
         await page.mouse.down();
+        await page.waitForTimeout(200);
         try { await assertAdminPalette(page); }
         finally {
             await page.mouse.move(0, 0);
@@ -80,6 +82,7 @@ async function assertAdminControlStates(page) {
         }
         await page.keyboard.press('Tab');
         await control.focus();
+        await page.waitForTimeout(200);
         await assertAdminPalette(page);
     }
 }

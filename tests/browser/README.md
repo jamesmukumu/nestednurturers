@@ -1,5 +1,51 @@
 # Admin browser regressions
 
+## Category, account, and complete editor controls
+
+`admin-management.cjs` writes and deletes disposable fixtures. Create a fresh SQLite
+database in an isolated checkout, set its absolute path as `DB_DATABASE` in that
+checkout's `.env`, select `DB_CONNECTION=sqlite`, and use `APP_ENV=local`,
+`SESSION_DRIVER=file`, `QUEUE_CONNECTION=sync`, `MAIL_MAILER=log`, and
+`INERTIA_SSR_ENABLED=false`. Set an application key, run `php artisan migrate`,
+build production assets with `npm run build`, and serve that checkout locally.
+Never point this workflow at production or a database containing real content.
+
+With `PORTAL_TEST_ALLOW_WRITES=1`, run `php tests/browser/seed-management.php`.
+It refuses nonlocal/non-SQLite environments and databases already containing admins.
+It creates verified `qa.manager@example.test` and `qa.writer@example.test` accounts
+with the disposable password `password`, two owned content sets, and consultations.
+Use the printed fixture IDs to configure this browser run:
+
+```powershell
+$env:NODE_PATH = 'C:/path/to/disposable-playwright/node_modules'
+$env:SIDEBAR_TEST_URL = 'http://127.0.0.1:8137'
+$env:SIDEBAR_TEST_EMAIL = 'qa.manager@example.test'
+$env:SIDEBAR_TEST_PASSWORD = 'password'
+$env:SIDEBAR_TEST_BROWSER = 'msedge' # Or an installed Playwright browser channel.
+$env:PORTAL_TEST_ALLOW_WRITES = '1'
+$env:MANAGEMENT_TEST_ARTICLE_ID = '1' # Use the seed output.
+$env:MANAGEMENT_TEST_SERVICE_ID = '1'
+$env:MANAGEMENT_TEST_TARGET_ID = '2'
+$env:MANAGEMENT_TEST_TRANSFER_ARTICLE = 'QA Transfer Article'
+$env:MANAGEMENT_TEST_TRANSFER_SERVICE = 'QA Transfer Service'
+$env:PORTAL_TEST_ARTIFACTS = Join-Path $env:TEMP 'admin-management-previews'
+node tests/browser/admin-management.cjs
+```
+
+Coverage includes category creation/editing/deletion, validation and cancellation,
+used-category protection, account editing and content-preserving deletion, and the
+same complete Jodit toolbar across all four rich-text fields in Light/Dark at
+1440px, 768px, and 390px. It exercises source editing, fullscreen dimensions and
+stacking, resize/unmount cleanup, independent editor values, and save/reload.
+Use a fresh fixture database for each run; the target account is deleted by the test.
+The existing portal regression additionally covers editor formatting, popup menus,
+dialogs, article creation, category selection, and broader theme isolation.
+
+Backend feature tests cover unauthorized access, category foreign-key protection
+and migration reversal, admin contact validation and protected-field injection,
+email reverification, self-action rejection, atomic transfers/rollback, image and
+consultation preservation, and access denial for deleted accounts.
+
 ## Admin palette checks
 
 The portal check audits rendered colors on all ten admin page types in Light,
