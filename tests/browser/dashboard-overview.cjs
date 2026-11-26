@@ -47,6 +47,7 @@ const { chromium } = require("playwright");
             [
                 data.admins,
                 data.articles.total,
+                data.services.total,
                 data.consultations.total,
                 data.consultations.newThisWeek,
                 data.consultations.pending,
